@@ -12,81 +12,111 @@
 
 <h3>Bruger side</h3>
 
-Skriv herunder dit rolle id:
-    <br />
-    <input @bind="brugerId" />
-    <br />
-    <button @onclick="UpdateLocalStorage">Save</button>
-    <button @onclick="ClearLocalStorage">Clear</button>
-
-<div class="ledigevagter">
-
-    <h1>Ledige vagter</h1>
-
-    <table>
-        <tr>
-            <th>Vagt ID</th>
-            <th>Dato</th>
-            <th>Vagt start</th>
-            <th>Vagt slut</th>
-            <th>Pause</th>
-            <th>Område</th>
-            <th>Opgave ID</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
-            <th>Bruger ID</th>
-        </tr>
-        @foreach (var vagt in Vagter)
-        {
-            <tr>
-                <td>@vagt.VagtId</td>
-                <td>@vagt.Dato</td>
-                <td>@vagt.VagtStart</td>
-                <td>@vagt.VagtSlut</td>
-                <td>@vagt.Pause</td>
-                <td>@vagt.Område</td>
-                <td>@vagt.OpgaveId</td>
-                <td>@vagt.BrugerId</td>
-            </tr>
-        }
-    </table>
-</div>
-
+Skriv herunder dit bruger id:
 <br />
+<input @bind="brugerId" />
+<br />
+<button @onclick="UpdateLocalStorage">Save</button>
+<button @onclick="ClearLocalStorage">Clear</button>
 
-<div class="brugervagter">
+<div class="parent">
 
-    <h1>Mine vagter</h1>
+    <div class="vagter">
+        <!--<div class="ledigevagter">-->
 
-    <table>
+        <h1>Ledige vagter</h1>
 
-        <tr>
-            <th>Vagt ID</th>
-            <th>Dato</th>
-            <th>Vagt start</th>
-            <th>Vagt slut</th>
-            <th>Pause</th>
-            <th>Område</th>
-            <th>Opgave ID</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
-            <th>Bruger ID</th>
-        </tr>
-        @foreach (var vagt in BrugerVagter)
-        {
+        <table>
             <tr>
-                <td>@vagt.VagtId</td>
-                <td>@vagt.Dato</td>
-                <td>@vagt.VagtStart</td>
-                <td>@vagt.VagtSlut</td>
-                <td>@vagt.Pause</td>
-                <td>@vagt.Område</td>
-                <td>@vagt.OpgaveId</td>
-                <td>@vagt.BrugerId</td>
+                <th>Vagt ID</th>
+                <th>Dato</th>
+                <th>Vagt start</th>
+                <th>Vagt slut</th>
+                <th>Pause</th>
+                <th>Område</th>
+                <th>Opgave ID</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
+                <th>Bruger ID</th>
             </tr>
-        }
+            @foreach (var vagt in Vagter)
+            {
+                <tr>
+                    <td>@vagt.VagtId</td>
+                    <td>@vagt.Dato</td>
+                    <td>@vagt.VagtStart</td>
+                    <td>@vagt.VagtSlut</td>
+                    <td>@vagt.Pause</td>
+                    <td>@vagt.Område</td>
+                    <td>@vagt.OpgaveId</td>
+                    <td>@vagt.BrugerId</td>
+                </tr>
+            }
+        </table>
+        <!--</div>-->
 
-    </table>
+        <br />
 
+        <!--<div class="brugervagter">-->
+
+        <h1>Mine vagter</h1>
+
+        <table>
+
+            <tr>
+                <th>Vagt ID</th>
+                <th>Dato</th>
+                <th>Vagt start</th>
+                <th>Vagt slut</th>
+                <th>Pause</th>
+                <th>Område</th>
+                <th>Opgave ID</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
+                <th>Bruger ID</th>
+            </tr>
+            @foreach (var vagt in BrugerVagter)
+            {
+                <tr>
+                    <td>@vagt.VagtId</td>
+                    <td>@vagt.Dato</td>
+                    <td>@vagt.VagtStart</td>
+                    <td>@vagt.VagtSlut</td>
+                    <td>@vagt.Pause</td>
+                    <td>@vagt.Område</td>
+                    <td>@vagt.OpgaveId</td>
+                    <td>@vagt.BrugerId</td>
+                </tr>
+            }
+
+        </table>
+
+
+    </div>
+
+    <br />
+    <br />
+
+    <div class="kompetencer">
+
+        <table>
+
+            <tr>
+                <th>Kompetencer</th>
+            </tr>
+            <tr>
+                <td>Førstehjælpskursus</td>
+            </tr>
+            <tr>
+                <td>Kørekort</td>
+            </tr>
+            <tr>
+                <td>Køkkencertifikat</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <!--</div>-->
 
 </div>
-
 
 
 @code {

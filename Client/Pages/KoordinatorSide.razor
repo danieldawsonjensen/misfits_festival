@@ -12,8 +12,9 @@
 
 <div class="brugerId">
 
-    Skriv herunder dit rolle id:
+    Skriv herunder dit bruger id:
     <br />
+    <!--<input @bind="NyBruger.BrugerId" />-->
     <input @bind="brugerId" />
     <br />
     <button @onclick="UpdateLocalStorage">Save</button>
@@ -21,41 +22,42 @@
 
 </div>
 
+<br />
+
 @if (brugerId != "2")
 {
-    <label>Du har ikke adgang til denne side</label>
+    <h1>Du har ikke adgang til denne side</h1>
 }
 else
 {
     <h3>Vagter</h3>
 
 <div>
-    <table class="vagter">
-        <tr>
-            <th>Vagt ID</th>
-            <th>Dato</th>
-            <th>Vagt start</th>
-            <th>Vagt slut</th>
-            <th>Pause</th>
-            <th>Område</th>
-            <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
-            <th>Bruger ID</th>
-        </tr>
-        @foreach (var vagt in Vagter)
-        {
+        <table class="vagter">
             <tr>
-                <td>@vagt.VagtId</td>
-                <td>@vagt.Dato</td>
-                <td>@vagt.VagtStart</td>
-                <td>@vagt.VagtSlut</td>
-                <td>@vagt.Pause</td>
-                <td>@vagt.Område</td>
-                <td>@vagt.OpgaveBeskrivelse</td>
-                <td>@vagt.BrugerId</td>
+                <th>Vagt ID</th>
+                <th>Dato</th>
+                <th>Vagt start</th>
+                <th>Vagt slut</th>
+                <th>Pause</th>
+                <th>Område</th>
+                <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
+                <th>Bruger ID</th>
             </tr>
-        }
-    </table>
-
+            @foreach (var vagt in Vagter)
+            {
+                <tr>
+                    <td>@vagt.VagtId</td>
+                    <td>@vagt.Dato</td>
+                    <td>@vagt.VagtStart</td>
+                    <td>@vagt.VagtSlut</td>
+                    <td>@vagt.Pause</td>
+                    <td>@vagt.Område</td>
+                    <td>@vagt.OpgaveBeskrivelse</td>
+                    <td>@vagt.BrugerId</td>
+                </tr>
+            }
+        </table>
     <br />
 
     <table class="frivillige">
@@ -85,6 +87,8 @@ else
 
 
 @code {
+    private Bruger NyBruger = new Bruger(); // definerer en ny bruger
+
     const string noteKey = "note";
     string brugerId = "";
     public async void UpdateLocalStorage()
@@ -98,12 +102,11 @@ else
         await localStore.ClearAsync();
     }
 
-
+    
     private List<Vagt> Vagter = new List<Vagt>();
     private Vagt Vagt = new Vagt();
 
     private List<Bruger> Brugere = new List<Bruger>(); // definerer en ny liste af brugere
-    private Bruger Bruger = new Bruger(); // definerer en ny bruger
 
     [Inject]
     public IKoordinatorService KoordinatorService { get; set; } // laver en instans af vores interface,
