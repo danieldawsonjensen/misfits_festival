@@ -4,6 +4,7 @@ using misfits_festival.Shared.Models;
 using Dapper;
 using misfits_festival.Client;
 using misfits_festival.Client.Services;
+using Blazored.LocalStorage;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -20,6 +21,8 @@ builder.Services.AddHttpClient<IFrivilligService, FrivilligService>(client =>
 {
     client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
 });
+
+builder.Services.AddBlazoredLocalStorage();
 
 
 await builder.Build().RunAsync();

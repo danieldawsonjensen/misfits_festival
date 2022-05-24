@@ -36,7 +36,7 @@ namespace misfits_festival.Server.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("addvagt")]
         public void AddVagt(Vagt vagt) // http post til at tilføje en ny vagt til tabellen
         {
             Console.WriteLine("addVagt - koordinatorController");

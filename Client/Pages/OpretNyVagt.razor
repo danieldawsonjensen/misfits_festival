@@ -28,12 +28,12 @@
 
         <div class="col-md-6 mb-3">
             <label for="VagtStart">Vagt start</label>
-            <InputDate id="VagtStart" @bind-Value="Vagt.VagtStart" class="form-control" />
+            <InputText id="VagtStart" @bind-Value="Vagt.VagtStart" class="form-control" />
         </div>
 
         <div class="col-md-6 mb-3">
             <label for="VagtSlut">Vagt slut</label>
-            <InputDate id="VagtSlut" @bind-Value="Vagt.VagtSlut" class="form-control" />
+            <InputText id="VagtSlut" @bind-Value="Vagt.VagtSlut" class="form-control" />
         </div>
 
         <div class="col-md-6 mb-3">
@@ -53,8 +53,15 @@
 
         <br />
 
+        <div class="col-md-6 mb-3">
+            <label for="OpgaveBeskrivelse">Opgave Beskrivelse</label>
+            <InputText id="OpgaveBeksrivelse" @bind-Value="Vagt.OpgaveBeskrivelse" class="form-control" />
+        </div>
+
+        <br />
+
         <div class="col-12 mb-3">
-            <button class="btn btn-primary" @onclick="AddVagtHandler">Book shelter</button>
+            <button class="btn btn-primary" @onclick="AddVagtHandler">Tilføj ny vagt</button>
         </div>
 
     </EditForm>
@@ -79,6 +86,7 @@
     private async Task AddVagtHandler()
     {
         ErrorCode = await Service.AddVagt(Vagt);
+        Console.WriteLine("Vagt tilføjet: " + ErrorCode);
         Vagt = new Vagt();
         EditContext = new EditContext(Vagt);
     }

@@ -19,7 +19,7 @@ namespace misfits_festival.Client.Services
 
         public async Task<int> AddVagt(Vagt vagt)
         {
-            var response = await httpClient.PostAsJsonAsync("api/koordinator", vagt);
+            var response = await httpClient.PostAsJsonAsync("api/koordinator/addvagt", vagt);
             var responseStatusCode = response.StatusCode;
             return (int)responseStatusCode;
         }
@@ -34,6 +34,7 @@ namespace misfits_festival.Client.Services
         public async Task<int> DeleteVagt(int vagtId)
         {
             var response = await httpClient.PostAsJsonAsync("api/koordinator", vagtId); // hvad skal der stå her?
+                                                                                        // skal der står DeleteAsync?
             var responseStatusCode = response.StatusCode;
             return (int)responseStatusCode;
         }
