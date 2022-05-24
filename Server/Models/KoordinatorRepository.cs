@@ -14,7 +14,6 @@ namespace misfits_festival.Server.Models
     {
         // string connString = "User ID=postgres;Password=qrm49zyp;Host=localhost;Port=5432;Database=2_semester_projekt;";
         string connString = "User ID=adminbruger;Password=!hej1234;Host=misfitsfestival-db.postgres.database.azure.com;Port=5432;Database=postgres;";
-
         string sql = "";
 
         // FestivalDBContext db = new FestivalDBContext(); // skal denne linje være ligesom mini-projekt?
@@ -23,16 +22,7 @@ namespace misfits_festival.Server.Models
         public async Task<IEnumerable<Vagt>> GetAlleVagter()
         {
             // sql = @"SELECT * FROM vagt_opgave";
-            sql = $@" SELECT v.vagt_id,
-    v.dato,
-    v.vagt_start,
-    v.vagt_slut,
-    v.pause,
-    v.""område"",
-    o.opgave_beskrivelse,
-    v.bruger_id
-   FROM vagt v
-     JOIN opgave o USING(opgave_id); ";
+            sql = $@"SELECT * from vagt_opgave";
 
             Console.WriteLine("getAlleVagter koordinatorRepository");
 
@@ -85,7 +75,8 @@ namespace misfits_festival.Server.Models
 
         public async Task<IEnumerable<Bruger>> GetAlleFrivillige()
         {
-            sql = @"SELECT * FROM frivillig_kompetencer";
+            // sql = @"SELECT * FROM frivillig_kompetencer";
+            sql = $@" SELECT * FROM frivillig_kompetencer";
 
             Console.WriteLine("getAlleFrivillige koordinatorRepository");
 

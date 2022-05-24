@@ -13,7 +13,8 @@ namespace misfits_festival.Server.Models
 {
     internal class FrivilligRepository : IFrivilligRepository
     {
-        string connString = "User ID=postgres;Password=qrm49zyp;Host=localhost;Port=5432;Database=2_semester_projekt;";
+        // string connString = "User ID=postgres;Password=qrm49zyp;Host=localhost;Port=5432;Database=2_semester_projekt;";
+        string connString = "User ID=adminbruger;Password=!hej1234;Host=misfitsfestival-db.postgres.database.azure.com;Port=5432;Database=postgres;";
         string sql = "";
 
 
