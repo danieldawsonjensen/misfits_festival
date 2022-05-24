@@ -36,7 +36,7 @@ namespace misfits_festival.Server.Models
         public async void AddVagt(Vagt vagt)
         {
             sql =
-                $@"CALL opret_vagt ({vagt.VagtId}, {vagt.Dato}, {vagt.VagtStart}, {vagt.VagtSlut}, {vagt.Pause}, {vagt.Område}, {vagt.OpgaveId}, {vagt.BrugerId})";
+                $@"CALL opret_vagt ({vagt.VagtId}, {vagt.Dato}, {vagt.VagtStart}, {vagt.VagtSlut}, {vagt.Pause}, {vagt.Område}, {vagt.OpgaveId}, {vagt.OpgaveBeskrivelse})";
 
             Console.WriteLine("addVagt koordinatorRepository");
 
