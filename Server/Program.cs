@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.ResponseCompression;
+﻿using misfits_festival.Server.Models;
+using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<IKoordinatorRepository, KoordinatorRepository>();
+builder.Services.AddScoped<IFrivilligRepository, FrivilligRepository>();
 
 var app = builder.Build();
 
@@ -34,4 +38,3 @@ app.MapControllers();
 app.MapFallbackToFile("index.html");
 
 app.Run();
-

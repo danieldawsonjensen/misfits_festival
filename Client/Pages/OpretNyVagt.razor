@@ -1,0 +1,85 @@
+﻿@using System;
+@using System.Net;
+@using misfits_festival.Shared.Models;
+@using Dapper;
+@using Npgsql;
+@using misfits_festival.Client.Services;
+@using System.Net.Http;
+
+@page "/nyvagt"
+
+<h3>Opret ny vagt</h3>
+
+<div class="opretvagt">
+    <EditForm EditContext="@EditContext" class="row p-3">
+        <div class="col-md-12 mb-3">
+            <label for="VagtId">Vagt ID</label>
+            <InputNumber id="VagtId" @bind-Value="Vagt.VagtId" class="form-control" />
+        </div>
+
+        <br />
+
+        <div class="col-md-12 mb-3">
+            <label for="Dato">Dato</label>
+            <InputDate id="Dato" @bind-Value="Vagt.Dato" class="form-control" />
+        </div>
+
+        <br />
+
+        <div class="col-md-6 mb-3">
+            <label for="VagtStart">Vagt start</label>
+            <InputDate id="VagtStart" @bind-Value="Vagt.VagtStart" class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="VagtSlut">Vagt slut</label>
+            <InputDate id="VagtSlut" @bind-Value="Vagt.VagtSlut" class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="Pause">Pause</label>
+            <InputNumber id="Pause" @bind-Value="Vagt.Pause" class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="Område">Område</label>
+            <InputText id="Område" @bind-Value="Vagt.Område" class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="OpgaveId">Opgave ID</label>
+            <InputNumber id="OpgaveId" @bind-Value="Vagt.OpgaveId" class="form-control" />
+        </div>
+
+        <br />
+
+        <div class="col-12 mb-3">
+            <button class="btn btn-primary" @onclick="AddVagtHandler">Book shelter</button>
+        </div>
+
+    </EditForm>
+</div>
+
+
+@code {
+    private EditContext EditContext;
+    private Vagt Vagt = new Vagt();
+
+    private int ErrorCode { get; set; }
+
+    [Inject]
+    public IKoordinatorService Service { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        EditContext = new EditContext(Vagt);
+    }
+
+    private async Task AddVagtHandler()
+    {
+        ErrorCode = await Service.AddVagt(Vagt);
+        Vagt = new Vagt();
+        EditContext = new EditContext(Vagt);
+    }
+}

@@ -1,0 +1,82 @@
+﻿@using System;
+@using System.Net;
+@using misfits_festival.Shared.Models;
+@using Dapper;
+@using Npgsql;
+@using misfits_festival.Client.Services;
+@using System.Net.Http;
+
+@page "/koordinator"
+
+<h3>Vagter</h3>
+
+<div>
+    <table class="vagter">
+        <tr>
+            <th>Vagt ID</th>
+            <th>Dato</th>
+            <th>Vagt start</th>
+            <th>Vagt slut</th>
+            <th>Pause</th>
+            <th>Område</th>
+            <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
+            <th>Bruger ID</th>
+        </tr>
+        @foreach (var vagt in Vagter)
+        {
+            <tr>
+                <td>@vagt.VagtId</td>
+                <td>@vagt.Dato</td>
+                <td>@vagt.VagtStart</td>
+                <td>@vagt.VagtSlut</td>
+                <td>@vagt.Pause</td>
+                <td>@vagt.Område</td>
+                <td>@vagt.OpgaveBeskrivelse</td>
+                <td>@vagt.BrugerId</td>
+            </tr>
+        }
+    </table>
+
+    <br />
+
+    <table class="frivillige">
+        @foreach (var bruger in Brugere)
+        {
+            <tr>
+                <th>Bruger Navn</th>
+                <th>Bruger Email</th>
+                <th>Kompetencer</th>
+            </tr>
+            <tr>
+                <td>@bruger.BrugerNavn</td>
+                <td>@bruger.BrugerEmail</td>
+                <td>@bruger.KompetenceBeskrivelse</td>
+            </tr>
+        }
+    </table>
+
+
+</div>
+
+
+
+@code {
+    private List<Vagt> Vagter = new List<Vagt>();
+    private Vagt Vagt = new Vagt();
+
+    private List<Bruger> Brugere = new List<Bruger>(); // definerer en ny liste af brugere
+    private Bruger Bruger = new Bruger(); // definerer en ny bruger
+
+    [Inject]
+    public IKoordinatorService KoordinatorService { get; set; } // laver en instans af vores interface,
+                                                                // nu kan metoderne i interfacet bruges
+
+    protected override async Task OnInitializedAsync()
+    {
+        Vagter = (await KoordinatorService.GetAlleVagter()).ToList();
+        Brugere = (await KoordinatorService.GetAlleFrivillige()).ToList(); // populater vores liste af brugere v hjælp af,
+                                                                           // getAlleFrivillige() metoden + toList
+    }
+
+
+}
