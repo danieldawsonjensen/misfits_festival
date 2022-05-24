@@ -6,9 +6,18 @@
 @using misfits_festival.Client.Services;
 @using System.Net.Http;
 
+@inject Blazored.LocalStorage.ILocalStorageService localStore
+
 @page "/bruger"
 
 <h3>Bruger side</h3>
+
+Skriv herunder dit rolle id:
+    <br />
+    <input @bind="brugerId" />
+    <br />
+    <button @onclick="UpdateLocalStorage">Save</button>
+    <button @onclick="ClearLocalStorage">Clear</button>
 
 <div class="ledigevagter">
 
@@ -81,6 +90,19 @@
 
 
 @code {
+    const string noteKey = "note";
+    string brugerId = "";
+    public async void UpdateLocalStorage()
+    {
+        await localStore.SetItemAsync(noteKey, brugerId);
+    }
+
+    public async void ClearLocalStorage()
+    {
+        brugerId = "";
+        await localStore.ClearAsync();
+    }
+
     private List<Vagt> Vagter = new List<Vagt>();
     private List<Vagt> BrugerVagter = new List<Vagt>();
 
@@ -93,8 +115,9 @@
 
     protected override async Task OnInitializedAsync()
     {
+        brugerId = await localStore.GetItemAsync<string>(noteKey);
         Vagter = (await FrivilligService.GetLedigeVagter()).ToList();
-        BrugerVagter = (await FrivilligService.GetMineVagter()).ToList();
+        BrugerVagter = (await FrivilligService.GetMineVagter(brugerId)).ToList();
     }
 
 
