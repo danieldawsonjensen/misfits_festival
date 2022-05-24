@@ -12,7 +12,9 @@ namespace misfits_festival.Server.Models
 {
     internal class KoordinatorRepository : IKoordinatorRepository
     {
-        string connString = "User ID=postgres;Password=qrm49zyp;Host=localhost;Port=5432;Database=2_semester_projekt;";
+        // string connString = "User ID=postgres;Password=qrm49zyp;Host=localhost;Port=5432;Database=2_semester_projekt;";
+        string connString = "User ID=adminbruger;Password=!hej1234;Host=misfitsfestival-db.postgres.database.azure.com;Port=5432;Database=postgres;";
+
         string sql = "";
 
         // FestivalDBContext db = new FestivalDBContext(); // skal denne linje være ligesom mini-projekt?
