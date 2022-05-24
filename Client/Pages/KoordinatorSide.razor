@@ -6,9 +6,31 @@
 @using misfits_festival.Client.Services;
 @using System.Net.Http;
 
+@inject Blazored.LocalStorage.ILocalStorageService localStore
+
 @page "/koordinator"
 
-<h3>Vagter</h3>
+<div class="brugerId">
+
+    Velkommen til Misfits Festivals digitale hjemmeside!
+    <br />
+    <br />
+    Skriv herunder dit rolle id:
+    <br />
+    <input @bind="brugerId" />
+    <br />
+    <button @onclick="UpdateLocalStorage">Save</button>
+    <button @onclick="ClearLocalStorage">Clear</button>
+
+</div>
+
+@if (brugerId == "1")
+{
+    <label>Du har ikke adgang til denne side</label>
+}
+else
+{
+    <h3>Vagter</h3>
 
 <div>
     <table class="vagter">
@@ -59,10 +81,27 @@
 
 
 </div>
+}
+
+
 
 
 
 @code {
+    const string noteKey = "note";
+    string brugerId = "";
+    public async void UpdateLocalStorage()
+    {
+        await localStore.SetItemAsync(noteKey, brugerId);
+    }
+
+    public async void ClearLocalStorage()
+    {
+        brugerId = "";
+        await localStore.ClearAsync();
+    }
+
+
     private List<Vagt> Vagter = new List<Vagt>();
     private Vagt Vagt = new Vagt();
 
@@ -75,6 +114,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        brugerId = await localStore.GetItemAsync<string>(noteKey);
         Vagter = (await KoordinatorService.GetAlleVagter()).ToList();
         Brugere = (await KoordinatorService.GetAlleFrivillige()).ToList(); // populater vores liste af brugere v hjælp af,
                                                                            // getAlleFrivillige() metoden + toList
