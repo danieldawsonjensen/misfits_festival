@@ -12,7 +12,7 @@
     <br />
     Skriv herunder dit rolle id:
     <br />
-    <input @bind="noteContent" />
+    <input @bind="homeBrugerId" />
     <br />
     <button @onclick="UpdateLocalStorage">Save</button>
     <button @onclick="ClearLocalStorage">Clear</button>
@@ -21,21 +21,20 @@
 
 @code{
     const string noteKey = "note";
-    string noteContent = "";
+    string homeBrugerId = "";
     public async void UpdateLocalStorage()
     {
-        await localStore.SetItemAsync(noteKey, noteContent);
+        await localStore.SetItemAsync(noteKey, homeBrugerId);
     }
 
     public async void ClearLocalStorage()
     {
-        noteContent = "";
+        homeBrugerId = "";
         await localStore.ClearAsync();
     }
 
     protected override async Task OnInitializedAsync()
     {
-        noteContent = await localStore.GetItemAsync<string>
-    (noteKey);
+        homeBrugerId = await localStore.GetItemAsync<string>(noteKey);
     }
     }

@@ -4,6 +4,7 @@
 @using Dapper;
 @using Npgsql;
 @using misfits_festival.Client.Services;
+@using misfits_festival.Client.Pages;
 @using System.Net.Http;
 
 @inject Blazored.LocalStorage.ILocalStorageService localStore
@@ -32,7 +33,7 @@ else
 {
     <h3>Vagter</h3>
 
-<div>
+    <div>
         <table class="vagter">
             <tr>
                 <th>Vagt ID</th>
@@ -53,33 +54,32 @@ else
                     <td>@vagt.VagtSlut</td>
                     <td>@vagt.Pause</td>
                     <td>@vagt.Område</td>
-                    <td>@vagt.OpgaveBeskrivelse</td>
                     <td>@vagt.BrugerId</td>
                 </tr>
             }
         </table>
-    <br />
+        <br />
 
-    <table class="frivillige">
-        @foreach (var bruger in Brugere)
-        {
+        <table class="frivillige">
             <tr>
                 <th>Bruger Navn</th>
                 <th>Bruger Email</th>
                 <th>Telefonnummer</th>
                 <th>Kompetencer</th>
             </tr>
-            <tr>
-                <td>@bruger.BrugerNavn</td>
-                <td>@bruger.BrugerEmail</td>
-                <td>@bruger.TelefonNummer</td>
-                <td>@bruger.Kompetencer</td>
-            </tr>
-        }
-    </table>
+            @foreach (var frivillig in Frivillige)
+            {
+                <tr>
+                    <td>@frivillig.BrugerNavn</td>
+                    <td>@frivillig.BrugerEmail</td>
+                    <td>@frivillig.TelefonNummer</td>
+                    <td>@frivillig.Kompetencer</td>
+                </tr>
+            }
+        </table>
 
 
-</div>
+    </div>
 }
 
 
@@ -102,11 +102,11 @@ else
         await localStore.ClearAsync();
     }
 
-    
+
     private List<Vagt> Vagter = new List<Vagt>();
     private Vagt Vagt = new Vagt();
 
-    private List<Bruger> Brugere = new List<Bruger>(); // definerer en ny liste af brugere
+    private List<Bruger> Frivillige = new List<Bruger>(); // definerer en ny liste af brugere
 
     [Inject]
     public IKoordinatorService KoordinatorService { get; set; } // laver en instans af vores interface,
@@ -116,7 +116,7 @@ else
     {
         brugerId = await localStore.GetItemAsync<string>(noteKey);
         Vagter = (await KoordinatorService.GetAlleVagter()).ToList();
-        Brugere = (await KoordinatorService.GetAlleFrivillige()).ToList(); // populater vores liste af brugere v hjælp af,
+        Frivillige = (await KoordinatorService.GetAlleFrivillige()).ToList(); // populater vores liste af brugere v hjælp af,
                                                                            // getAlleFrivillige() metoden + toList
     }
 
