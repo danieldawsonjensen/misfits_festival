@@ -22,7 +22,18 @@ namespace misfits_festival.Server.Models
         public async Task<IEnumerable<Vagt>> GetAlleVagter()
         {
             // sql = @"SELECT * FROM vagt_opgave";
-            sql = $@"SELECT * from vagt_opgave";
+            sql = $@" SELECT v.vagt_id,
+    v.dato,
+    v.vagt_start,
+    v.vagt_slut,
+    v.pause,
+    v.""område"",
+    o.opgave_beskrivelse,
+	b.bruger_navn
+   FROM vagt v
+     JOIN opgave o USING(opgave_id)
+
+     LEFT JOIN bruger b USING(bruger_id); ";
 
             Console.WriteLine("getAlleVagter koordinatorRepository");
 

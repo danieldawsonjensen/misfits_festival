@@ -69,8 +69,8 @@ Skriv dit bruger navn herunder:
                 <th>Vagt slut</th>
                 <th>Pause</th>
                 <th>Område</th>
-                <th>Opgave ID</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
-                <th>Bruger ID</th>
+                <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
+                <th>Bruger navn</th>
             </tr>
             @foreach (var vagt in BrugerVagter)
             {
@@ -82,7 +82,7 @@ Skriv dit bruger navn herunder:
                     <td>@vagt.Pause</td>
                     <td>@vagt.Område</td>
                     <td>@vagt.OpgaveId</td>
-                    <td>@vagt.BrugerId</td>
+                    <td>@vagt.BrugerNavn</td>
                 </tr>
             }
 
@@ -122,7 +122,7 @@ Skriv dit bruger navn herunder:
 
 @code {
     const string noteKey = "note";
-    string brugerNavn = "";
+    string brugerNavn = "brugerNavn";
     public async void UpdateLocalStorage()
     {
         await localStore.SetItemAsync(noteKey, brugerNavn);
@@ -130,7 +130,7 @@ Skriv dit bruger navn herunder:
 
     public async void ClearLocalStorage()
     {
-        brugerNavn = "";
+        brugerNavn = "brugerNavn";
         await localStore.ClearAsync();
     }
 
