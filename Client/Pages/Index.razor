@@ -12,7 +12,7 @@
     <br />
     Skriv dit bruger id herunder:
     <br />
-    <input @bind="homeBrugerId" />
+    <input @bind="brugerId" />
     <br />
     <button @onclick="UpdateLocalStorage">Save</button>
     <button @onclick="ClearLocalStorage">Clear</button>
@@ -23,20 +23,20 @@
 
 @code{
     const string noteKey = "note";
-    string homeBrugerId = "";
+    string brugerId = "";
     public async void UpdateLocalStorage()
     {
-        await localStore.SetItemAsync(noteKey, homeBrugerId);
+        await localStore.SetItemAsync(noteKey, brugerId);
     }
 
     public async void ClearLocalStorage()
     {
-        homeBrugerId = "";
+        brugerId = "";
         await localStore.ClearAsync();
     }
 
     protected override async Task OnInitializedAsync()
     {
-        homeBrugerId = await localStore.GetItemAsync<string>(noteKey);
+        brugerId = await localStore.GetItemAsync<string>(noteKey);
     }
     }

@@ -8,7 +8,7 @@ namespace misfits_festival.Client.Services
     {
         private readonly HttpClient httpClient;
 
-        public async Task<Vagt[]?> GetMineVagter(string brugerNavn)
+        public async Task<Vagt[]?> GetMineVagter(int brugerId)
         {
             var result = await httpClient.GetFromJsonAsync<Vagt[]>("api/frivillig/brugervagter"); // httpGet fra api'en
             return result;

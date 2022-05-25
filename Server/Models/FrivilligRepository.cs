@@ -18,10 +18,10 @@ namespace misfits_festival.Server.Models
         string sql = "";
 
 
-        public async Task<IEnumerable<Vagt>> GetMineVagter(string brugerNavn)
+        public async Task<IEnumerable<Vagt>> GetMineVagter(int brugerId)
         {
             sql = $@"SELECT * FROM vagt_opgave
-            WHERE bruger_navn = '{brugerNavn}'";
+            WHERE bruger_navn = '{brugerId}'";
 
             Console.WriteLine("getMineVagter frivilligRepository");
 
@@ -35,8 +35,8 @@ namespace misfits_festival.Server.Models
 
         public async Task<IEnumerable<Vagt>> GetLedigeVagter()
         {
-            sql = @"SELECT * FROM vagt
-            WHERE bruger_id IS NULL";
+            sql = @"SELECT * FROM vagt_opgave
+            WHERE bruger_navn IS NULL";
 
             Console.WriteLine("getLedigeVagter frivilligRepository");
 

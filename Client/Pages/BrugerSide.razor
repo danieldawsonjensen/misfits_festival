@@ -13,12 +13,9 @@
 
 <h3>Bruger side</h3>
 
-Skriv dit bruger navn herunder:
+    Skriv dit bruger id herunder:
 <br />
-<input @bind="brugerNavn" />
-<br />
-<button @onclick="UpdateLocalStorage">Save</button>
-<button @onclick="ClearLocalStorage">Clear</button>
+<input @bind="brugerId" />
 
 <div class="parent">
 
@@ -29,26 +26,22 @@ Skriv dit bruger navn herunder:
 
         <table>
             <tr>
-                <th>Vagt ID</th>
                 <th>Dato</th>
                 <th>Vagt start</th>
                 <th>Vagt slut</th>
                 <th>Pause</th>
                 <th>Område</th>
-                <th>Opgave ID</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
-                <th>Bruger ID</th>
+                <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
             </tr>
             @foreach (var vagt in Vagter)
             {
                 <tr>
-                    <td>@vagt.VagtId</td>
                     <td>@vagt.Dato</td>
                     <td>@vagt.VagtStart</td>
                     <td>@vagt.VagtSlut</td>
                     <td>@vagt.Pause</td>
                     <td>@vagt.Område</td>
                     <td>@vagt.OpgaveBeskrivelse</td>
-                    <td>@vagt.BrugerId</td>
                 </tr>
             }
         </table>
@@ -70,7 +63,6 @@ Skriv dit bruger navn herunder:
                 <th>Pause</th>
                 <th>Område</th>
                 <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
-                <th>Bruger navn</th>
             </tr>
             @foreach (var vagt in BrugerVagter)
             {
@@ -82,7 +74,6 @@ Skriv dit bruger navn herunder:
                     <td>@vagt.Pause</td>
                     <td>@vagt.Område</td>
                     <td>@vagt.OpgaveBeskrivelse</td>
-                    <!--<td>@vagt.BrugerNavn</td>-->
                 </tr>
             }
 
@@ -124,7 +115,6 @@ Skriv dit bruger navn herunder:
     const string noteKey = "note";
     string brugerId = "";
 
-
     private List<Vagt> Vagter = new List<Vagt>();
     private List<Vagt> BrugerVagter = new List<Vagt>();
 
@@ -139,7 +129,8 @@ Skriv dit bruger navn herunder:
     {
         brugerId = await localStore.GetItemAsync<string>(noteKey);
         Vagter = (await FrivilligService.GetLedigeVagter()).ToList();
-        BrugerVagter = (await FrivilligService.GetMineVagter(brugerId)).ToList();
+        // int mitBrugerId = int.Parse(brugerId);
+        BrugerVagter = (await FrivilligService.GetMineVagter(int.Parse(brugerId))).ToList();
     }
 
 

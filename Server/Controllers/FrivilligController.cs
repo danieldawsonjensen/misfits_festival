@@ -30,10 +30,10 @@ namespace misfits_festival.Server.Controllers
 		}
 
 		[HttpGet("brugervagter")]
-		public async Task<IEnumerable<Vagt>> GetMineVagter(string brugerNavn) // http get task til vagter med et specifikt brugerId
+		public async Task<IEnumerable<Vagt>> GetMineVagter(int brugerId) // http get task til vagter med et specifikt brugerId
 		{
 			Console.WriteLine("getledigevagter - frivilligController");
-			return await Frivillig.GetMineVagter(brugerNavn);
+			return await Frivillig.GetMineVagter(brugerId);
 		}
 
 		[HttpGet("ledigevagter")]
