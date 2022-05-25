@@ -17,46 +17,60 @@ namespace misfits_festival.Server.Controllers
 
 	public class FrivilligController : ControllerBase // nedarvning fra ControllerBase er meget vigtig
 	{
-		private readonly IFrivilligRepository Vagter = new FrivilligRepository(); // definerer en ny instans af interfacet med
+		private readonly IFrivilligRepository Frivillig = new FrivilligRepository(); // definerer en ny instans af interfacet med
 																				  // metoderne til CRUD funktionalitet
 
 		public FrivilligController(IFrivilligRepository frivilligRepository)
 		{
-			if (Vagter == null && frivilligRepository != null)
+			if (Frivillig == null && frivilligRepository != null)
 			{
-				Vagter = frivilligRepository;
+				Frivillig = frivilligRepository;
 				Console.WriteLine("Repository initialized");
 			}
 		}
 
 		[HttpGet]
-		public async Task<IEnumerable<Vagt>> GetMineVagter(int brugerId) // http get task til vagter med et specifikt brugerId
+		public async Task<IEnumerable<Vagt>> GetMineVagter(string brugerNavn) // http get task til vagter med et specifikt brugerId
 		{
 			Console.WriteLine("getledigevagter - frivilligController");
-			return await Vagter.GetMineVagter(brugerId);
+			return await Frivillig.GetMineVagter(brugerNavn);
 		}
 
 		[HttpGet("ledigevagter")]
 		public async Task<IEnumerable<Vagt>> GetLedigeVagter() // http get task til vagter der er ledige
 		{
 			Console.WriteLine("getledigevagter - frivilligController");
-			return await Vagter.GetLedigeVagter();
+			return await Frivillig.GetLedigeVagter();
 		}
 
 		[HttpPost]
 		public void BookVagt(int vagtId, int brugerId) // http post til booking af en vagt, bruger et brugerId og
 													   // vagtId'et til den vagt man vil booke
 		{
-			Console.WriteLine("addVagt - frivilligController");
-			Vagter.BookVagt(vagtId, brugerId);
+			Console.WriteLine("bookVagt - frivilligController");
+			Frivillig.BookVagt(vagtId, brugerId);
 		}
 
 		[HttpPost("addbruger")]
-		public void AddBruger(Vagt vagt) // http post til at tilføje en ny vagt til tabellen
+		public void AddBruger(Bruger bruger) // http post til at tilføje en ny vagt til tabellen
 		{
-			Console.WriteLine("addVagt - frivilligController");
-			Vagter.AddBruger(vagt);
+			Console.WriteLine("addBruger - frivilligController");
+			Frivillig.AddBruger(bruger);
 		}
+
+        [HttpGet("getkompetencer")]
+		public async Task<IEnumerable<Kompetence>> GetAlleKompetencer()
+        {
+            Console.WriteLine("getAlleKompetencer - frivilligController");
+			return await Frivillig.GetAlleKompetencer();
+        }
+
+        [HttpPost("updatekompetencer")]
+		public async void UpdateKompetencer(int brugerId, int kompetenceId)
+        {
+            Console.WriteLine("updateKompetencer - frivilligController");
+			Frivillig.UpdateKompetencer(brugerId, kompetenceId);
+        }
 
 	}
 }

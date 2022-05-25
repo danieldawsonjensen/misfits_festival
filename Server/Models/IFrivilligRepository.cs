@@ -13,12 +13,16 @@ namespace misfits_festival.Server.Models
 {
 	public interface IFrivilligRepository
 	{
-		Task<IEnumerable<Vagt>> GetMineVagter(int brugerId); // metode til at se sine egne bookede vagter
+		Task<IEnumerable<Vagt>> GetMineVagter(string brugerNavn); // metode til at se sine egne bookede vagter
 
 		Task<IEnumerable<Vagt>> GetLedigeVagter(); // metode til at se alle de nuværende ledige vagter
 
 		void BookVagt(int vagtId, int brugerId); // metode til at booke en vagt
 
 		void AddBruger(Bruger bruger);
+
+		Task<IEnumerable<Kompetence>> GetAlleKompetencer();
+
+		void UpdateKompetencer(int brugerId, int kompetenceId);
 	}
 }

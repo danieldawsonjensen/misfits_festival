@@ -18,10 +18,10 @@ namespace misfits_festival.Server.Models
         string sql = "";
 
 
-        public async Task<IEnumerable<Vagt>> GetMineVagter(int brugerId)
+        public async Task<IEnumerable<Vagt>> GetMineVagter(string brugerNavn)
         {
             sql = $@"SELECT * FROM vagt
-            WHERE bruger_id = {brugerId}";
+            WHERE bruger_navn = {brugerNavn}";
 
             Console.WriteLine("getMineVagter frivilligRepository");
 
@@ -66,7 +66,7 @@ namespace misfits_festival.Server.Models
         public async void AddBruger(Bruger bruger)
         {
             sql =
-                $@"CALL opret_bruger ('{bruger.BrugerNavn}', '{bruger.BrugerEmail}', {bruger.RolleId}, {bruger.TelefonNummer})";
+                $@"CALL opret_bruger ('{bruger.BrugerNavn}', '{bruger.BrugerEmail}', {bruger.RolleId}, '{bruger.TelefonNummer}')";
 
             Console.WriteLine("addbBruger frivilligRepository");
 
@@ -76,6 +76,31 @@ namespace misfits_festival.Server.Models
             }
         }
 
+        public async Task<IEnumerable<Kompetence>> GetAlleKompetencer()
+        {
+            sql = $@"SELECT * FROM kompetence";
+
+            Console.WriteLine("getAlleKompetencer frivilligRepository");
+
+            using (var connection = new NpgsqlConnection(connString))
+            {
+                var alleKompetencer = await connection.QueryAsync<Kompetence>(sql);
+                return alleKompetencer.ToList();
+            }
+        }
+
+        public async void UpdateKompetencer(int brugerId, int kompetenceId)
+        {
+            sql = $@"INSERT INTO bruger_kompetence
+                        VALUES ({brugerId}, {kompetenceId})";
+
+            Console.WriteLine("updateKompetencer frivilligRepository");
+
+            using (var connection = new NpgsqlConnection(connString))
+            {
+                var updateKompetencer = await connection.ExecuteAsync(sql);
+            }
+        }
 
         public FrivilligRepository()
         {

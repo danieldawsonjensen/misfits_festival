@@ -13,9 +13,9 @@
 
 <h3>Bruger side</h3>
 
-Skriv dit bruger id herunder:
+Skriv dit bruger navn herunder:
 <br />
-<input @bind="brugerId" />
+<input @bind="brugerNavn" />
 <br />
 <button @onclick="UpdateLocalStorage">Save</button>
 <button @onclick="ClearLocalStorage">Clear</button>
@@ -122,15 +122,15 @@ Skriv dit bruger id herunder:
 
 @code {
     const string noteKey = "note";
-    string brugerId = "";
+    string brugerNavn = "";
     public async void UpdateLocalStorage()
     {
-        await localStore.SetItemAsync(noteKey, brugerId);
+        await localStore.SetItemAsync(noteKey, brugerNavn);
     }
 
     public async void ClearLocalStorage()
     {
-        brugerId = "";
+        brugerNavn = "";
         await localStore.ClearAsync();
     }
 
@@ -146,9 +146,9 @@ Skriv dit bruger id herunder:
 
     protected override async Task OnInitializedAsync()
     {
-        brugerId = await localStore.GetItemAsync<string>(noteKey);
+        brugerNavn = await localStore.GetItemAsync<string>(noteKey);
         Vagter = (await FrivilligService.GetLedigeVagter()).ToList();
-        BrugerVagter = (await FrivilligService.GetMineVagter(brugerId)).ToList();
+        BrugerVagter = (await FrivilligService.GetMineVagter(brugerNavn)).ToList();
     }
 
 

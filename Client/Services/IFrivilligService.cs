@@ -7,10 +7,12 @@ namespace misfits_festival.Client.Services
 	{
 		Task<Vagt[]?> GetLedigeVagter(); // metode til get på alle ledige vagter
 
-		Task<Vagt[]?> GetMineVagter(string brugerId); // metode til get på alle ledige vagter
+		Task<Vagt[]?> GetMineVagter(int brugerId); // metode til get på alle ledige vagter
 
 		Task<int> BookVagt(Vagt vagt); // metode til booking af en vagt
 
 		Task<int> AddBruger(Bruger bruger);
+
+        Task<Kompetence[]?> GetAlleKompetencer();
 	}
 }

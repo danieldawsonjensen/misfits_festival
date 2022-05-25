@@ -4,6 +4,7 @@
 @using Dapper;
 @using Npgsql;
 @using misfits_festival.Client.Services;
+@using misfits_festival.Client.Pages;
 @using System.Net.Http;
 
 @page "/nybruger"
@@ -15,50 +16,72 @@
 
         <div class="col-md-12 mb-3">
             <label for="BrugerNavn">Bruger navn</label>
-            <InputNumber id="VagtId" @bind-Value="Vagt.VagtId" class="form-control" />
+            <InputText id="BrugerNavn" @bind-Value="Bruger.BrugerNavn" class="form-control" />
         </div>
 
         <br />
 
         <div class="col-md-12 mb-3">
-            <label for="Dato">Dato</label>
-            <InputDate id="Dato" @bind-Value="Vagt.Dato" class="form-control" />
+            <label for="BrugerEmail">Email</label>
+            <InputText id="BrugerEmail" @bind-Value="Bruger.BrugerEmail" class="form-control" />
         </div>
 
         <br />
 
         <div class="col-md-6 mb-3">
-            <label for="VagtStart">Vagt start</label>
-            <InputText id="VagtStart" @bind-Value="Vagt.VagtStart" class="form-control" />
+            <label for="RolleId">Rolle</label>
+            <InputNumber id="RolleId" @bind-Value="Bruger.RolleId" class="form-control" />
         </div>
 
         <br />
 
         <div class="col-md-6 mb-3">
-            <label for="VagtSlut">Vagt slut</label>
-            <InputText id="VagtSlut" @bind-Value="Vagt.VagtSlut" class="form-control" />
+            <label for="Telefonnummer">Telefonnummer</label>
+            <InputText id="Telefonnummer" @bind-Value="Bruger.TelefonNummer" class="form-control" />
         </div>
 
         <br />
 
-        <div class="col-md-6 mb-3">
-            <label for="Pause">Pause</label>
-            <InputNumber id="Pause" @bind-Value="Vagt.Pause" class="form-control" />
+        <div class="col-md-12 mb-3">
+            <label for="ValgtKompetence">Valgt kompetence: @Bruger.Kompetencer</label>
         </div>
 
         <br />
 
         <div class="col-12 mb-3">
-            <button class="btn btn-primary" @onclick="AddVagtHandler">Tilføj ny vagt</button>
+            <button class="btn btn-primary" @onclick="AddBrugerHandler">Tilføj ny bruger</button>
         </div>
 
     </EditForm>
+</div>
+
+<div class="kompetencer">
+    <table>
+        <tr>
+            <th>Kompetence ID</th>
+            <th>Kompetence beskrivelse</th>
+            <th></th>
+        </tr>
+        @foreach (var kompetence in Kompetencer)
+        {
+            <tr>
+                <td>@kompetence.KompetenceId</td>
+                <td>@kompetence.KompetenceBeskrivelse</td>
+                <button class="btn btn-success" @onclick="() => VælgKompetence(kompetence)">Vælg denne kompetence</button>
+            </tr>
+        }
+    </table>
+
+
+
 </div>
 
 
 @code {
     private EditContext EditContext;
     private Bruger Bruger = new Bruger();
+
+    private List<Kompetence> Kompetencer = new List<Kompetence>();
 
     private int ErrorCode { get; set; }
 
@@ -73,9 +96,19 @@
 
     private async Task AddBrugerHandler()
     {
-        ErrorCode = await Service.AddVagt(Bruger);
-        Console.WriteLine("Vagt tilføjet: " + ErrorCode);
+        ErrorCode = await Service.AddBruger(Bruger);
+        Console.WriteLine("Bruger tilføjet: " + ErrorCode);
         Bruger = new Bruger();
         EditContext = new EditContext(Bruger);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Kompetencer = (await Service.GetAlleKompetencer()).ToList();
+    }
+
+    private async Task VælgKompetence(Kompetence kompetence)
+    {
+        Bruger.Kompetencer = kompetence.KompetenceBeskrivelse;
     }
 }
