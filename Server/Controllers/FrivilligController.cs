@@ -51,5 +51,12 @@ namespace misfits_festival.Server.Controllers
 			Vagter.BookVagt(vagtId, brugerId);
 		}
 
+		[HttpPost("addbruger")]
+		public void AddBruger(Vagt vagt) // http post til at tilføje en ny vagt til tabellen
+		{
+			Console.WriteLine("addVagt - frivilligController");
+			Vagter.AddBruger(vagt);
+		}
+
 	}
 }

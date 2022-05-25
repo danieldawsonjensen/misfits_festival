@@ -63,6 +63,18 @@ namespace misfits_festival.Server.Models
             }
         }
 
+        public async void AddBruger(Bruger bruger)
+        {
+            sql =
+                $@"CALL opret_bruger ('{bruger.BrugerNavn}', '{bruger.BrugerEmail}', {bruger.RolleId}, {bruger.TelefonNummer})";
+
+            Console.WriteLine("addbBruger frivilligRepository");
+
+            using (var connection = new NpgsqlConnection(connString))
+            {
+                var addBruger = await connection.ExecuteAsync(sql);
+            }
+        }
 
 
         public FrivilligRepository()

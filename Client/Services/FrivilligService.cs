@@ -27,6 +27,13 @@ namespace misfits_festival.Client.Services
             return (int)responseStatusCode;
         }
 
+        public async Task<int> AddBruger(Bruger bruger)
+        {
+            var response = await httpClient.PostAsJsonAsync("api/koordinator/addvagt", bruger);
+            var responseStatusCode = response.StatusCode;
+            return (int)responseStatusCode;
+        }
+
 
         public FrivilligService(HttpClient httpClient)
         {
