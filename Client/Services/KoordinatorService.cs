@@ -39,17 +39,17 @@ namespace misfits_festival.Client.Services
             return (int)responseStatusCode;
         }
 
-        public Task<Bruger[]?> GetAlleFrivillige()
-        {
-            var result = httpClient.GetFromJsonAsync<Bruger[]>("api/koordinator/getfrivillige");
-            return result;
-        }
-
         public async Task<int> AddOpgave(Opgave opgave)
         {
             var response = await httpClient.PostAsJsonAsync("api/koordinator/postopgave", opgave);
             var responseStatusCode = response.StatusCode;
             return (int)responseStatusCode;
+        }
+
+        public Task<Bruger[]?> GetAlleFrivillige()
+        {
+            var result = httpClient.GetFromJsonAsync<Bruger[]>("api/koordinator/getfrivillige");
+            return result;
         }
 
         public KoordinatorService(HttpClient httpClient)

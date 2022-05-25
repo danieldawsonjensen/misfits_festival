@@ -29,7 +29,7 @@ namespace misfits_festival.Server.Controllers
 			}
 		}
 
-		[HttpGet]
+		[HttpGet("brugervagter")]
 		public async Task<IEnumerable<Vagt>> GetMineVagter(string brugerNavn) // http get task til vagter med et specifikt brugerId
 		{
 			Console.WriteLine("getledigevagter - frivilligController");

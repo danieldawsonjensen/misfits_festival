@@ -10,7 +10,7 @@ namespace misfits_festival.Client.Services
 
         public async Task<Vagt[]?> GetMineVagter(string brugerNavn)
         {
-            var result = await httpClient.GetFromJsonAsync<Vagt[]>("api/frivillig"); // httpGet fra api'en
+            var result = await httpClient.GetFromJsonAsync<Vagt[]>("api/frivillig/brugervagter"); // httpGet fra api'en
             return result;
         }
 

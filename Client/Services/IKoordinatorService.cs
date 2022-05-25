@@ -13,9 +13,9 @@ namespace misfits_festival.Client.Services
 
 		Task<int> UpdateVagt(int vagtId, Vagt vagt); // metode til update på en vagt, bruger et vagtId, samt en instans af vagt klassen
 
-		Task<Bruger[]?> GetAlleFrivillige(); // metode til get af alle frivillige
-
 		Task<int> AddOpgave(Opgave opgave); // metode til post af en ny instans af opgave klassen
+
+		Task<Bruger[]?> GetAlleFrivillige(); // metode til get af alle frivillige
 
 	}
 }

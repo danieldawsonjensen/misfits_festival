@@ -21,19 +21,7 @@ namespace misfits_festival.Server.Models
 
         public async Task<IEnumerable<Vagt>> GetAlleVagter()
         {
-            // sql = @"SELECT * FROM vagt_opgave";
-            sql = $@" SELECT v.vagt_id,
-    v.dato,
-    v.vagt_start,
-    v.vagt_slut,
-    v.pause,
-    v.""område"",
-    o.opgave_beskrivelse,
-	b.bruger_navn
-   FROM vagt v
-     JOIN opgave o USING(opgave_id)
-
-     LEFT JOIN bruger b USING(bruger_id); ";
+            sql = @"SELECT * FROM vagt_opgave";
 
             Console.WriteLine("getAlleVagter koordinatorRepository");
 
@@ -48,8 +36,8 @@ namespace misfits_festival.Server.Models
         {
             // sql = $@"CALL opret_vagt ({vagt.VagtId}, {vagt.Dato}, {vagt.VagtStart}, {vagt.VagtSlut}, {vagt.Pause}, {vagt.Område}, {vagt.OpgaveId}, {vagt.OpgaveBeskrivelse})";
             sql = $@"INSERT INTO vagt (vagt_id, dato, vagt_start, vagt_slut, pause, område, opgave_id)
-                        VALUES ({vagt.VagtId}, '{vagt.Dato}', '{vagt.VagtStart}', '{vagt.VagtSlut}', {vagt.Pause}, '{vagt.Område}', {vagt.OpgaveId})";
-            Console.WriteLine("sql:" + sql);
+                        VALUES ({vagt.VagtId}, '{vagt.Dato}', '{vagt.VagtStart}', '{vagt.VagtSlut}', {vagt.Pause}, '{vagt.Område}', {vagt.OpgaveBeskrivelse})";
+
             Console.WriteLine("addVagt koordinatorRepository");
 
             using (var connection = new NpgsqlConnection(connString))
@@ -64,7 +52,7 @@ namespace misfits_festival.Server.Models
             sql =
                 $@"UPDATE vagt
                 SET dato = {vagt.Dato}, ""vagt_start"" = {vagt.VagtStart}, ""vagt_slut"" = {vagt.VagtSlut}, pause = {vagt.Pause}, område = {vagt.Område},
-                    ""opgave_id"" = {vagt.OpgaveId}, ""bruger_id"" = {vagt.BrugerId}
+                    ""opgave_id"" = {vagt.OpgaveBeskrivelse}, ""bruger_id"" = {vagt.BrugerId}
                 WHERE vagt_id = {vagtId}";
 
             Console.WriteLine("addVagt koordinatorRepository");
@@ -104,7 +92,7 @@ namespace misfits_festival.Server.Models
         {
             sql =
                 $@"INSERT INTO opgave (""opgave_beskrivelse"")
-                    VALUES ({opgave.OpgaveBeskrivelse})";
+                    VALUES ('{opgave.OpgaveBeskrivelse}')";
 
             Console.WriteLine("addOpgave koordinatorRepository");
 

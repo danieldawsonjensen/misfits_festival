@@ -12,14 +12,16 @@
 @page "/koordinator"
 
 <div class="brugerId">
-
-    Skriv dit bruger id herunder:
+    <!--
+    Skriv herunder dit bruger id:
     <br />
-    <!--<input @bind="NyBruger.BrugerId" />-->
     <input @bind="brugerId" />
+
     <br />
+
     <button @onclick="UpdateLocalStorage">Save</button>
     <button @onclick="ClearLocalStorage">Clear</button>
+    -->
 
 </div>
 
@@ -36,25 +38,24 @@ else
     <div>
         <table class="vagter">
             <tr>
-                <th>Vagt ID</th>
                 <th>Dato</th>
                 <th>Vagt start</th>
                 <th>Vagt slut</th>
                 <th>Pause</th>
                 <th>Område</th>
-                <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
-                <th>Bruger ID</th>
+                <th>Opgave beskrivelse</th>
+                <th>Bruger navn</th>
             </tr>
             @foreach (var vagt in Vagter)
             {
                 <tr>
-                    <td>@vagt.VagtId</td>
                     <td>@vagt.Dato</td>
                     <td>@vagt.VagtStart</td>
                     <td>@vagt.VagtSlut</td>
                     <td>@vagt.Pause</td>
                     <td>@vagt.Område</td>
-                    <td>@vagt.BrugerId</td>
+                    <td>@vagt.OpgaveBeskrivelse</td>
+                    <td>@vagt.BrugerNavn</td>
                 </tr>
             }
         </table>
@@ -117,7 +118,7 @@ else
         brugerId = await localStore.GetItemAsync<string>(noteKey);
         Vagter = (await KoordinatorService.GetAlleVagter()).ToList();
         Frivillige = (await KoordinatorService.GetAlleFrivillige()).ToList(); // populater vores liste af brugere v hjælp af,
-                                                                           // getAlleFrivillige() metoden + toList
+                                                                              // getAlleFrivillige() metoden + toList
     }
 
 

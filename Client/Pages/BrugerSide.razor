@@ -47,7 +47,7 @@ Skriv dit bruger navn herunder:
                     <td>@vagt.VagtSlut</td>
                     <td>@vagt.Pause</td>
                     <td>@vagt.Område</td>
-                    <td>@vagt.OpgaveId</td>
+                    <td>@vagt.OpgaveBeskrivelse</td>
                     <td>@vagt.BrugerId</td>
                 </tr>
             }
@@ -81,8 +81,8 @@ Skriv dit bruger navn herunder:
                     <td>@vagt.VagtSlut</td>
                     <td>@vagt.Pause</td>
                     <td>@vagt.Område</td>
-                    <td>@vagt.OpgaveId</td>
-                    <td>@vagt.BrugerNavn</td>
+                    <td>@vagt.OpgaveBeskrivelse</td>
+                    <!--<td>@vagt.BrugerNavn</td>-->
                 </tr>
             }
 
@@ -122,17 +122,8 @@ Skriv dit bruger navn herunder:
 
 @code {
     const string noteKey = "note";
-    string brugerNavn = "brugerNavn";
-    public async void UpdateLocalStorage()
-    {
-        await localStore.SetItemAsync(noteKey, brugerNavn);
-    }
+    string brugerId = "";
 
-    public async void ClearLocalStorage()
-    {
-        brugerNavn = "brugerNavn";
-        await localStore.ClearAsync();
-    }
 
     private List<Vagt> Vagter = new List<Vagt>();
     private List<Vagt> BrugerVagter = new List<Vagt>();
@@ -146,9 +137,9 @@ Skriv dit bruger navn herunder:
 
     protected override async Task OnInitializedAsync()
     {
-        brugerNavn = await localStore.GetItemAsync<string>(noteKey);
+        brugerId = await localStore.GetItemAsync<string>(noteKey);
         Vagter = (await FrivilligService.GetLedigeVagter()).ToList();
-        BrugerVagter = (await FrivilligService.GetMineVagter(brugerNavn)).ToList();
+        BrugerVagter = (await FrivilligService.GetMineVagter(brugerId)).ToList();
     }
 
 

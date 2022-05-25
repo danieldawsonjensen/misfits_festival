@@ -13,7 +13,7 @@ namespace misfits_festival.Shared.Models
 
         public int OpgaveId { get; set; }
 
-        // public string OpgaveBeskrivelse { get; set; }
+        public string OpgaveBeskrivelse { get; set; }
 
         // public string Status { get; set; }
 

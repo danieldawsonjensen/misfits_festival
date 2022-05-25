@@ -21,9 +21,9 @@ namespace misfits_festival.Server.Models
 
 		void DeleteVagt(int id); // metode til delete af en vagt
 
-		Task<IEnumerable<Bruger>> GetAlleFrivillige(); // task til at hente alle frivillige i systemet
-
 		void AddOpgave(Opgave opgave); // metode til post af en ny opgave
+
+		Task<IEnumerable<Bruger>> GetAlleFrivillige(); // task til at hente alle frivillige i systemet
 
 	}
 }
