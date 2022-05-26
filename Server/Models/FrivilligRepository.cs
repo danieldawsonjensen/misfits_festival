@@ -27,7 +27,7 @@ namespace misfits_festival.Server.Models
                      FROM vagt v
                      JOIN opgave o USING(opgave_id)
                      LEFT JOIN bruger b USING(bruger_id)
-                     WHERE bruger_email = 'daniel@frivillig.com'; ";
+                     WHERE bruger_email = '{brugerEmail}'; ";
 
             Console.WriteLine("sql:" + sql);
 
@@ -44,7 +44,7 @@ namespace misfits_festival.Server.Models
         public async Task<IEnumerable<Vagt>> GetLedigeVagter()
         {
             sql = @"SELECT * FROM vagt_opgave
-            WHERE bruger_navn IS NULL";
+            WHERE bruger_email IS NULL";
 
             Console.WriteLine("getLedigeVagter frivilligRepository");
 
