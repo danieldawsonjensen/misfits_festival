@@ -11,11 +11,14 @@ using Microsoft.Net.Http;
 
 namespace misfits_festival.Server.Models
 {
-	public interface IKoordinatorRepository
+	public interface IOpgaveRepository
 	{
-		
+		Task<IEnumerable<Opgave>> GetAlleOpgaver();
 
-		
+		void AddOpgave(Opgave opgave); // metode til post af en ny opgave
 
+		void UpdateOpgave(Opgave opgave);
+
+		void DeleteOpgave(int opgaveId);
 	}
 }

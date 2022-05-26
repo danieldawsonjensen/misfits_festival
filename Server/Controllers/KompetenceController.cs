@@ -13,12 +13,12 @@ using Microsoft.Net.Http;
 namespace misfits_festival.Server.Controllers
 {
 	[ApiController]
-	[Route("api/frivillig")]
+	[Route("api/kompetence")]
 
 	public class FrivilligController : ControllerBase // nedarvning fra ControllerBase er meget vigtig
 	{
 		private readonly IFrivilligRepository Frivillig = new FrivilligRepository(); // definerer en ny instans af interfacet med
-																				  // metoderne til CRUD funktionalitet
+																					 // metoderne til CRUD funktionalitet
 
 		public FrivilligController(IFrivilligRepository frivilligRepository)
 		{
@@ -58,19 +58,19 @@ namespace misfits_festival.Server.Controllers
 			Frivillig.AddBruger(bruger);
 		}
 
-        [HttpGet("getkompetencer")]
+		[HttpGet("getkompetencer")]
 		public async Task<IEnumerable<Kompetence>> GetAlleKompetencer()
-        {
-            Console.WriteLine("getAlleKompetencer - frivilligController");
+		{
+			Console.WriteLine("getAlleKompetencer - frivilligController");
 			return await Frivillig.GetAlleKompetencer();
-        }
+		}
 
-        [HttpPut("updatekompetencer")]
+		[HttpPut("updatekompetencer")]
 		public void UpdateKompetencer(int brugerId, int kompetenceId)
-        {
-            Console.WriteLine("updateKompetencer - frivilligController");
+		{
+			Console.WriteLine("updateKompetencer - frivilligController");
 			Frivillig.UpdateKompetencer(brugerId, kompetenceId);
-        }
+		}
 
 	}
 }

@@ -28,48 +28,6 @@ namespace misfits_festival.Server.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Vagt>> GetAlleVagter() // http get til samtlige vagter, både bookede og ledige
-        {
-            Console.WriteLine("getAlleVagter - koordinatorController");
-            return await Vagter.GetAlleVagter();
-        }
-
-
-        [HttpPost("addvagt")]
-        public void AddVagt(Vagt vagt) // http post til at tilføje en ny vagt til tabellen
-        {
-            Console.WriteLine("addVagt - koordinatorController");
-            Vagter.AddVagt(vagt);
-        }
-
-        [HttpPut("updatevagt")]
-        public void UpdateVagt(int vagtId, Vagt vagt) // http post til opdatering af en vagt, evt ændring af tid, opgave etc
-        {
-            Console.WriteLine("updateVagt - koordinatorController");
-            Vagter.UpdateVagt(vagtId, vagt);
-        }
-
-        [HttpDelete]
-        public void DeleteVagt(int vagtId) // http delete til at slette en vagt fra tabellen
-        {
-            Console.WriteLine("deleteVagt - koordinatorController");
-            Vagter.DeleteVagt(vagtId);
-        }
-
-        [HttpPost("postopgave")]
-        public void AddOpgave(Opgave opgave) // http post til at tilføje en ny opgave
-        {
-            Console.WriteLine("addOpgave - koordinatorController");
-            Vagter.AddOpgave(opgave);
-        }
-
-        [HttpGet("opgaver")]
-        public async Task<IEnumerable<Opgave>> GetAlleOpgaver()
-        {
-            Console.WriteLine("getAlleOpgaver - koordinatorController");
-            return await Vagter.GetAlleOpgaver();
-        }
 
         [HttpGet("getfrivillige")]
         public async Task<IEnumerable<Bruger>> GetAlleFrivillige() // http get på alle frivillige i systemet

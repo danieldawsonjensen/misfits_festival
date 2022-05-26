@@ -11,7 +11,7 @@ namespace misfits_festival.Shared.Models
         public string TelefonNummer { get; set; }
         public int RolleId { get; set; }
 
-        public string Kompetencer { get; set; }
+        public string? Kompetencer { get; set; }
 
         // public DateOnly FødselsDato { get; set; } // alder skal være 16+
 

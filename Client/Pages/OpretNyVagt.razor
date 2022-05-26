@@ -124,9 +124,9 @@
     }
 
     private async Task DeleteOpgaveHandler()
-        {
-
-        }
+    {
+        
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -136,14 +136,15 @@
     private async Task VælgOpgave(Opgave opgave)
     {
         // Vagt.OpgaveId = opgave.OpgaveId;
-        Vagt.OpgaveId = opgave.OpgaveId;
+        Vagt.OpgaveId = opgave.OpgaveId; // fortæller hvilket specifikt id der skal vælges
         Vagt.OpgaveBeskrivelse = opgave.OpgaveBeskrivelse;
     }
 
     /*
     private async Task SletOpgave(Opgave opgave)
     {
-        Opgaver.Remove(opgave);
+        evt benyt samme teknik som i VælgOpgave, hvor man egentligt trykker på en speficik OpgaveBeksrivelse
+        men faktisk vælger et OpgaveId
     }
     */
 }
