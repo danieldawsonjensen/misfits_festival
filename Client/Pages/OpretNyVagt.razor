@@ -43,13 +43,6 @@
                 <InputText id="Område" @bind-Value="Vagt.Område" class="form-control" />
             </div>
 
-
-            <div class="col-md-6 mb-3">
-                <label for="OpgaveId">Opgave ID</label>
-                <InputNumber id="OpgaveId" @bind-Value="Vagt.OpgaveId" class="form-control" />
-            </div>
-
-
             <br />
 
             <div class="col-md-6 mb-3">
@@ -81,20 +74,22 @@
             }
         </table>
 
-        <EditForm EditContext="@EditContext" class="row p-3">
+        <EditForm EditContext="@EditOpgaveContext" class="row p-3">
             <div class="col-md-12 mb-3">
-                <label for="Dato">Dato</label>
-                <InputDate id="Dato" @bind-Value="Opgave.OpgaveBeskrivelse" class="form-control" />
+                <label for="OpgaveAdd">Opgave beskrivelse</label>
+                <InputDate id="OpgaveAdd" @bind-Value="Opgave.OpgaveBeskrivelse" class="form-control" />
             </div>
 
             <button class="btn btn-primary" @onclick="AddOpgaveHandler">Tilføj ny opgave</button>
         </EditForm>
-</div>
+
+    </div>
 
 </div>
 
 @code {
     private EditContext EditContext;
+    private EditContext EditOpgaveContext;
     private Vagt Vagt = new Vagt();
     private List<Opgave> Opgaver = new List<Opgave>();
     private Opgave Opgave = new Opgave();
@@ -108,6 +103,7 @@
     protected override void OnInitialized()
     {
         EditContext = new EditContext(Vagt);
+        EditOpgaveContext = new EditContext(Opgave);
     }
 
     private async Task AddVagtHandler()
@@ -123,7 +119,7 @@
         ErrorCode = await KoordinatorService.AddOpgave(Opgave);
         Console.WriteLine("Opgave tilføjet: " + ErrorCode);
         Opgave = new Opgave();
-        EditContext = new EditContext(Opgave);
+        EditOpgaveContext = new EditContext(Opgave);
     }
 
     protected override async Task OnInitializedAsync()

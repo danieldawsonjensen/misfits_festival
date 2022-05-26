@@ -113,7 +113,7 @@
 
     @code {
         const string noteKey = "note";
-        string brugerEmail = "daniel@frivillig.com";
+        string brugerEmail = "";
 
         private List<Vagt> Vagter = new List<Vagt>();
         private List<Vagt> BrugerVagter = new List<Vagt>();
@@ -126,7 +126,7 @@
 
         protected override async Task OnInitializedAsync()
         {
-            // brugerEmail = await localStore.GetItemAsync<string>(noteKey);
+            brugerEmail = await localStore.GetItemAsync<string>(noteKey);
             Vagter = (await FrivilligService.GetLedigeVagter()).ToList();
             // int mitBrugerId = int.Parse(brugerId);
             BrugerVagter = (await FrivilligService.GetMineVagter(brugerEmail)).ToList();

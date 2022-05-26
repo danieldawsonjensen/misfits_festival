@@ -11,7 +11,7 @@ namespace misfits_festival.Shared.Models
         public int Pause { get; set; }
         public string Område { get; set; }
 
-        public int OpgaveId { get; set; }
+        public int? OpgaveId { get; set; }
 
         public string OpgaveBeskrivelse { get; set; }
 
