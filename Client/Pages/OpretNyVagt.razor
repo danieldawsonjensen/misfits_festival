@@ -12,11 +12,17 @@
 <h3>Opret ny vagt</h3>
 
 <div class="parent">
-
     <div class="opretvagt">
         <EditForm EditContext="@EditContext" class="row p-3">
 
-            <div class="col-md-12 mb-3">
+            <div class="col-md-6 mb-3">
+                <label for="OpgaveBeskrivelse">Opgave Beskrivelse</label>
+                <InputText id="OpgaveBeskrivelse" @bind-Value="Vagt.OpgaveBeskrivelse" class="form-control" />
+            </div>
+
+            <br />
+
+            <div class="col-md-6 mb-3">
                 <label for="Dato">Dato</label>
                 <InputDate id="Dato" @bind-Value="Vagt.Dato" class="form-control" />
             </div>
@@ -45,20 +51,14 @@
 
             <br />
 
-            <div class="col-md-6 mb-3">
-                <label for="OpgaveBeskrivelse">Opgave Beskrivelse</label>
-                <InputText id="OpgaveBeskrivelse" @bind-Value="Vagt.OpgaveBeskrivelse" class="form-control" />
-            </div>
-
-            <br />
-
             <div class="col-12 mb-3">
                 <button class="btn btn-primary" @onclick="AddVagtHandler">Tilføj ny vagt</button>
             </div>
 
+
+
         </EditForm>
     </div>
-
     <div class="opgaver">
 
         <table>
@@ -71,17 +71,18 @@
                     <td>@opgave.OpgaveBeskrivelse</td>
                     <button class="btn btn-success" @onclick="() => VælgOpgave(opgave)">Vælg denne opgave</button>
                 </tr>
+
             }
         </table>
 
-        <EditForm EditContext="@EditOpgaveContext" class="row p-3">
-            <div class="col-md-12 mb-3">
-                <label for="OpgaveAdd">Opgave beskrivelse</label>
-                <InputDate id="OpgaveAdd" @bind-Value="Opgave.OpgaveBeskrivelse" class="form-control" />
-            </div>
+        <br />
 
-            <button class="btn btn-primary" @onclick="AddOpgaveHandler">Tilføj ny opgave</button>
-        </EditForm>
+        <div class="col-md-12 mb-3">
+            <label for="OpgaveAdd">Opgave beskrivelse</label>
+            <input id="OpgaveAdd" @bind-value="Opgave.OpgaveBeskrivelse" class="form-control" />
+        </div>
+
+        <button class="btn btn-primary" @onclick="AddOpgaveHandler">Tilføj ny opgave</button>
 
     </div>
 
@@ -89,7 +90,7 @@
 
 @code {
     private EditContext EditContext;
-    private EditContext EditOpgaveContext;
+    // private EditContext EditOpgaveContext;
     private Vagt Vagt = new Vagt();
     private List<Opgave> Opgaver = new List<Opgave>();
     private Opgave Opgave = new Opgave();
@@ -103,7 +104,7 @@
     protected override void OnInitialized()
     {
         EditContext = new EditContext(Vagt);
-        EditOpgaveContext = new EditContext(Opgave);
+        // EditOpgaveContext = new EditContext(Opgave);
     }
 
     private async Task AddVagtHandler()
@@ -119,8 +120,13 @@
         ErrorCode = await KoordinatorService.AddOpgave(Opgave);
         Console.WriteLine("Opgave tilføjet: " + ErrorCode);
         Opgave = new Opgave();
-        EditOpgaveContext = new EditContext(Opgave);
+        // EditOpgaveContext = new EditContext(Opgave);
     }
+
+    private async Task DeleteOpgaveHandler()
+        {
+
+        }
 
     protected override async Task OnInitializedAsync()
     {
@@ -133,4 +139,11 @@
         Vagt.OpgaveId = opgave.OpgaveId;
         Vagt.OpgaveBeskrivelse = opgave.OpgaveBeskrivelse;
     }
+
+    /*
+    private async Task SletOpgave(Opgave opgave)
+    {
+        Opgaver.Remove(opgave);
+    }
+    */
 }
