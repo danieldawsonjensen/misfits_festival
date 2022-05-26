@@ -32,9 +32,9 @@ namespace misfits_festival.Client.Services
             return (int)responseStatusCode;
         }
 
-        public async Task<int> DeleteOpgave(int opgaveId)
+        public async Task<int> DeleteOpgave(Opgave opgave)
         {
-            var response = await httpClient.PostAsJsonAsync("api/opgaver", opgaveId); // hvad skal der stå her?
+            var response = await httpClient.DeleteAsync("api/opgaver"); // hvad skal der stå her?
                                                                                     // skal der står DeleteAsync?
             var responseStatusCode = response.StatusCode;
             return (int)responseStatusCode;

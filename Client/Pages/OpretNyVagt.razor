@@ -70,6 +70,7 @@
                 <tr>
                     <td>@opgave.OpgaveBeskrivelse</td>
                     <button class="btn btn-success" @onclick="() => VælgOpgave(opgave)">Vælg denne opgave</button>
+                    <button class="btn btn-danger" @onclick="() => SletOpgave(opgave)">Slet denne opgave</button>
                 </tr>
 
             }
@@ -78,11 +79,16 @@
         <br />
 
         <div class="col-md-12 mb-3">
-            <label for="OpgaveAdd">Opgave beskrivelse</label>
+            <label for="OpgaveAdd">Ny opgave</label>
             <input id="OpgaveAdd" @bind-value="Opgave.OpgaveBeskrivelse" class="form-control" />
+            <button class="btn btn-primary" @onclick="AddOpgaveHandler">Tilføj denne opgave</button>
         </div>
 
-        <button class="btn btn-primary" @onclick="AddOpgaveHandler">Tilføj ny opgave</button>
+        <div class="col-md-12 mb-3">
+            <label for="OpgaveSlet">Slet opgave</label>
+            <input id="OpgaveSlet" @bind-value="SlettetOpgave.OpgaveBeskrivelse" class="form-control" />
+            <button class="btn btn-primary" @onclick="DeleteOpgaveHandler">Slet denne opgave</button>
+        </div>
 
     </div>
 
@@ -94,6 +100,7 @@
     private Vagt Vagt = new Vagt();
     private List<Opgave> Opgaver = new List<Opgave>();
     private Opgave Opgave = new Opgave();
+    private Opgave SlettetOpgave = new Opgave();
 
     private int ErrorCode { get; set; }
 
@@ -126,10 +133,16 @@
         // EditOpgaveContext = new EditContext(Opgave);
     }
 
+
     private async Task DeleteOpgaveHandler()
     {
-
+        // evt benyt samme teknik som i VælgOpgave, hvor man egentligt trykker på en speficik OpgaveBeksrivelse
+        // men faktisk vælger et OpgaveId
+        ErrorCode = await OpgaveService.DeleteOpgave(Opgave);
+        Console.WriteLine("Opgave slettet: " + ErrorCode);
+        Opgave = new Opgave();
     }
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -143,11 +156,11 @@
         Vagt.OpgaveBeskrivelse = opgave.OpgaveBeskrivelse;
     }
 
-    /*
     private async Task SletOpgave(Opgave opgave)
     {
-        evt benyt samme teknik som i VælgOpgave, hvor man egentligt trykker på en speficik OpgaveBeksrivelse
-        men faktisk vælger et OpgaveId
+        // Vagt.OpgaveId = opgave.OpgaveId;
+        SlettetOpgave.OpgaveId = opgave.OpgaveId; // fortæller hvilket specifikt id der skal vælges
+        SlettetOpgave.OpgaveBeskrivelse = opgave.OpgaveBeskrivelse;
     }
-    */
+
 }
