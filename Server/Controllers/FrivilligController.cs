@@ -65,7 +65,7 @@ namespace misfits_festival.Server.Controllers
 			return await Frivillig.GetAlleKompetencer();
         }
 
-        [HttpPost("updatekompetencer")]
+        [HttpPut("updatekompetencer")]
 		public async void UpdateKompetencer(int brugerId, int kompetenceId)
         {
             Console.WriteLine("updateKompetencer - frivilligController");

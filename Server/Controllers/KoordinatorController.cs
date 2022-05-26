@@ -43,7 +43,7 @@ namespace misfits_festival.Server.Controllers
             Vagter.AddVagt(vagt);
         }
 
-        [HttpPost("updatevagt")]
+        [HttpPut("updatevagt")]
         public void UpdateVagt(int vagtId, Vagt vagt) // http post til opdatering af en vagt, evt ændring af tid, opgave etc
         {
             Console.WriteLine("updateVagt - koordinatorController");

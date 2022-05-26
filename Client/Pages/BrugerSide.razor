@@ -13,9 +13,7 @@
 
 <h3>Bruger side</h3>
 
-    Skriv dit bruger id herunder:
-<br />
-<input @bind="brugerId" />
+    Dit bruger id er: @brugerId
 
 <div class="parent">
 
@@ -36,7 +34,7 @@
             @foreach (var vagt in Vagter)
             {
                 <tr>
-                    <td>@vagt.Dato</td>
+                    <td>@vagt.Dato.ToShortDateString()</td>
                     <td>@vagt.VagtStart</td>
                     <td>@vagt.VagtSlut</td>
                     <td>@vagt.Pause</td>
@@ -68,7 +66,7 @@
             {
                 <tr>
                     <td>@vagt.VagtId</td>
-                    <td>@vagt.Dato</td>
+                    <td>@vagt.Dato.ToShortDateString()</td>
                     <td>@vagt.VagtStart</td>
                     <td>@vagt.VagtSlut</td>
                     <td>@vagt.Pause</td>
@@ -130,7 +128,7 @@
         brugerId = await localStore.GetItemAsync<string>(noteKey);
         Vagter = (await FrivilligService.GetLedigeVagter()).ToList();
         // int mitBrugerId = int.Parse(brugerId);
-        BrugerVagter = (await FrivilligService.GetMineVagter(int.Parse(brugerId))).ToList();
+        BrugerVagter = (await FrivilligService.GetMineVagter(int.Parse((brugerId)))).ToList();
     }
 
 
