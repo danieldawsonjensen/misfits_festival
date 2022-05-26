@@ -15,121 +15,123 @@
 
     Dit bruger id er: @brugerId
 
-<div class="parent">
+    <div class="parent">
 
-    <div class="vagter">
-        <!--<div class="ledigevagter">-->
+        <div class="vagter">
+            <!--<div class="ledigevagter">-->
 
-        <h1>Ledige vagter</h1>
+            <h1>Ledige vagter</h1>
 
-        <table>
-            <tr>
-                <th>Dato</th>
-                <th>Vagt start</th>
-                <th>Vagt slut</th>
-                <th>Pause</th>
-                <th>Område</th>
-                <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
-            </tr>
-            @foreach (var vagt in Vagter)
-            {
+            <table>
                 <tr>
-                    <td>@vagt.Dato.ToShortDateString()</td>
-                    <td>@vagt.VagtStart</td>
-                    <td>@vagt.VagtSlut</td>
-                    <td>@vagt.Pause</td>
-                    <td>@vagt.Område</td>
-                    <td>@vagt.OpgaveBeskrivelse</td>
+                    <th>Dato</th>
+                    <th>Vagt start</th>
+                    <th>Vagt slut</th>
+                    <th>Pause</th>
+                    <th>Område</th>
+                    <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
                 </tr>
-            }
-        </table>
-        <!--</div>-->
+                @foreach (var vagt in Vagter)
+                {
+                    <tr>
+                        <td>@vagt.Dato.ToShortDateString()</td>
+                        <td>@vagt.VagtStart</td>
+                        <td>@vagt.VagtSlut</td>
+                        <td>@vagt.Pause</td>
+                        <td>@vagt.Område</td>
+                        <td>@vagt.OpgaveBeskrivelse</td>
+                    </tr>
+                }
+            </table>
+            <!--</div>-->
+
+            <br />
+
+            <!--<div class="brugervagter">-->
+
+            <h1>Mine vagter</h1>
+
+            <table>
+
+                <tr>
+                    <th>Vagt ID</th>
+                    <th>Dato</th>
+                    <th>Vagt start</th>
+                    <th>Vagt slut</th>
+                    <th>Pause</th>
+                    <th>Område</th>
+                    <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
+                    <th>Bruger navn</th>
+                </tr>
+                @foreach (var vagt in BrugerVagter)
+                {
+                    <tr>
+                        <td>@vagt.VagtId</td>
+                        <td>@vagt.Dato.ToShortDateString()</td>
+                        <td>@vagt.VagtStart</td>
+                        <td>@vagt.VagtSlut</td>
+                        <td>@vagt.Pause</td>
+                        <td>@vagt.Område</td>
+                        <td>@vagt.OpgaveBeskrivelse</td>
+                        <td>@vagt.BrugerNavn</td>
+                    </tr>
+                }
+
+            </table>
+
+
+        </div>
 
         <br />
+        <br />
 
-        <!--<div class="brugervagter">-->
+        <div class="kompetencer">
 
-        <h1>Mine vagter</h1>
+            <table>
 
-        <table>
-
-            <tr>
-                <th>Vagt ID</th>
-                <th>Dato</th>
-                <th>Vagt start</th>
-                <th>Vagt slut</th>
-                <th>Pause</th>
-                <th>Område</th>
-                <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
-            </tr>
-            @foreach (var vagt in BrugerVagter)
-            {
                 <tr>
-                    <td>@vagt.VagtId</td>
-                    <td>@vagt.Dato.ToShortDateString()</td>
-                    <td>@vagt.VagtStart</td>
-                    <td>@vagt.VagtSlut</td>
-                    <td>@vagt.Pause</td>
-                    <td>@vagt.Område</td>
-                    <td>@vagt.OpgaveBeskrivelse</td>
+                    <th>Kompetencer</th>
                 </tr>
-            }
+                <tr>
+                    <td>Førstehjælpskursus</td>
+                </tr>
+                <tr>
+                    <td>Kørekort</td>
+                </tr>
+                <tr>
+                    <td>Køkkencertifikat</td>
+                </tr>
 
-        </table>
+            </table>
 
+        </div>
 
-    </div>
-
-    <br />
-    <br />
-
-    <div class="kompetencer">
-
-        <table>
-
-            <tr>
-                <th>Kompetencer</th>
-            </tr>
-            <tr>
-                <td>Førstehjælpskursus</td>
-            </tr>
-            <tr>
-                <td>Kørekort</td>
-            </tr>
-            <tr>
-                <td>Køkkencertifikat</td>
-            </tr>
-
-        </table>
+        <!--</div>-->
 
     </div>
 
-    <!--</div>-->
 
-</div>
+    @code {
+        const string noteKey = "note";
+        int brugerId = 0;
 
+        private List<Vagt> Vagter = new List<Vagt>();
+        private List<Vagt> BrugerVagter = new List<Vagt>();
 
-@code {
-    const string noteKey = "note";
-    string brugerId = "";
-
-    private List<Vagt> Vagter = new List<Vagt>();
-    private List<Vagt> BrugerVagter = new List<Vagt>();
-
-    private Vagt Vagt = new Vagt();
+        private Vagt Vagt = new Vagt();
 
 
-    [Inject]
-    public IFrivilligService FrivilligService { get; set; } // laver en instans af vores interface,
-                                                            // nu kan metoderne i interfacet bruges
+        [Inject]
+        public IFrivilligService FrivilligService { get; set; } // laver en instans af vores interface,
+                                                                // nu kan metoderne i interfacet bruges
 
-    protected override async Task OnInitializedAsync()
-    {
-        brugerId = await localStore.GetItemAsync<string>(noteKey);
-        Vagter = (await FrivilligService.GetLedigeVagter()).ToList();
-        // int mitBrugerId = int.Parse(brugerId);
-        BrugerVagter = (await FrivilligService.GetMineVagter(int.Parse((brugerId)))).ToList();
+        protected override async Task OnInitializedAsync()
+        {
+            brugerId = (await localStore.GetItemAsync<int>(noteKey));
+            Vagter = (await FrivilligService.GetLedigeVagter()).ToList();
+            // int mitBrugerId = int.Parse(brugerId);
+            BrugerVagter = (await FrivilligService.GetMineVagter((brugerId))).ToList();
+        }
+
+
     }
-
-
-}

@@ -14,5 +14,7 @@ namespace misfits_festival.Client.Services
 		Task<int> AddBruger(Bruger bruger);
 
         Task<Kompetence[]?> GetAlleKompetencer();
+
+		Task<int> UpdateKompetencer(int brugerId, int kompetenceId);
 	}
 }

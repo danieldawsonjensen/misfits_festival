@@ -28,7 +28,7 @@
 <br />
 
 
-@if (brugerId != "2")
+@if (brugerId != 2)
 {
     <h1>Du har ikke adgang til denne side</h1>
 }
@@ -92,7 +92,7 @@ else
     private Bruger NyBruger = new Bruger(); // definerer en ny bruger
 
     const string noteKey = "note";
-    string brugerId = "";
+    int brugerId = 0;
     public async void UpdateLocalStorage()
     {
         await localStore.SetItemAsync(noteKey, brugerId);
@@ -100,7 +100,7 @@ else
 
     public async void ClearLocalStorage()
     {
-        brugerId = "";
+        brugerId = 0;
         await localStore.ClearAsync();
     }
 
@@ -116,7 +116,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        brugerId = await localStore.GetItemAsync<string>(noteKey);
+        brugerId = await localStore.GetItemAsync<int>(noteKey);
         Vagter = (await KoordinatorService.GetAlleVagter()).ToList();
         Frivillige = (await KoordinatorService.GetAlleFrivillige()).ToList(); // populater vores liste af brugere v hjælp af,
                                                                               // getAlleFrivillige() metoden + toList

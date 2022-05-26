@@ -40,6 +40,13 @@ namespace misfits_festival.Client.Services
             return result;
         }
 
+        public async Task<int> UpdateKompetencer(int brugerId, int kompetenceId)
+        {
+            var response = await httpClient.PutAsJsonAsync("api/frivillig/updatekompetencer", (brugerId, kompetenceId)); // er dette rigtigt?
+            var responseStatusCode = response.StatusCode;
+            return (int)responseStatusCode;
+        }
+
 
         public FrivilligService(HttpClient httpClient)
         {
