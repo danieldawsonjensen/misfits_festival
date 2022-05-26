@@ -54,12 +54,17 @@ namespace misfits_festival.Client.Services
             return result;
         }
 
-        // muligvis skal man ikke selv kunne vælge en vagt, men koordinatoren skal derimod booke dig ind..
+        // muligvis skal man ikke selv kunne vælge en vagt, men koordinatoren skal derimod booke dig ind..?
         public async Task<int> BookVagt(Vagt vagt)
         {
             var response = await httpClient.PutAsJsonAsync("api/vagter/bookvagt", vagt); // httpPut fra api'en
             var responseStatusCode = response.StatusCode;
             return (int)responseStatusCode;
+        }
+
+        public VagtService(HttpClient httpClient)
+        {
+            this.httpClient = httpClient;
         }
     }
 }

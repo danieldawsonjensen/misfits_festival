@@ -18,11 +18,12 @@ namespace misfits_festival.Server.Models
 
 
 		// frivillig funktioner
-		void AddBruger(Bruger bruger);
+		void AddBruger(Bruger bruger); // kan evt være en koordinators job..?
 
 		void UpdateBruger(Bruger bruger);
 
 		void DeleteBruger(string brugerEmail); // ?? hvordan skal denne implementeres og er den nødvendig?
+											   // og skal det måske være noget koordinatoren kan gøre?
 
 		Task<IEnumerable<Kompetence>> GetAlleKompetencer();
 	}

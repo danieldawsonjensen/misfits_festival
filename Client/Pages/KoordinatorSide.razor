@@ -40,6 +40,7 @@ else
     <div>
         <table class="vagter">
             <tr>
+                <th>Vagt ID</th>
                 <th>Dato</th>
                 <th>Vagt start</th>
                 <th>Vagt slut</th>
@@ -51,6 +52,7 @@ else
             @foreach (var vagt in Vagter)
             {
                 <tr>
+                    <td>@vagt.VagtId</td>
                     <td>@vagt.Dato.ToShortDateString()</td>
                     <td>@vagt.VagtStart</td>
                     <td>@vagt.VagtSlut</td>

@@ -62,7 +62,7 @@ namespace misfits_festival.Server.Models
             }
         }
 
-        public async void DeleteBruger(int brugerEmail)
+        public async void DeleteBruger(string brugerEmail)
         {
             sql = $@"DELETE FROM bruger
                      WHERE brugerEmail = '{brugerEmail}'";
