@@ -27,7 +27,7 @@ namespace misfits_festival.Server.Models
                      FROM vagt v
                      JOIN opgave o USING(opgave_id)
                      LEFT JOIN bruger b USING(bruger_id)
-                     WHERE bruger_email = '{brugerEmail}'; ";
+                     WHERE bruger_email = 'daniel@frivillig.com'; ";
 
             Console.WriteLine("sql:" + sql);
 

@@ -1,4 +1,13 @@
-﻿@inject Blazored.LocalStorage.ILocalStorageService localStore
+﻿@using System;
+@using System.Net;
+@using misfits_festival.Shared.Models;
+@using Dapper;
+@using Npgsql;
+@using misfits_festival.Client.Services;
+@using misfits_festival.Client.Pages;
+@using System.Net.Http;
+
+@inject Blazored.LocalStorage.ILocalStorageService localStore
 @page "/"
 
 <PageTitle>Home page</PageTitle>
@@ -24,6 +33,7 @@
 @code{
     const string noteKey = "note";
     string brugerEmail = "";
+
     public async void UpdateLocalStorage()
     {
         await localStore.SetItemAsync(noteKey, brugerEmail);
@@ -39,4 +49,4 @@
     {
         brugerEmail = await localStore.GetItemAsync<string>(noteKey);
     }
-    }
+}
