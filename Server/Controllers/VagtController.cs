@@ -29,6 +29,7 @@ namespace misfits_festival.Server.Controllers
 			}
 		}
 
+		// koordinator funktioner
 		[HttpGet]
 		public async Task<IEnumerable<Vagt>> GetAlleVagter() // http get til samtlige vagter, både bookede og ledige
 		{

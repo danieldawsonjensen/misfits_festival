@@ -102,15 +102,17 @@ else
 
     private List<Bruger> Frivillige = new List<Bruger>(); // definerer en ny liste af brugere
 
+    // interfaces der tages i brug i dette component
     [Inject]
-    public IKoordinatorService KoordinatorService { get; set; } // laver en instans af vores interface,
-                                                                // nu kan metoderne i interfacet bruges
+    public IVagtService VagtService { get; set; }
+    [Inject]
+    public IBrugerService BrugerService { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         brugerEmail = await localStore.GetItemAsync<string>(noteKey);
-        Vagter = (await KoordinatorService.GetAlleVagter()).ToList();
-        Frivillige = (await KoordinatorService.GetAlleFrivillige()).ToList(); // populater vores liste af brugere v hjælp af,
+        Vagter = (await VagtService.GetAlleVagter()).ToList();
+        Frivillige = (await BrugerService.GetAlleFrivillige()).ToList(); // populater vores liste af brugere v hjælp af,
                                                                               // getAlleFrivillige() metoden + toList
     }
 

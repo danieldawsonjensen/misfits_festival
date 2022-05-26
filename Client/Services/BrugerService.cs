@@ -4,7 +4,7 @@ using misfits_festival.Shared.Models;
 
 namespace misfits_festival.Client.Services
 {
-    public class FrivilligService : IFrivilligService
+    public class BrugerService : IBrugerService
     {
         private readonly HttpClient httpClient;
 

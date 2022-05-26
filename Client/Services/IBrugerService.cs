@@ -3,7 +3,7 @@ using misfits_festival.Shared.Models;
 
 namespace misfits_festival.Client.Services
 {
-	public interface IFrivilligService
+	public interface IBrugerService
 	{
 		// koordinator funktioner
 		Task<Bruger[]?> GetAlleFrivillige(); // metode til get af alle frivillige

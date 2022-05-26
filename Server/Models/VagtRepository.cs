@@ -119,8 +119,8 @@ namespace misfits_festival.Server.Models
         {
             sql =
                 $@"UPDATE vagt
-                SET bruger_id = {brugerId}
-                WHERE vagt_id = {vagtId}";
+                SET bruger_email = '{vagt.BrugerEmail}'
+                WHERE vagt_id = {vagt.VagtId}";
 
             Console.WriteLine("bookVagt vagtRepository");
 

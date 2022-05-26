@@ -97,8 +97,11 @@
 
     private int ErrorCode { get; set; }
 
+    // interfaces der tages i brug i dette component
     [Inject]
-    public IKoordinatorService KoordinatorService { get; set; }
+    public IVagtService VagtService { get; set; }
+    [Inject]
+    public IOpgaveService OpgaveService { get; set; }
 
 
     protected override void OnInitialized()
@@ -109,7 +112,7 @@
 
     private async Task AddVagtHandler()
     {
-        ErrorCode = await KoordinatorService.AddVagt(Vagt);
+        ErrorCode = await VagtService.AddVagt(Vagt);
         Console.WriteLine("Vagt tilføjet: " + ErrorCode);
         Vagt = new Vagt();
         EditContext = new EditContext(Vagt);
@@ -117,7 +120,7 @@
 
     private async Task AddOpgaveHandler()
     {
-        ErrorCode = await KoordinatorService.AddOpgave(Opgave);
+        ErrorCode = await OpgaveService.AddOpgave(Opgave);
         Console.WriteLine("Opgave tilføjet: " + ErrorCode);
         Opgave = new Opgave();
         // EditOpgaveContext = new EditContext(Opgave);
@@ -125,12 +128,12 @@
 
     private async Task DeleteOpgaveHandler()
     {
-        
+
     }
 
     protected override async Task OnInitializedAsync()
     {
-        Opgaver = (await KoordinatorService.GetAlleOpgaver()).ToList();
+        Opgaver = (await OpgaveService.GetAlleOpgaver()).ToList();
     }
 
     private async Task VælgOpgave(Opgave opgave)

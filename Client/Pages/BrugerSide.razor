@@ -121,15 +121,17 @@
         private Vagt Vagt = new Vagt();
 
         [Inject]
-        public IFrivilligService FrivilligService { get; set; } // laver en instans af vores interface,
+        public IBrugerService BrugerService { get; set; } // laver en instans af vores interface
 
+        [Inject]
+        public IVagtService VagtService { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             brugerEmail = await localStore.GetItemAsync<string>(noteKey);
-            Vagter = (await FrivilligService.GetLedigeVagter()).ToList();
+            Vagter = (await VagtService.GetLedigeVagter()).ToList();
             // int mitBrugerId = int.Parse(brugerId);
-            BrugerVagter = (await FrivilligService.GetMineVagter(brugerEmail)).ToList();
+            BrugerVagter = (await VagtService.GetMineVagter(brugerEmail)).ToList();
         }
 
 

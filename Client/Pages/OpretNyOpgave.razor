@@ -35,8 +35,9 @@
 
     private int ErrorCode { get; set; }
 
+    // interfaces der tages i brug i dette component
     [Inject]
-    public IKoordinatorService KoordinatorService { get; set; }
+    public IOpgaveService OpgaveService { get; set; }
 
 
     protected override void OnInitialized()
@@ -46,7 +47,7 @@
 
     private async Task AddOpgaveHandler()
     {
-        ErrorCode = await KoordinatorService.AddOpgave(Opgave);
+        ErrorCode = await OpgaveService.AddOpgave(Opgave);
         Console.WriteLine("Vagt tilføjet: " + ErrorCode);
         Opgave = new Opgave();
         EditContext = new EditContext(Opgave);

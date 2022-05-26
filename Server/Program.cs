@@ -8,8 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-builder.Services.AddScoped<IKoordinatorRepository, KoordinatorRepository>();
-builder.Services.AddScoped<IFrivilligRepository, FrivilligRepository>();
+builder.Services.AddScoped<IBrugerRepository, BrugerRepository>();
+builder.Services.AddScoped<IOpgaveRepository, OpgaveRepository>();
+builder.Services.AddScoped<IVagtRepository, VagtRepository>();
 
 var app = builder.Build();
 
