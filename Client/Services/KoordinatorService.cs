@@ -46,6 +46,12 @@ namespace misfits_festival.Client.Services
             return (int)responseStatusCode;
         }
 
+        public Task<Opgave[]?> GetAlleOpgaver()
+        {
+            var result = httpClient.GetFromJsonAsync<Opgave[]>("api/koordinator/opgaver");
+            return result;
+        }
+
         public Task<Bruger[]?> GetAlleFrivillige()
         {
             var result = httpClient.GetFromJsonAsync<Bruger[]>("api/koordinator/getfrivillige");

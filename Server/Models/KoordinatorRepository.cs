@@ -35,8 +35,8 @@ namespace misfits_festival.Server.Models
         public async void AddVagt(Vagt vagt)
         {
             // sql = $@"CALL opret_vagt ({vagt.VagtId}, {vagt.Dato}, {vagt.VagtStart}, {vagt.VagtSlut}, {vagt.Pause}, {vagt.Område}, {vagt.OpgaveId}, {vagt.OpgaveBeskrivelse})";
-            sql = $@"INSERT INTO vagt (vagt_id, dato, vagt_start, vagt_slut, pause, område, opgave_id)
-                        VALUES ({vagt.VagtId}, '{vagt.Dato}', '{vagt.VagtStart}', '{vagt.VagtSlut}', {vagt.Pause}, '{vagt.Område}', {vagt.OpgaveBeskrivelse})";
+            sql = $@"INSERT INTO vagt (dato, vagt_start, vagt_slut, pause, område, opgave_id)
+                        VALUES ('{vagt.Dato}', '{vagt.VagtStart}', '{vagt.VagtSlut}', {vagt.Pause}, '{vagt.Område}', '{vagt.OpgaveId}')";
 
             Console.WriteLine("addVagt koordinatorRepository");
 
@@ -72,21 +72,6 @@ namespace misfits_festival.Server.Models
             Console.WriteLine("addVagt koordinatorRepository");
         }
 
-
-        public async Task<IEnumerable<Bruger>> GetAlleFrivillige()
-        {
-            // sql = @"SELECT * FROM frivillig_kompetencer";
-            sql = $@" SELECT * FROM frivillig_kompetencer";
-
-            Console.WriteLine("getAlleFrivillige koordinatorRepository");
-
-            using (var connection = new NpgsqlConnection(connString))
-            {
-                var alleFrivillige = await connection.QueryAsync<Bruger>(sql);
-                return alleFrivillige.ToList();
-            }
-        }
-
         // er ikke sikker på om dette er et krav?
         public async void AddOpgave(Opgave opgave)
         {
@@ -102,6 +87,32 @@ namespace misfits_festival.Server.Models
             }
         }
 
+        public async Task<IEnumerable<Opgave>> GetAlleOpgaver()
+        {
+            sql = $@"SELECT * FROM opgave";
+
+            Console.WriteLine("getAlleOpgaver koordinatorRepository");
+
+            using (var connection = new NpgsqlConnection(connString))
+            {
+                var alleOpgaver = await connection.QueryAsync<Opgave>(sql);
+                return alleOpgaver.ToList();
+            }
+        }
+
+        public async Task<IEnumerable<Bruger>> GetAlleFrivillige()
+        {
+            // sql = @"SELECT * FROM frivillig_kompetencer";
+            sql = $@" SELECT * FROM frivillig_kompetencer";
+
+            Console.WriteLine("getAlleFrivillige koordinatorRepository");
+
+            using (var connection = new NpgsqlConnection(connString))
+            {
+                var alleFrivillige = await connection.QueryAsync<Bruger>(sql);
+                return alleFrivillige.ToList();
+            }
+        }
 
         public KoordinatorRepository()
         {

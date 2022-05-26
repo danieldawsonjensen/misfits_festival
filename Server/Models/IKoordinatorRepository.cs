@@ -23,6 +23,8 @@ namespace misfits_festival.Server.Models
 
 		void AddOpgave(Opgave opgave); // metode til post af en ny opgave
 
+		Task<IEnumerable<Opgave>> GetAlleOpgaver();
+
 		Task<IEnumerable<Bruger>> GetAlleFrivillige(); // task til at hente alle frivillige i systemet
 
 	}

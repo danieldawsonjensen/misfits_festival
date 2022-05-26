@@ -70,7 +70,6 @@
         @foreach (var kompetence in Kompetencer)
         {
             <tr>
-                <td>@kompetence.KompetenceId</td>
                 <td>@kompetence.KompetenceBeskrivelse</td>
                 <button class="btn btn-success" @onclick="() => VælgKompetence(kompetence)">Vælg denne kompetence</button>
             </tr>
@@ -93,7 +92,7 @@
     private int ErrorCode { get; set; }
 
     [Inject]
-    public IFrivilligService Service { get; set; }
+    public IFrivilligService FrivilligService { get; set; }
 
 
     protected override void OnInitialized()
@@ -104,7 +103,7 @@
 
     private async Task AddBrugerHandler()
     {
-        ErrorCode = await Service.AddBruger(Bruger);
+        ErrorCode = await FrivilligService.AddBruger(Bruger);
         Console.WriteLine("Bruger tilføjet: " + ErrorCode);
         Bruger = new Bruger();
         EditContext = new EditContext(Bruger);
@@ -113,7 +112,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Kompetencer = (await Service.GetAlleKompetencer()).ToList();
+        Kompetencer = (await FrivilligService.GetAlleKompetencer()).ToList();
     }
 
     private async Task VælgKompetence(Kompetence kompetence)

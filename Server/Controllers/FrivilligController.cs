@@ -43,7 +43,7 @@ namespace misfits_festival.Server.Controllers
 			return await Frivillig.GetLedigeVagter();
 		}
 
-		[HttpPost]
+		[HttpPut]
 		public void BookVagt(int vagtId, int brugerId) // http post til booking af en vagt, bruger et brugerId og
 													   // vagtId'et til den vagt man vil booke
 		{

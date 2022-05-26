@@ -11,80 +11,98 @@
 
 <h3>Opret ny vagt</h3>
 
-<div class="opretvagt">
-    <EditForm EditContext="@EditContext" class="row p-3">
+<div class="parent">
 
-        <div class="col-md-12 mb-3">
-            <label for="Dato">Dato</label>
-            <InputDate id="Dato" @bind-Value="Vagt.Dato" class="form-control" />
-        </div>
+    <div class="opretvagt">
+        <EditForm EditContext="@EditContext" class="row p-3">
 
-        <br />
+            <div class="col-md-12 mb-3">
+                <label for="Dato">Dato</label>
+                <InputDate id="Dato" @bind-Value="Vagt.Dato" class="form-control" />
+            </div>
 
-        <div class="col-md-6 mb-3">
-            <label for="VagtStart">Vagt start</label>
-            <InputText id="VagtStart" @bind-Value="Vagt.VagtStart" class="form-control" />
-        </div>
+            <br />
 
-        <div class="col-md-6 mb-3">
-            <label for="VagtSlut">Vagt slut</label>
-            <InputText id="VagtSlut" @bind-Value="Vagt.VagtSlut" class="form-control" />
-        </div>
+            <div class="col-md-6 mb-3">
+                <label for="VagtStart">Vagt start</label>
+                <InputText id="VagtStart" @bind-Value="Vagt.VagtStart" class="form-control" />
+            </div>
 
-        <div class="col-md-6 mb-3">
-            <label for="Pause">Pause</label>
-            <InputNumber id="Pause" @bind-Value="Vagt.Pause" class="form-control" />
-        </div>
+            <div class="col-md-6 mb-3">
+                <label for="VagtSlut">Vagt slut</label>
+                <InputText id="VagtSlut" @bind-Value="Vagt.VagtSlut" class="form-control" />
+            </div>
 
-        <div class="col-md-6 mb-3">
-            <label for="Område">Område</label>
-            <InputText id="Område" @bind-Value="Vagt.Område" class="form-control" />
-        </div>
+            <div class="col-md-6 mb-3">
+                <label for="Pause">Pause</label>
+                <InputNumber id="Pause" @bind-Value="Vagt.Pause" class="form-control" />
+            </div>
 
-        <div class="col-md-6 mb-3">
-            <label for="OpgaveId">Opgave ID</label>
-            <InputNumber id="OpgaveId" @bind-Value="Vagt.OpgaveId" class="form-control" />
-        </div>
+            <div class="col-md-6 mb-3">
+                <label for="Område">Område</label>
+                <InputText id="Område" @bind-Value="Vagt.Område" class="form-control" />
+            </div>
 
-        <br />
 
-        <div class="col-md-6 mb-3">
-            <label for="OpgaveBeskrivelse">Opgave Beskrivelse</label>
-            <InputText id="OpgaveBeskrivelse" @bind-Value="Vagt.OpgaveBeskrivelse" class="form-control" />
-        </div>
+            <div class="col-md-6 mb-3">
+                <label for="OpgaveId">Opgave ID</label>
+                <InputNumber id="OpgaveId" @bind-Value="Vagt.OpgaveId" class="form-control" />
+            </div>
 
-        <br />
 
-        <div class="col-md-6 mb-3">
-            <label for="BrugerId">Bruger ID</label>
-            <InputNumber id="BrugerId" @bind-Value="Vagt.BrugerId" class="form-control" />
-        </div>
+            <br />
 
-        <br />
+            <div class="col-md-6 mb-3">
+                <label for="OpgaveBeskrivelse">Opgave Beskrivelse</label>
+                <InputText id="OpgaveBeskrivelse" @bind-Value="Vagt.OpgaveBeskrivelse" class="form-control" />
+            </div>
 
-        <div class="col-md-6 mb-3">
-            <label for="BrugerNavn">Bruger navn</label>
-            <InputText id="BrugerNavn" @bind-Value="Vagt.BrugerEmail" class="form-control" />
-        </div>
+            <br />
 
-        <br />
+            <div class="col-12 mb-3">
+                <button class="btn btn-primary" @onclick="AddVagtHandler">Tilføj ny vagt</button>
+            </div>
 
-        <div class="col-12 mb-3">
-            <button class="btn btn-primary" @onclick="AddVagtHandler">Tilføj ny vagt</button>
-        </div>
+        </EditForm>
+    </div>
 
-    </EditForm>
+    <div class="opgaver">
+
+        <table>
+            <tr>
+                <th>Opgave beskrivelse</th>
+            </tr>
+            @foreach (var opgave in Opgaver)
+            {
+                <tr>
+                    <td>@opgave.OpgaveBeskrivelse</td>
+                    <button class="btn btn-success" @onclick="() => VælgOpgave(opgave)">Vælg denne opgave</button>
+                </tr>
+            }
+        </table>
+
+        <EditForm EditContext="@EditContext" class="row p-3">
+            <div class="col-md-12 mb-3">
+                <label for="Dato">Dato</label>
+                <InputDate id="Dato" @bind-Value="Opgave.OpgaveBeskrivelse" class="form-control" />
+            </div>
+
+            <button class="btn btn-primary" @onclick="AddOpgaveHandler">Tilføj ny opgave</button>
+        </EditForm>
 </div>
 
+</div>
 
 @code {
     private EditContext EditContext;
     private Vagt Vagt = new Vagt();
+    private List<Opgave> Opgaver = new List<Opgave>();
+    private Opgave Opgave = new Opgave();
 
     private int ErrorCode { get; set; }
 
     [Inject]
-    public IKoordinatorService Service { get; set; }
+    public IKoordinatorService KoordinatorService { get; set; }
 
 
     protected override void OnInitialized()
@@ -94,9 +112,29 @@
 
     private async Task AddVagtHandler()
     {
-        ErrorCode = await Service.AddVagt(Vagt);
+        ErrorCode = await KoordinatorService.AddVagt(Vagt);
         Console.WriteLine("Vagt tilføjet: " + ErrorCode);
         Vagt = new Vagt();
         EditContext = new EditContext(Vagt);
+    }
+
+    private async Task AddOpgaveHandler()
+    {
+        ErrorCode = await KoordinatorService.AddOpgave(Opgave);
+        Console.WriteLine("Opgave tilføjet: " + ErrorCode);
+        Opgave = new Opgave();
+        EditContext = new EditContext(Opgave);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Opgaver = (await KoordinatorService.GetAlleOpgaver()).ToList();
+    }
+
+    private async Task VælgOpgave(Opgave opgave)
+    {
+        // Vagt.OpgaveId = opgave.OpgaveId;
+        Vagt.OpgaveId = opgave.OpgaveId;
+        Vagt.OpgaveBeskrivelse = opgave.OpgaveBeskrivelse;
     }
 }

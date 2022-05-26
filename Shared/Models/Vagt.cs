@@ -4,7 +4,7 @@ namespace misfits_festival.Shared.Models
 {
     public class Vagt
     {
-        public int VagtId { get; set; }
+        public int? VagtId { get; set; }
         public DateTime Dato { get; set; } = DateTime.Now;
         public string VagtStart { get; set; }
         public string VagtSlut { get; set; }
@@ -17,8 +17,8 @@ namespace misfits_festival.Shared.Models
 
         // public string Status { get; set; }
 
-        public int BrugerId { get; set; }
-        public string BrugerEmail { get; set; }
+        public int? BrugerId { get; set; }
+        public string? BrugerEmail { get; set; }
 
         public Vagt()
         {

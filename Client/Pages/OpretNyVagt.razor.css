@@ -1,0 +1,18 @@
+﻿.parent {
+    overflow: hidden;
+}
+
+
+.opretvagt {
+    text-align: left;
+    width: 55%;
+    float: left;
+}
+
+.opgaver {
+    margin-left: 60%;
+}
+
+table, th, td {
+    border: 1px solid black;
+}

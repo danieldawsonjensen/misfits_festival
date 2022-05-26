@@ -36,7 +36,7 @@
     private int ErrorCode { get; set; }
 
     [Inject]
-    public IKoordinatorService Service { get; set; }
+    public IKoordinatorService KoordinatorService { get; set; }
 
 
     protected override void OnInitialized()
@@ -46,7 +46,7 @@
 
     private async Task AddOpgaveHandler()
     {
-        ErrorCode = await Service.AddOpgave(Opgave);
+        ErrorCode = await KoordinatorService.AddOpgave(Opgave);
         Console.WriteLine("Vagt tilføjet: " + ErrorCode);
         Opgave = new Opgave();
         EditContext = new EditContext(Opgave);

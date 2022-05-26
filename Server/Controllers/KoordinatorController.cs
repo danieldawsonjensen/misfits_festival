@@ -64,6 +64,13 @@ namespace misfits_festival.Server.Controllers
             Vagter.AddOpgave(opgave);
         }
 
+        [HttpGet("opgaver")]
+        public async Task<IEnumerable<Opgave>> GetAlleOpgaver()
+        {
+            Console.WriteLine("getAlleOpgaver - koordinatorController");
+            return await Vagter.GetAlleOpgaver();
+        }
+
         [HttpGet("getfrivillige")]
         public async Task<IEnumerable<Bruger>> GetAlleFrivillige() // http get på alle frivillige i systemet
         {
