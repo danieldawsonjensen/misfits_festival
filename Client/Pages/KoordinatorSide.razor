@@ -30,6 +30,7 @@
 
 @if (brugerEmail != "koordinator")
 {
+    <h1>Din email er: @brugerEmail</h1>
     <h1>Du har ikke adgang til denne side</h1>
 }
 else
@@ -45,7 +46,7 @@ else
                 <th>Pause</th>
                 <th>Område</th>
                 <th>Opgave beskrivelse</th>
-                <th>Bruger navn</th>
+                <th>Bruger email</th>
             </tr>
             @foreach (var vagt in Vagter)
             {
