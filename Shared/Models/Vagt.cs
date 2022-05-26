@@ -18,7 +18,7 @@ namespace misfits_festival.Shared.Models
         // public string Status { get; set; }
 
         public int BrugerId { get; set; }
-        public string BrugerNavn { get; set; }
+        public string BrugerEmail { get; set; }
 
         public Vagt()
         {

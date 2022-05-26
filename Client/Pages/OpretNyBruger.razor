@@ -55,8 +55,6 @@
 
         <div class="col-12 mb-3">
             <button class="btn btn-primary" @onclick="AddBrugerHandler">Tilføj ny bruger</button>
-
-            <label for="succesOpret">Status: @addBruger</label>
         </div>
 
     </EditForm>
@@ -94,8 +92,6 @@
 
     private int ErrorCode { get; set; }
 
-    private string addBruger = "";
-
     [Inject]
     public IFrivilligService Service { get; set; }
 
@@ -110,7 +106,6 @@
     {
         ErrorCode = await Service.AddBruger(Bruger);
         Console.WriteLine("Bruger tilføjet: " + ErrorCode);
-        addBruger = "Success! Dit bruger id er " + Bruger.BrugerId;
         Bruger = new Bruger();
         EditContext = new EditContext(Bruger);
         Bruger.RolleId = Roller[0];

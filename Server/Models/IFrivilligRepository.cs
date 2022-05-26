@@ -13,7 +13,7 @@ namespace misfits_festival.Server.Models
 {
 	public interface IFrivilligRepository
 	{
-		Task<IEnumerable<Vagt>> GetMineVagter(int brugerId); // metode til at se sine egne bookede vagter
+		Task<IEnumerable<Vagt>> GetMineVagter(string brugerEmail); // metode til at se sine egne bookede vagter
 
 		Task<IEnumerable<Vagt>> GetLedigeVagter(); // metode til at se alle de nuværende ledige vagter
 

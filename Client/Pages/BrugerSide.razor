@@ -13,7 +13,7 @@
 
 <h3>Bruger side</h3>
 
-    Dit bruger id er: @brugerId
+    Din bruger email er: @brugerEmail
 
     <div class="parent">
 
@@ -61,7 +61,7 @@
                     <th>Pause</th>
                     <th>Område</th>
                     <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
-                    <th>Bruger navn</th>
+                    <th>Bruger email</th>
                 </tr>
                 @foreach (var vagt in BrugerVagter)
                 {
@@ -73,7 +73,7 @@
                         <td>@vagt.Pause</td>
                         <td>@vagt.Område</td>
                         <td>@vagt.OpgaveBeskrivelse</td>
-                        <td>@vagt.BrugerNavn</td>
+                        <td>@vagt.BrugerEmail</td>
                     </tr>
                 }
 
@@ -113,13 +113,12 @@
 
     @code {
         const string noteKey = "note";
-        int brugerId = 0;
+        string brugerEmail = "";
 
         private List<Vagt> Vagter = new List<Vagt>();
         private List<Vagt> BrugerVagter = new List<Vagt>();
 
         private Vagt Vagt = new Vagt();
-
 
         [Inject]
         public IFrivilligService FrivilligService { get; set; } // laver en instans af vores interface,
@@ -127,10 +126,10 @@
 
         protected override async Task OnInitializedAsync()
         {
-            brugerId = (await localStore.GetItemAsync<int>(noteKey));
+            brugerEmail = (await localStore.GetItemAsync<string>(noteKey));
             Vagter = (await FrivilligService.GetLedigeVagter()).ToList();
             // int mitBrugerId = int.Parse(brugerId);
-            BrugerVagter = (await FrivilligService.GetMineVagter((brugerId))).ToList();
+            BrugerVagter = (await FrivilligService.GetMineVagter((brugerEmail))).ToList();
         }
 
 
