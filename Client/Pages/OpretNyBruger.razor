@@ -30,7 +30,12 @@
 
         <div class="col-md-6 mb-3">
             <label for="RolleId">Rolle</label>
-            <InputNumber id="RolleId" @bind-Value="Bruger.RolleId" class="form-control" />
+            <InputSelect id="RolleId" @bind-Value="Bruger.RolleId">
+                @foreach(var rolle in Roller)
+                    {
+                        <option>@rolle</option>
+                    }
+            </InputSelect>
         </div>
 
         <br />
@@ -83,6 +88,8 @@
 
     private List<Kompetence> Kompetencer = new List<Kompetence>();
 
+    private int[] Roller = { 1 };
+
     private int ErrorCode { get; set; }
 
     [Inject]
@@ -92,6 +99,7 @@
     protected override void OnInitialized()
     {
         EditContext = new EditContext(Bruger);
+        Bruger.RolleId = Roller[0];
     }
 
     private async Task AddBrugerHandler()
@@ -100,6 +108,7 @@
         Console.WriteLine("Bruger tilføjet: " + ErrorCode);
         Bruger = new Bruger();
         EditContext = new EditContext(Bruger);
+        Bruger.RolleId = Roller[0];
     }
 
     protected override async Task OnInitializedAsync()
