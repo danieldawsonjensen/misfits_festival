@@ -60,7 +60,7 @@ namespace misfits_festival.Server.Models
 
         public async void DeleteOpgave(int? opgaveId)
         {
-            sql = $@"DELETE FROM opgave WHERE opgave_id = 9;";
+            sql = $@"DELETE FROM opgave WHERE opgave_id = {opgaveId};";
             Console.WriteLine("sql:" + sql);
             Console.WriteLine("deleteOpgave opgaveRepository");
 

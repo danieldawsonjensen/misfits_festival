@@ -53,7 +53,7 @@ else
             {
                 <tr>
                     <td>@vagt.VagtId</td>
-                    <td>@vagt.Dato.ToShortDateString()</td>
+                    <td>@vagt.Dato</td>
                     <td>@vagt.VagtStart</td>
                     <td>@vagt.VagtSlut</td>
                     <td>@vagt.Pause</td>
@@ -67,6 +67,7 @@ else
 
         <table class="frivillige">
             <tr>
+                <th>Bruger ID</th>
                 <th>Bruger Navn</th>
                 <th>Bruger Email</th>
                 <th>Telefonnummer</th>
@@ -75,6 +76,7 @@ else
             @foreach (var frivillig in Frivillige)
             {
                 <tr>
+                    <td>@frivillig.BrugerId</td>
                     <td>@frivillig.BrugerNavn</td>
                     <td>@frivillig.BrugerEmail</td>
                     <td>@frivillig.TelefonNummer</td>
@@ -82,6 +84,30 @@ else
                 </tr>
             }
         </table>
+    </div>
+
+    <div class="updatevagt">
+
+
+        <EditForm EditContext="@EditContext" class="row p-3">
+
+            <div class="col-md-6 mb-3">
+                <label for="VagtId">Vagt ID</label>
+                <InputNumber id="VagtId" @bind-Value="Vagt.VagtId" class="form-control" />
+            </div>
+
+            <br />
+
+            <div class="col-md-6 mb-3">
+                <label for="BrugerId">Bruger ID</label>
+                <InputNumber id="BrugerId" @bind-Value="Vagt.BrugerId" class="form-control" />
+            </div>
+
+            <div class="col-12 mb-3">
+                <button class="btn btn-primary" @onclick="UpdateVagtHandler">Update vagt</button>
+            </div>
+
+        </EditForm>
 
 
     </div>
@@ -92,10 +118,14 @@ else
 
 
 @code {
-    private Bruger NyBruger = new Bruger(); // definerer en ny bruger
-
     const string noteKey = "note";
     string brugerEmail = "";
+
+    private EditContext EditContext;
+    private int ErrorCode { get; set; }
+
+    private Bruger NyBruger = new Bruger(); // definerer en ny bruger
+
 
     private List<Vagt> Vagter = new List<Vagt>();
     private Vagt Vagt = new Vagt();
@@ -108,12 +138,25 @@ else
     [Inject]
     public IBrugerService BrugerService { get; set; }
 
+    protected override void OnInitialized()
+    {
+        EditContext = new EditContext(Vagt);
+    }
+
+    private async Task UpdateVagtHandler()
+    {
+        ErrorCode = await VagtService.UpdateVagt(Vagt);
+        Console.WriteLine("Vagt opdateret: " + ErrorCode);
+        Vagt = new Vagt();
+        EditContext = new EditContext(Vagt);
+    }
+
     protected override async Task OnInitializedAsync()
     {
         brugerEmail = await localStore.GetItemAsync<string>(noteKey);
         Vagter = (await VagtService.GetAlleVagter()).ToList();
         Frivillige = (await BrugerService.GetAlleFrivillige()).ToList(); // populater vores liste af brugere v hjælp af,
-                                                                              // getAlleFrivillige() metoden + toList
+                                                                         // getAlleFrivillige() metoden + toList
     }
 
 
