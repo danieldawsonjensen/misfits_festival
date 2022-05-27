@@ -11,6 +11,6 @@ namespace misfits_festival.Client.Services
 
 		Task<int> UpdateOpgave(Opgave opgave);
 
-		Task<int> DeleteOpgave(Opgave opgave);
+		Task<int> DeleteOpgave(int? opgaveId);
 	}
 }

@@ -58,11 +58,10 @@ namespace misfits_festival.Server.Models
             }
         }
 
-        public async void DeleteOpgave(Opgave opgave)
+        public async void DeleteOpgave(int? opgaveId)
         {
-            sql = $@"DELETE FROM opgave
-                     WHERE opgave_id = {opgave.OpgaveId};";
-
+            sql = $@"DELETE FROM opgave WHERE opgave_id = 9;";
+            Console.WriteLine("sql:" + sql);
             Console.WriteLine("deleteOpgave opgaveRepository");
 
             using (var connection = new NpgsqlConnection(connString))

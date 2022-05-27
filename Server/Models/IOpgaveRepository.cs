@@ -19,6 +19,6 @@ namespace misfits_festival.Server.Models
 
 		void UpdateOpgave(Opgave opgave);
 
-		void DeleteOpgave(Opgave opgave);
+		void DeleteOpgave(int? opgaveId);
 	}
 }

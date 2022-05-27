@@ -51,10 +51,10 @@ namespace misfits_festival.Server.Controllers
 		}
 
         [HttpDelete]
-		public void DeleteOpgave(Opgave opgave)
+		public void DeleteOpgave(int? opgaveId)
         {
 			Console.WriteLine("deleteOpgave - opgaveController");
-			Opgaver.DeleteOpgave(opgave);
+			Opgaver.DeleteOpgave(opgaveId);
 		}
 	
 	}
