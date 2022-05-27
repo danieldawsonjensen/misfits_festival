@@ -47,15 +47,10 @@ namespace misfits_festival.Server.Models
 
         public async void UpdateVagt(Vagt vagt)
         {
-            /*
             sql =
-                $@"UPDATE vagt
-                SET dato = '{vagt.Dato}', ""vagt_start"" = '{vagt.VagtStart}', ""vagt_slut"" = '{vagt.VagtSlut}', pause = {vagt.Pause}, område = '{vagt.Område}',
-                    ""opgave_id"" = {vagt.OpgaveId}, ""bruger_id"" = {vagt.BrugerId}
-                WHERE vagt_id = {vagt.VagtId}";
-            */
-
-            sql = $@"UPDATE vagt SET bruger_id = {vagt.BrugerId} WHERE vagt_id = {vagt.VagtId}";
+                $@"UPDATE vagt SET vagt_start = '{vagt.VagtStart}', vagt_slut = '{vagt.VagtSlut}', pause = {vagt.Pause} WHERE vagt_id = {vagt.VagtId}";
+            
+            // sql = $@"UPDATE vagt SET bruger_id = {vagt.BrugerId} WHERE vagt_id = {vagt.VagtId}";
             Console.WriteLine("sql: " + sql);
 
             Console.WriteLine("updateVagt vagtRepository");

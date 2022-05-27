@@ -53,13 +53,14 @@ else
             {
                 <tr>
                     <td>@vagt.VagtId</td>
-                    <td>@vagt.Dato</td>
+                    <td>@vagt.Dato.ToShortDateString()</td>
                     <td>@vagt.VagtStart</td>
                     <td>@vagt.VagtSlut</td>
                     <td>@vagt.Pause</td>
                     <td>@vagt.Område</td>
                     <td>@vagt.OpgaveBeskrivelse</td>
                     <td>@vagt.BrugerEmail</td>
+                    <button class="btn btn-success" @onclick="() => OpdaterVagt(vagt)">Opdater denne vagt</button>
                 </tr>
             }
         </table>
@@ -67,7 +68,6 @@ else
 
         <table class="frivillige">
             <tr>
-                <th>Bruger ID</th>
                 <th>Bruger Navn</th>
                 <th>Bruger Email</th>
                 <th>Telefonnummer</th>
@@ -76,7 +76,6 @@ else
             @foreach (var frivillig in Frivillige)
             {
                 <tr>
-                    <td>@frivillig.BrugerId</td>
                     <td>@frivillig.BrugerNavn</td>
                     <td>@frivillig.BrugerEmail</td>
                     <td>@frivillig.TelefonNummer</td>
@@ -86,22 +85,39 @@ else
         </table>
     </div>
 
+    <br />
+
     <div class="updatevagt">
 
-
         <EditForm EditContext="@EditContext" class="row p-3">
+            <h3>Update en vagt</h3>
 
             <div class="col-md-6 mb-3">
-                <label for="VagtId">Vagt ID</label>
-                <InputNumber id="VagtId" @bind-Value="Vagt.VagtId" class="form-control" />
+                <label for="NyVagtId">Vagt ID: @NyVagt.VagtId</label>
             </div>
 
             <br />
 
             <div class="col-md-6 mb-3">
-                <label for="BrugerId">Bruger ID</label>
-                <InputNumber id="BrugerId" @bind-Value="Vagt.BrugerId" class="form-control" />
+                <label for="NyBrugerId">Vagt start</label>
+                <InputText id="NyBrugerId" @bind-Value="NyVagt.VagtStart" class="form-control" />
             </div>
+
+            <br />
+
+            <div class="col-md-6 mb-3">
+                <label for="NyVagtSlut">Vagt slut</label>
+                <InputText id="NyVagtSlut" @bind-Value="NyVagt.VagtSlut" class="form-control" />
+            </div>
+
+            <br />
+
+            <div class="col-md-6 mb-3">
+                <label for="NyPause">Pause</label>
+                <InputNumber id="NyPause" @bind-Value="NyVagt.Pause" class="form-control" />
+            </div>
+
+            <br />
 
             <div class="col-12 mb-3">
                 <button class="btn btn-primary" @onclick="UpdateVagtHandler">Update vagt</button>
@@ -129,6 +145,7 @@ else
 
     private List<Vagt> Vagter = new List<Vagt>();
     private Vagt Vagt = new Vagt();
+    private Vagt NyVagt = new Vagt();
 
     private List<Bruger> Frivillige = new List<Bruger>(); // definerer en ny liste af brugere
 
@@ -159,5 +176,12 @@ else
                                                                          // getAlleFrivillige() metoden + toList
     }
 
+    private async Task OpdaterVagt(Vagt vagt)
+    {
+        NyVagt.VagtId = vagt.VagtId;
+        NyVagt.VagtStart = vagt.VagtStart;
+        NyVagt.VagtSlut = vagt.VagtSlut;
+        NyVagt.Pause = vagt.Pause;
+    }
 
 }

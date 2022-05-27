@@ -34,7 +34,7 @@
                 @foreach (var vagt in Vagter)
                 {
                     <tr>
-                        <td>@vagt.Dato</td>
+                        <td>@vagt.Dato.ToShortDateString()</td>
                         <td>@vagt.VagtStart</td>
                         <td>@vagt.VagtSlut</td>
                         <td>@vagt.Pause</td>
@@ -67,7 +67,7 @@
                 {
                     <tr>
                         <td>@vagt.VagtId</td>
-                        <td>@vagt.Dato</td>
+                        <td>@vagt.Dato.ToShortDateString()</td>
                         <td>@vagt.VagtStart</td>
                         <td>@vagt.VagtSlut</td>
                         <td>@vagt.Pause</td>
