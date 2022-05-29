@@ -51,13 +51,6 @@
 
             <br />
 
-            <div class="col-md-6 mb-3">
-                <label for="Status">Status</label>
-                <InputText id="Status" @bind-Value="Vagt.Status" class="form-control" />
-            </div>
-
-            <br />
-
             <div class="col-12 mb-3">
                 <button class="btn btn-primary" @onclick="AddVagtHandler">Tilføj ny vagt</button>
             </div>
@@ -80,7 +73,7 @@
                     <td>@opgave.OpgaveId</td>
                     <td>@opgave.OpgaveBeskrivelse</td>
                     <button class="btn btn-success" @onclick="() => VælgOpgave(opgave)">Vælg denne opgave</button>
-                    <button class="btn btn-danger" @onclick="() => SletOpgave(opgave.OpgaveId)">Slet denne opgave</button>
+                    <button class="btn btn-danger" @onclick="() => SletOpgaveKnap(opgave.OpgaveId)">Slet denne opgave</button>
                 </tr>
 
             }
@@ -97,9 +90,9 @@
         <div class="col-md-12 mb-3">
             <label for="OpgaveSlet">Slet opgave</label>
             <input id="OpgaveSlet" @bind-value="@SlettetOpgave.OpgaveId" class="form-control" />
-            <button class="btn btn-primary" @onclick="() => DeleteOpgaveHandler(Opgave.OpgaveId)">Slet denne opgave</button>
+            <button class="btn btn-primary" @onclick="() => DeleteOpgaveHandler(SlettetOpgave.OpgaveId)">Slet denne opgave</button>
         </div>
-
+        
     </div>
 
 </div>
@@ -139,15 +132,13 @@
         ErrorCode = await OpgaveService.AddOpgave(Opgave);
         Console.WriteLine("Opgave tilføjet: " + ErrorCode);
         Opgave = new Opgave();
-        // EditOpgaveContext = new EditContext(Opgave);
     }
 
 
-    private void DeleteOpgaveHandler(int? opgaveId)
+    private async void DeleteOpgaveHandler(int? opgaveId)
     {
-        // evt benyt samme teknik som i VælgOpgave, hvor man egentligt trykker på en speficik OpgaveBeksrivelse
-        // men faktisk vælger et OpgaveId
-        OpgaveService.DeleteOpgave(opgaveId);
+        ErrorCode = await OpgaveService.DeleteOpgave(SlettetOpgave.OpgaveId);
+        OpgaveService.DeleteOpgave(SlettetOpgave.OpgaveId);
         Console.WriteLine("Opgave slettet: " + ErrorCode);
         Opgave = new Opgave();
     }
@@ -165,7 +156,7 @@
         Vagt.OpgaveBeskrivelse = opgave.OpgaveBeskrivelse;
     }
 
-    private async Task SletOpgave(int? opgaveId) // lav om til opgaveId og prøv metoderne igen
+    private async Task SletOpgaveKnap(int? opgaveId) // lav om til opgaveId og prøv metoderne igen
     {
         SlettetOpgave.OpgaveId = opgaveId; // fortæller hvilket specifikt id der skal slettes
         // SlettetOpgave.OpgaveBeskrivelse = opgave.OpgaveBeskrivelse;

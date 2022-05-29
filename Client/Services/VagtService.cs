@@ -32,9 +32,9 @@ namespace misfits_festival.Client.Services
             return (int)responseStatusCode;
         }
 
-        public async Task<int> DeleteVagt(int vagtId)
+        public async Task<int> DeleteVagt(int? vagtId)
         {
-            var response = await httpClient.PostAsJsonAsync("api/vagter", vagtId); // hvad skal der stå her?
+            var response = await httpClient.DeleteAsync("api/vagter"); // hvad skal der stå her?
                                                                                    // skal der står DeleteAsync?
             var responseStatusCode = response.StatusCode;
             return (int)responseStatusCode;
@@ -42,7 +42,7 @@ namespace misfits_festival.Client.Services
 
 
         // frivillig funktioner
-        public async Task<Vagt[]?> GetMineVagter(string brugerEmail)
+        public async Task<Vagt[]?> GetMineVagter(string? brugerEmail)
         {
             var result = await httpClient.GetFromJsonAsync<Vagt[]>("api/vagter/brugervagter"); // httpGet fra api'en
             return result;

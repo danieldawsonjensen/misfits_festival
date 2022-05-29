@@ -62,11 +62,10 @@ namespace misfits_festival.Server.Models
             }
         }
 
-        public async void DeleteVagt(int vagtId)
+        public async void DeleteVagt(int? vagtId)
         {
             sql =
-                $@"DELETE FROM vagt
-                WHERE vagt_id = {vagtId}";
+                $@"DELETE FROM vagt WHERE vagt_id = {vagtId}";
 
             Console.WriteLine("updateVagt vagtRepository");
 
@@ -78,7 +77,7 @@ namespace misfits_festival.Server.Models
 
 
         // frivillig funktioner
-        public async Task<IEnumerable<Vagt>> GetMineVagter(string brugerEmail)
+        public async Task<IEnumerable<Vagt>> GetMineVagter(string? brugerEmail)
         {
             /*sql = $@"SELECT * FROM vagt_opgave
             WHERE bruger_id = {brugerId}";*/

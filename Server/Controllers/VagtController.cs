@@ -53,7 +53,7 @@ namespace misfits_festival.Server.Controllers
 		}
 
 		[HttpDelete]
-		public void DeleteVagt(int vagtId) // http delete til at slette en vagt fra tabellen
+		public void DeleteVagt(int? vagtId) // http delete til at slette en vagt fra tabellen
 		{
 			Console.WriteLine("deleteVagt - vagtController");
 			Vagter.DeleteVagt(vagtId);
@@ -62,7 +62,7 @@ namespace misfits_festival.Server.Controllers
 
 		//frivillig funktioner
 		[HttpGet("brugervagter")]
-		public async Task<IEnumerable<Vagt>> GetMineVagter(string brugerEmail) // http get task til vagter med et specifikt brugerId
+		public async Task<IEnumerable<Vagt>> GetMineVagter(string? brugerEmail) // http get task til vagter med et specifikt brugerId
 		{
 			Console.WriteLine("getminevagter - vagtController");
 			return await Vagter.GetMineVagter(brugerEmail);

@@ -13,6 +13,8 @@
 
 <h3>Bruger side</h3>
 
+
+
     Din bruger email er: @brugerEmail
 
     <div class="parent">
@@ -31,7 +33,7 @@
                     <th>Område</th>
                     <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
                 </tr>
-                @foreach (var vagt in Vagter)
+                @foreach (var vagt in LedigeVagter)
                 {
                     <tr>
                         <td>@vagt.Dato.ToShortDateString()</td>
@@ -49,35 +51,42 @@
 
             <!--<div class="brugervagter">-->
 
-            <h1>Mine vagter</h1>
+            @if (BrugerVagter is null)
+            {
+                <h3>Der er ingen vagter at vise</h3>
+            }
+            else
+            {
+                <h1>Dine vagter</h1>
 
-            <table>
+                <table>
 
-                <tr>
-                    <th>Vagt ID</th>
-                    <th>Dato</th>
-                    <th>Vagt start</th>
-                    <th>Vagt slut</th>
-                    <th>Pause</th>
-                    <th>Område</th>
-                    <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
-                    <th>Bruger email</th>
-                </tr>
-                @foreach (var vagt in BrugerVagter)
-                {
                     <tr>
-                        <td>@vagt.VagtId</td>
-                        <td>@vagt.Dato.ToShortDateString()</td>
-                        <td>@vagt.VagtStart</td>
-                        <td>@vagt.VagtSlut</td>
-                        <td>@vagt.Pause</td>
-                        <td>@vagt.Område</td>
-                        <td>@vagt.OpgaveBeskrivelse</td>
-                        <td>@vagt.BrugerEmail</td>
+                        <th>Vagt ID</th>
+                        <th>Dato</th>
+                        <th>Vagt start</th>
+                        <th>Vagt slut</th>
+                        <th>Pause</th>
+                        <th>Område</th>
+                        <th>Opgave beskrivelse</th>
+                        <th>Bruger email</th>
                     </tr>
-                }
+                    @foreach (var vagt in BrugerVagter)
+                    {
+                        <tr>
+                            <td>@vagt.VagtId</td>
+                            <td>@vagt.Dato.ToShortDateString()</td>
+                            <td>@vagt.VagtStart</td>
+                            <td>@vagt.VagtSlut</td>
+                            <td>@vagt.Pause</td>
+                            <td>@vagt.Område</td>
+                            <td>@vagt.OpgaveBeskrivelse</td>
+                            <td>@vagt.BrugerEmail</td>
+                        </tr>
+                    }
 
-            </table>
+                </table>
+            }
 
 
         </div>
@@ -113,9 +122,22 @@
 
     @code {
         const string noteKey = "note";
-        string brugerEmail = "";
+        string? brugerEmail = "daniel@frivillig.com";
 
-        private List<Vagt> Vagter = new List<Vagt>();
+        /*
+        public async void UpdateLocalStorage()
+        {
+            await localStore.SetItemAsync(noteKey, brugerEmail);
+        }
+
+        public async void ClearLocalStorage()
+        {
+            brugerEmail = "";
+            await localStore.ClearAsync();
+        }
+        */
+
+        private List<Vagt> LedigeVagter = new List<Vagt>();
         private List<Vagt> BrugerVagter = new List<Vagt>();
 
         private Vagt Vagt = new Vagt();
@@ -128,8 +150,8 @@
 
         protected override async Task OnInitializedAsync()
         {
-            brugerEmail = await localStore.GetItemAsync<string>(noteKey);
-            Vagter = (await VagtService.GetLedigeVagter()).ToList();
+            // brugerEmail = await localStore.GetItemAsync<string?>(noteKey);
+            LedigeVagter = (await VagtService.GetLedigeVagter()).ToList();
             // int mitBrugerId = int.Parse(brugerId);
             BrugerVagter = (await VagtService.GetMineVagter(brugerEmail)).ToList();
         }

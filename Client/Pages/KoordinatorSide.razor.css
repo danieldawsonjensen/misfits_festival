@@ -1,4 +1,5 @@
-﻿body {
+﻿.parent {
+    overflow: hidden;
 }
 
 table, th, td {
@@ -6,5 +7,6 @@ table, th, td {
 }
 
 .updatevagt {
-    
+    width: 50%
 }
+

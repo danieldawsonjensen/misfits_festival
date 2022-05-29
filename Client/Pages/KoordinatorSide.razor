@@ -37,7 +37,7 @@ else
 {
     <h3>Vagter</h3>
 
-    <div>
+    <div class="vagter">
         <table class="vagter">
             <tr>
                 <th>Vagt ID</th>
@@ -70,73 +70,93 @@ else
                         <td>Ikke done</td>
                     }
                     <button class="btn btn-success" @onclick="() => OpdaterVagt(vagt)">Opdater denne vagt</button>
+                    <button class="btn btn-danger" @onclick="() => SletVagt(vagt.VagtId)">Slet denne vagt</button>
                 </tr>
             }
         </table>
         <br />
-
-        <table class="frivillige">
-            <tr>
-                <th>Bruger Navn</th>
-                <th>Bruger Email</th>
-                <th>Telefonnummer</th>
-                <th>Kompetencer</th>
-            </tr>
-            @foreach (var frivillig in Frivillige)
-            {
-                <tr>
-                    <td>@frivillig.BrugerNavn</td>
-                    <td>@frivillig.BrugerEmail</td>
-                    <td>@frivillig.TelefonNummer</td>
-                    <td>@frivillig.Kompetencer</td>
-                </tr>
-            }
-        </table>
     </div>
 
-    <br />
+    <div class="parent">
 
-    <div class="updatevagt col-md-6 mb-3">
+        <div class="updatevagt">
 
-        <EditForm EditContext="@EditContext" class="row p-3">
-            <h3>Update en vagt</h3>
+            <EditForm EditContext="@EditContext" class="row p-3">
+                <h3>Update en vagt</h3>
 
-            <div class="col-2 mb-3">
-                <label for="NyVagtId">Vagt ID</label>
-                <InputNumber id="NyVagtId" @bind-Value="Vagt.VagtId" class="form-control" />
-            </div>
+                <div class="col-2 mb-3">
+                    <label for="NyVagtId">Vagt ID</label>
+                    <InputNumber id="NyVagtId" @bind-Value="Vagt.VagtId" class="form-control" />
+                </div>
 
-            <br />
+                <br />
 
-            <div class="col-2 mb-3">
-                <label for="NyVagtStart">Vagt start</label>
-                <InputText id="NyVagtStart" @bind-Value="Vagt.VagtStart" class="form-control" />
-            </div>
+                <div class="col-2 mb-3">
+                    <label for="NyVagtStart">Vagt start</label>
+                    <InputText id="NyVagtStart" @bind-Value="Vagt.VagtStart" class="form-control" />
+                </div>
 
-            <br />
+                <br />
 
-            <div class="col-2 mb-3">
-                <label for="NyVagtSlut">Vagt slut</label>
-                <InputText id="NyVagtSlut" @bind-Value="Vagt.VagtSlut" class="form-control" />
-            </div>
+                <div class="col-2 mb-3">
+                    <label for="NyVagtSlut">Vagt slut</label>
+                    <InputText id="NyVagtSlut" @bind-Value="Vagt.VagtSlut" class="form-control" />
+                </div>
 
-            <br />
+                <br />
 
-            <div class="col-2 mb-3">
-                <label for="NyPause">Pause</label>
-                <InputNumber id="NyPause" @bind-Value="Vagt.Pause" class="form-control" />
-            </div>
+                <div class="col-2 mb-3">
+                    <label for="NyPause">Pause</label>
+                    <InputNumber id="NyPause" @bind-Value="Vagt.Pause" class="form-control" />
+                </div>
 
-            <br />
-            <br />
+                <br />
+                <br />
 
-            <div class="col-12 mb-3">
-                <button class="btn btn-primary" @onclick="UpdateVagtHandler">Update vagt</button>
-            </div>
+                <div class="col-12 mb-3">
+                    <button class="btn btn-primary" @onclick="UpdateVagtHandler">Update vagt</button>
+                </div>
 
 
-        </EditForm>
+                <h1>Slet en vagt</h1>
 
+                <div class="col-2 mb-3">
+                    <label for="SletVagtId">Vagt ID</label>
+                    <InputNumber id="SletVagtId" @bind-Value="Vagt.VagtId" class="form-control" />
+                </div>
+
+                <div class="col-12 mb-3">
+                    <button class="btn btn-primary" @onclick="() => DeleteVagtHandler(Vagt.VagtId)">Slet vagt</button>
+                </div>
+
+            </EditForm>
+
+
+        </div>
+
+        <div class="frivillige">
+
+            <h1>Frivillige</h1>
+
+            <table class="frivillige">
+                <tr>
+                    <th>Bruger Navn</th>
+                    <th>Bruger Email</th>
+                    <th>Telefonnummer</th>
+                    <th>Kompetencer</th>
+                </tr>
+                @foreach (var frivillig in Frivillige)
+                {
+                    <tr>
+                        <td>@frivillig.BrugerNavn</td>
+                        <td>@frivillig.BrugerEmail</td>
+                        <td>@frivillig.TelefonNummer</td>
+                        <td>@frivillig.Kompetencer</td>
+                    </tr>
+                }
+            </table>
+
+        </div>
 
     </div>
 }
@@ -149,15 +169,15 @@ else
     const string noteKey = "note";
     string brugerEmail = "";
 
+
     private EditContext EditContext;
     private int ErrorCode { get; set; }
 
     private Bruger NyBruger = new Bruger(); // definerer en ny bruger
 
-
+    // definerer en liste af vagt-opbjekter samt en enkelt vagt; disse bruges hhv. i GetAlleVagter() og UpdateVagt()
     private List<Vagt> Vagter = new List<Vagt>();
     private Vagt Vagt = new Vagt();
-    private Vagt NyVagt = new Vagt();
 
     private List<Bruger> Frivillige = new List<Bruger>(); // definerer en ny liste af brugere
 
@@ -180,6 +200,14 @@ else
         EditContext = new EditContext(Vagt);
     }
 
+    private async Task DeleteVagtHandler(int? vagtId)
+    {
+        ErrorCode = await VagtService.DeleteVagt(vagtId);
+        Console.WriteLine("Vagt slettet: " + ErrorCode);
+        Vagt = new Vagt();
+        EditContext = new EditContext(Vagt);
+    }
+
     protected override async Task OnInitializedAsync()
     {
         brugerEmail = await localStore.GetItemAsync<string>(noteKey);
@@ -194,6 +222,11 @@ else
         Vagt.VagtStart = vagt.VagtStart;
         Vagt.VagtSlut = vagt.VagtSlut;
         Vagt.Pause = vagt.Pause;
+    }
+
+    private async Task SletVagt(int? vagtId)
+    {
+        Vagt.VagtId = vagtId;
     }
 
 }

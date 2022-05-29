@@ -20,11 +20,11 @@ namespace misfits_festival.Server.Models
 
 		void UpdateVagt(Vagt vagt); // metode til at update en vagt
 
-		void DeleteVagt(int id); // metode til delete af en vagt
+		void DeleteVagt(int? id); // metode til delete af en vagt
 
 
 		// frivillig funktioner
-		Task<IEnumerable<Vagt>> GetMineVagter(string brugerEmail); //skal muligvis være int brugerId // metode til at se sine egne bookede vagter
+		Task<IEnumerable<Vagt>> GetMineVagter(string? brugerEmail); //skal muligvis være int brugerId // metode til at se sine egne bookede vagter
 
 		Task<IEnumerable<Vagt>> GetLedigeVagter(); // metode til at se alle de nuværende ledige vagter
 
