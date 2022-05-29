@@ -79,7 +79,7 @@ namespace misfits_festival.Server.Controllers
 		public void BookVagt(Vagt vagt) // http post til booking af en vagt, bruger et brugerId og
 													  // vagtId'et til den vagt man vil booke
 		{
-			Console.WriteLine("getledigevagter - vagtController");
+			Console.WriteLine("bookvagt - vagtController");
 			Vagter.BookVagt(vagt);
 		}
 

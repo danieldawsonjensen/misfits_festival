@@ -48,6 +48,7 @@ else
                 <th>Område</th>
                 <th>Opgave beskrivelse</th>
                 <th>Bruger email</th>
+                <th>Status</th>
             </tr>
             @foreach (var vagt in Vagter)
             {
@@ -60,6 +61,14 @@ else
                     <td>@vagt.Område</td>
                     <td>@vagt.OpgaveBeskrivelse</td>
                     <td>@vagt.BrugerEmail</td>
+                    @if (vagt.Dato < DateTime.Now)
+                    {
+                        <td>Done</td>
+                    }
+                    else
+                    {
+                        <td>Ikke done</td>
+                    }
                     <button class="btn btn-success" @onclick="() => OpdaterVagt(vagt)">Opdater denne vagt</button>
                 </tr>
             }
@@ -87,41 +96,44 @@ else
 
     <br />
 
-    <div class="updatevagt">
+    <div class="updatevagt col-md-6 mb-3">
 
         <EditForm EditContext="@EditContext" class="row p-3">
             <h3>Update en vagt</h3>
 
-            <div class="col-md-6 mb-3">
-                <label for="NyVagtId">Vagt ID: @NyVagt.VagtId</label>
+            <div class="col-2 mb-3">
+                <label for="NyVagtId">Vagt ID</label>
+                <InputNumber id="NyVagtId" @bind-Value="Vagt.VagtId" class="form-control" />
             </div>
 
             <br />
 
-            <div class="col-md-6 mb-3">
-                <label for="NyBrugerId">Vagt start</label>
-                <InputText id="NyBrugerId" @bind-Value="NyVagt.VagtStart" class="form-control" />
+            <div class="col-2 mb-3">
+                <label for="NyVagtStart">Vagt start</label>
+                <InputText id="NyVagtStart" @bind-Value="Vagt.VagtStart" class="form-control" />
             </div>
 
             <br />
 
-            <div class="col-md-6 mb-3">
+            <div class="col-2 mb-3">
                 <label for="NyVagtSlut">Vagt slut</label>
-                <InputText id="NyVagtSlut" @bind-Value="NyVagt.VagtSlut" class="form-control" />
+                <InputText id="NyVagtSlut" @bind-Value="Vagt.VagtSlut" class="form-control" />
             </div>
 
             <br />
 
-            <div class="col-md-6 mb-3">
+            <div class="col-2 mb-3">
                 <label for="NyPause">Pause</label>
-                <InputNumber id="NyPause" @bind-Value="NyVagt.Pause" class="form-control" />
+                <InputNumber id="NyPause" @bind-Value="Vagt.Pause" class="form-control" />
             </div>
 
+            <br />
             <br />
 
             <div class="col-12 mb-3">
                 <button class="btn btn-primary" @onclick="UpdateVagtHandler">Update vagt</button>
             </div>
+
 
         </EditForm>
 
@@ -178,10 +190,10 @@ else
 
     private async Task OpdaterVagt(Vagt vagt)
     {
-        NyVagt.VagtId = vagt.VagtId;
-        NyVagt.VagtStart = vagt.VagtStart;
-        NyVagt.VagtSlut = vagt.VagtSlut;
-        NyVagt.Pause = vagt.Pause;
+        Vagt.VagtId = vagt.VagtId;
+        Vagt.VagtStart = vagt.VagtStart;
+        Vagt.VagtSlut = vagt.VagtSlut;
+        Vagt.Pause = vagt.Pause;
     }
 
 }

@@ -34,7 +34,7 @@ namespace misfits_festival.Server.Models
         {
             // sql = $@"CALL opret_vagt ({vagt.VagtId}, {vagt.Dato}, {vagt.VagtStart}, {vagt.VagtSlut}, {vagt.Pause}, {vagt.Område}, {vagt.OpgaveId}, {vagt.OpgaveBeskrivelse})";
             sql = $@"INSERT INTO vagt (dato, vagt_start, vagt_slut, pause, område, opgave_id)
-                        VALUES ('{vagt.Dato}', '{vagt.VagtStart}', '{vagt.VagtSlut}', {vagt.Pause}, '{vagt.Område}', '{vagt.OpgaveId}')";
+                        VALUES ('{vagt.Dato}', '{vagt.VagtStart}', '{vagt.VagtSlut}', {vagt.Pause}, '{vagt.Område}', {vagt.OpgaveId})";
 
             Console.WriteLine("addVagt vagtRepository");
 
@@ -46,11 +46,12 @@ namespace misfits_festival.Server.Models
 
 
         public async void UpdateVagt(Vagt vagt)
-        {
+        {   
             sql =
                 $@"UPDATE vagt SET vagt_start = '{vagt.VagtStart}', vagt_slut = '{vagt.VagtSlut}', pause = {vagt.Pause} WHERE vagt_id = {vagt.VagtId}";
-            
+
             // sql = $@"UPDATE vagt SET bruger_id = {vagt.BrugerId} WHERE vagt_id = {vagt.VagtId}";
+
             Console.WriteLine("sql: " + sql);
 
             Console.WriteLine("updateVagt vagtRepository");
