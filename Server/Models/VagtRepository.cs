@@ -60,6 +60,7 @@ namespace misfits_festival.Server.Models
             {
                 var updateVagt = await connection.ExecuteAsync(sql);
             }
+            
         }
 
         public async void DeleteVagt(int? vagtId)
@@ -67,7 +68,9 @@ namespace misfits_festival.Server.Models
             sql =
                 $@"DELETE FROM vagt WHERE vagt_id = {vagtId}";
 
-            Console.WriteLine("updateVagt vagtRepository");
+            Console.WriteLine("sql: " + sql);
+
+            Console.WriteLine("deleteVagt vagtRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {

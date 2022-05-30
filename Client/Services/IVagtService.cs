@@ -10,10 +10,9 @@ namespace misfits_festival.Client.Services
 
         Task<int> AddVagt(Vagt vagt); // metode til post af en ny instans af vagt klassen
 
-        Task<int> DeleteVagt(int? id); // metode til delete af en vagt, bruger et specifikt vagtId
-
         Task<int> UpdateVagt(Vagt vagt); // metode til update på en vagt, bruger et vagtId, samt en instans af vagt klassen
 
+        Task<int> DeleteVagt(int? id); // metode til delete af en vagt, bruger et specifikt vagtId
 
         // frivillig funktioner
         Task<Vagt[]?> GetMineVagter(string? brugerEmail); // metode til get på alle ledige vagter

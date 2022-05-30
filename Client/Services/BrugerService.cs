@@ -17,21 +17,9 @@ namespace misfits_festival.Client.Services
 
 
         // frivillig funktioner
-        public async Task<Vagt[]?> GetMineVagter(string brugerEmail)
-        {
-            var result = await httpClient.GetFromJsonAsync<Vagt[]>("api/frivillig/brugervagter"); // httpGet fra api'en
-            return result;
-        }
-
-        public async Task<Vagt[]?> GetLedigeVagter()
-        {
-            var result = await httpClient.GetFromJsonAsync<Vagt[]>("api/frivillig/ledigevagter"); // httpGet fra api'en
-            return result;
-        }
-
         public async Task<int> AddBruger(Bruger bruger)
         {
-            var response = await httpClient.PostAsJsonAsync("api/frivillig/addbruger", bruger);
+            var response = await httpClient.PostAsJsonAsync("api/bruger", bruger);
             var responseStatusCode = response.StatusCode;
             return (int)responseStatusCode;
         }

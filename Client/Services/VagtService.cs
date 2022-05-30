@@ -34,8 +34,8 @@ namespace misfits_festival.Client.Services
 
         public async Task<int> DeleteVagt(int? vagtId)
         {
-            var response = await httpClient.DeleteAsync("api/vagter"); // hvad skal der stå her?
-                                                                                   // skal der står DeleteAsync?
+            var response = await httpClient.DeleteAsync("api/vagter/deletevagt/" + vagtId); // hvad skal der stå her?
+                                                                                            // skal der står DeleteAsync?
             var responseStatusCode = response.StatusCode;
             return (int)responseStatusCode;
         }

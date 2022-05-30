@@ -70,7 +70,7 @@ else
                         <td>Ikke done</td>
                     }
                     <button class="btn btn-success" @onclick="() => OpdaterVagt(vagt)">Opdater denne vagt</button>
-                    <button class="btn btn-danger" @onclick="() => SletVagt(vagt.VagtId)">Slet denne vagt</button>
+                    <button class="btn btn-danger" @onclick="() => SletVagt(vagt)">Slet denne vagt</button>
                 </tr>
             }
         </table>
@@ -118,19 +118,22 @@ else
                 </div>
 
 
+            </EditForm>
+
+            <EditForm EditContext="@SlettetEditContext">
+
                 <h1>Slet en vagt</h1>
 
                 <div class="col-2 mb-3">
                     <label for="SletVagtId">Vagt ID</label>
-                    <InputNumber id="SletVagtId" @bind-Value="Vagt.VagtId" class="form-control" />
+                    <InputNumber id="SletVagtId" @bind-Value="SlettetVagt.VagtId" class="form-control" />
                 </div>
 
                 <div class="col-12 mb-3">
-                    <button class="btn btn-primary" @onclick="() => DeleteVagtHandler(Vagt.VagtId)">Slet vagt</button>
+                    <button class="btn btn-primary" @onclick="() => DeleteVagtHandler(SlettetVagt.VagtId)">Slet vagt</button>
                 </div>
 
             </EditForm>
-
 
         </div>
 
@@ -159,6 +162,10 @@ else
         </div>
 
     </div>
+
+    <br />
+    <br />
+
 }
 
 
@@ -171,6 +178,7 @@ else
 
 
     private EditContext EditContext;
+    private EditContext SlettetEditContext;
     private int ErrorCode { get; set; }
 
     private Bruger NyBruger = new Bruger(); // definerer en ny bruger
@@ -178,8 +186,9 @@ else
     // definerer en liste af vagt-opbjekter samt en enkelt vagt; disse bruges hhv. i GetAlleVagter() og UpdateVagt()
     private List<Vagt> Vagter = new List<Vagt>();
     private Vagt Vagt = new Vagt();
+    private Vagt SlettetVagt = new Vagt(); // definere endnu et Vagt opbjekt der bruges til sletning af en vagt
 
-    private List<Bruger> Frivillige = new List<Bruger>(); // definerer en ny liste af brugere
+    private List<Bruger> Frivillige = new List<Bruger>(); // definerer en ny liste af brugere med rollen Frivillig
 
     // interfaces der tages i brug i dette component
     [Inject]
@@ -190,6 +199,7 @@ else
     protected override void OnInitialized()
     {
         EditContext = new EditContext(Vagt);
+        SlettetEditContext = new EditContext(SlettetVagt);
     }
 
     private async Task UpdateVagtHandler()
@@ -202,10 +212,11 @@ else
 
     private async Task DeleteVagtHandler(int? vagtId)
     {
+        vagtId = SlettetVagt.VagtId;
         ErrorCode = await VagtService.DeleteVagt(vagtId);
         Console.WriteLine("Vagt slettet: " + ErrorCode);
         Vagt = new Vagt();
-        EditContext = new EditContext(Vagt);
+        SlettetEditContext = new EditContext(SlettetVagt);
     }
 
     protected override async Task OnInitializedAsync()
@@ -224,9 +235,9 @@ else
         Vagt.Pause = vagt.Pause;
     }
 
-    private async Task SletVagt(int? vagtId)
+    private async Task SletVagt(Vagt vagt)
     {
-        Vagt.VagtId = vagtId;
+        SlettetVagt.VagtId = vagt.VagtId;
     }
 
 }
