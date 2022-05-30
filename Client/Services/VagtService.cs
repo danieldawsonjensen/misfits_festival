@@ -14,7 +14,7 @@ namespace misfits_festival.Client.Services
         // koordinator funktioner
         public Task<Vagt[]?> GetAlleVagter()
         {
-            var result = httpClient.GetFromJsonAsync<Vagt[]>("api/vagter");
+            var result = httpClient.GetFromJsonAsync<Vagt[]>("api/vagter/allevagter");
             return result;
         }
 
@@ -46,7 +46,7 @@ namespace misfits_festival.Client.Services
         // frivillig funktioner
         public async Task<Vagt[]?> GetMineVagter(string? brugerEmail)
         {
-            var result = await httpClient.GetFromJsonAsync<Vagt[]>("api/vagter/brugervagter/" + brugerEmail); // httpGet fra api'en
+            var result = await httpClient.GetFromJsonAsync<Vagt[]>("api/vagter/" + brugerEmail); // httpGet fra api'en
             return result;
         }
 

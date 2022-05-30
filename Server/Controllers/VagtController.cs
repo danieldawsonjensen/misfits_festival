@@ -30,7 +30,7 @@ namespace misfits_festival.Server.Controllers
 		}
 
 		// koordinator funktioner
-		[HttpGet]
+		[HttpGet("allevagter")]
 		public async Task<IEnumerable<Vagt>> GetAlleVagter() // http get til samtlige vagter, både bookede og ledige
 		{
 			Console.WriteLine("getAlleVagter - vagtController");
@@ -64,7 +64,7 @@ namespace misfits_festival.Server.Controllers
 
 
 		//frivillig funktioner
-		[HttpGet("brugervagter")]
+		[HttpGet("{brugerEmail}")]
 		public async Task<IEnumerable<Vagt>> GetMineVagter(string? brugerEmail) // http get task til vagter med et specifikt brugerId
 		{
 			Console.WriteLine("getminevagter - vagtController");
