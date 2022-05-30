@@ -30,15 +30,16 @@
 </div>
 
 @code{
+    // key og string til opdatering af email'en der skal stå gemmes i localstorage
     const string noteKey = "note";
     string brugerEmail = "";
 
-    public async void UpdateLocalStorage()
+    public async void UpdateLocalStorage() // opdaterer det der står gemt i localStorage
     {
         await localStore.SetItemAsync(noteKey, brugerEmail);
     }
 
-    public async void ClearLocalStorage()
+    public async void ClearLocalStorage() // clear'er det der står gemt i localStorage
     {
         brugerEmail = "";
         await localStore.ClearAsync();
@@ -46,6 +47,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        brugerEmail = await localStore.GetItemAsync<string>(noteKey);
+        brugerEmail = await localStore.GetItemAsync<string>(noteKey); // brugerEmail opdateres til at indeholde data fra localStorage
     }
 }

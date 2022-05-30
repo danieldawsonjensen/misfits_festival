@@ -13,7 +13,12 @@
 
 <h3>Bruger side</h3>
 
-
+Skriv din email herunder:
+<br />
+<input @bind="brugerEmail" />
+<br />
+<button @onclick="UpdateLocalStorage">Save</button>
+<button @onclick="ClearLocalStorage">Clear</button>
 
     Din bruger email er: @brugerEmail
 
@@ -122,9 +127,8 @@
 
     @code {
         const string noteKey = "note";
-        string? brugerEmail = "daniel@frivillig.com";
+        string? brugerEmail = "";
 
-        /*
         public async void UpdateLocalStorage()
         {
             await localStore.SetItemAsync(noteKey, brugerEmail);
@@ -135,25 +139,24 @@
             brugerEmail = "";
             await localStore.ClearAsync();
         }
-        */
 
-        private List<Vagt> LedigeVagter = new List<Vagt>();
-        private List<Vagt> BrugerVagter = new List<Vagt>();
+        private List<Vagt> LedigeVagter = new List<Vagt>(); // liste til ledige vagter
+        private List<Vagt> BrugerVagter = new List<Vagt>(); // liste til brugerens vagter; koblet til brugerEmail
 
-        private Vagt Vagt = new Vagt();
+        private Vagt Vagt = new Vagt(); // ny vagt objekt; bruges til 
 
+        // interfaces der tages i brug i dette component
         [Inject]
-        public IBrugerService BrugerService { get; set; } // laver en instans af vores interface
-
+        public IBrugerService BrugerService { get; set; }
         [Inject]
         public IVagtService VagtService { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            // brugerEmail = await localStore.GetItemAsync<string?>(noteKey);
-            LedigeVagter = (await VagtService.GetLedigeVagter()).ToList();
+            brugerEmail = await localStore.GetItemAsync<string?>(noteKey);
+            LedigeVagter = (await VagtService.GetLedigeVagter()).ToList();// populater LedigeVagter vha. metoden i VagtService
             // int mitBrugerId = int.Parse(brugerId);
-            BrugerVagter = (await VagtService.GetMineVagter(brugerEmail)).ToList();
+            BrugerVagter = (await VagtService.GetMineVagter(brugerEmail)).ToList(); // populater MineVagter vha. metoden i VagtService
         }
 
 

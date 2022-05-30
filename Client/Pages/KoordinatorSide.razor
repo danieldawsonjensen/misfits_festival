@@ -28,9 +28,8 @@
 <br />
 
 
-@if (brugerEmail != "koordinator")
+@if (brugerEmail != "koordinator") // hvis den indtastede brugerEmail fra index-siden ikke er en koordinator, vises siden ikke
 {
-    <h1>Din email er: @brugerEmail</h1>
     <h1>Du har ikke adgang til denne side</h1>
 }
 else
@@ -61,7 +60,7 @@ else
                     <td>@vagt.Område</td>
                     <td>@vagt.OpgaveBeskrivelse</td>
                     <td>@vagt.BrugerEmail</td>
-                    @if (vagt.Dato < DateTime.Now)
+                    @if (vagt.Dato < DateTime.Now) // hvis dags dato er senere end vagtens, er status ikke done
                     {
                         <td>Done</td>
                     }
@@ -69,7 +68,8 @@ else
                     {
                         <td>Ikke done</td>
                     }
-                    <button class="btn btn-success" @onclick="() => OpdaterVagt(vagt)">Opdater denne vagt</button>
+                    <!--De to knapper nedenfor bruges til at vælge om man vil slette eller opdatere end vagt, samt hvilkens-->
+                    <button class="btn btn-success" @onclick="() => OpdaterVagt(vagt)">Opdater denne vagt</button> 
                     <button class="btn btn-danger" @onclick="() => SletVagt(vagt)">Slet denne vagt</button>
                 </tr>
             }
@@ -81,7 +81,7 @@ else
 
         <div class="updatevagt">
 
-            <EditForm EditContext="@EditContext" class="row p-3">
+            <EditForm EditContext="@EditContext" class="row p-3"> <!--Form til opdatering af en vagt-->
                 <h3>Update en vagt</h3>
 
                 <div class="col-2 mb-3">
@@ -120,7 +120,7 @@ else
 
             </EditForm>
 
-            <EditForm EditContext="@SlettetEditContext">
+            <EditForm EditContext="@SlettetEditContext"> <!--Form til sletning af en vagt-->
 
                 <h1>Slet en vagt</h1>
 
@@ -178,7 +178,7 @@ else
 
 
     private EditContext EditContext;
-    private EditContext SlettetEditContext;
+    private EditContext SlettetEditContext; // definerer en sekundær EditContext; bruges til sletning af en vagt
     private int ErrorCode { get; set; }
 
     private Bruger NyBruger = new Bruger(); // definerer en ny bruger
@@ -186,7 +186,7 @@ else
     // definerer en liste af vagt-opbjekter samt en enkelt vagt; disse bruges hhv. i GetAlleVagter() og UpdateVagt()
     private List<Vagt> Vagter = new List<Vagt>();
     private Vagt Vagt = new Vagt();
-    private Vagt SlettetVagt = new Vagt(); // definere endnu et Vagt opbjekt der bruges til sletning af en vagt
+    private Vagt SlettetVagt = new Vagt(); // definerer endnu et Vagt opbjekt der bruges til sletning af en vagt
 
     private List<Bruger> Frivillige = new List<Bruger>(); // definerer en ny liste af brugere med rollen Frivillig
 
@@ -196,13 +196,13 @@ else
     [Inject]
     public IBrugerService BrugerService { get; set; }
 
-    protected override void OnInitialized()
+    protected override void OnInitialized() // initialiserer de to EditContext's
     {
         EditContext = new EditContext(Vagt);
         SlettetEditContext = new EditContext(SlettetVagt);
     }
 
-    private async Task UpdateVagtHandler()
+    private async Task UpdateVagtHandler() // implementerer UpdateVagt(vagt) fra VagtService
     {
         ErrorCode = await VagtService.UpdateVagt(Vagt);
         Console.WriteLine("Vagt opdateret: " + ErrorCode);
@@ -210,7 +210,7 @@ else
         EditContext = new EditContext(Vagt);
     }
 
-    private async Task DeleteVagtHandler(int? vagtId)
+    private async Task DeleteVagtHandler(int? vagtId) // implementerer DeleteVagt(brugerId) fra VagtService
     {
         vagtId = SlettetVagt.VagtId;
         ErrorCode = await VagtService.DeleteVagt(vagtId);

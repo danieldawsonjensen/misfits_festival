@@ -13,7 +13,7 @@
 
 <div class="parent">
     <div class="opretvagt">
-        <EditForm EditContext="@EditContext" class="row p-3">
+        <EditForm EditContext="@EditContext" class="row p-3"> <!--Form til opretning af en ny vagt-->
 
             <div class="col-md-6 mb-3">
                 <label for="OpgaveBeskrivelse">Opgave Beskrivelse</label>
@@ -72,6 +72,8 @@
                 <tr>
                     <td>@opgave.OpgaveId</td>
                     <td>@opgave.OpgaveBeskrivelse</td>
+                    <!--De to knapper nedenfor bruges hhv. til valg af opgave når man laver en ny vagt, samt valg af opgave
+                        til sletning af en opgave-->
                     <button class="btn btn-success" @onclick="() => VælgOpgave(opgave)">Vælg denne opgave</button>
                     <button class="btn btn-danger" @onclick="() => SletOpgaveKnap(opgave.OpgaveId)">Slet denne opgave</button>
                 </tr>

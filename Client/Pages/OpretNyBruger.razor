@@ -13,6 +13,7 @@
 
 <div class="opretbruger">
     <EditForm EditContext="@EditContext" class="row p-3">
+        <!--Form til opretning af en ny bruger-->
 
         <div class="col-md-12 mb-3">
             <label for="BrugerNavn">Bruger navn</label>
@@ -31,10 +32,10 @@
         <div class="col-md-6 mb-3">
             <label for="RolleId">Rolle</label>
             <InputSelect id="RolleId" @bind-Value="Bruger.RolleId">
-                @foreach(var rolle in Roller)
-                    {
-                        <option>@rolle</option>
-                    }
+                @foreach (var rolle in Roller)
+                {
+                    <option>@rolle</option>
+                }
             </InputSelect>
         </div>
 
@@ -88,7 +89,7 @@
 
     private List<Kompetence> Kompetencer = new List<Kompetence>();
 
-    private int[] Roller = { 1 };
+    private int[] Roller = { 1 }; // når en bruger oprettes skal de kun kunne have rolleId 1
 
     private int ErrorCode { get; set; }
 
@@ -100,10 +101,10 @@
     protected override void OnInitialized()
     {
         EditContext = new EditContext(Bruger);
-        Bruger.RolleId = Roller[0];
+        Bruger.RolleId = Roller[0]; // gør at dropdown menuen til rolleId står på 1 ved initialisering
     }
 
-    private async Task AddBrugerHandler()
+    private async Task AddBrugerHandler() // implementerer AddBruger(bruger)
     {
         ErrorCode = await BrugerService.AddBruger(Bruger);
         Console.WriteLine("Bruger tilføjet: " + ErrorCode);
