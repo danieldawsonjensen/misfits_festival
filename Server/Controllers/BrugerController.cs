@@ -30,15 +30,29 @@ namespace misfits_festival.Server.Controllers
 		}
 
 		// koordinator funktioner
-		[HttpGet]
+		[HttpGet("allefrivillige")]
 		public async Task<IEnumerable<Bruger>> GetAlleFrivillige() // http get på alle frivillige i systemet
 		{
 			Console.WriteLine("getAlleFrivillige - brugerController");
 			return await Brugere.GetAlleFrivillige();
 		}
 
+		[HttpGet("allekoordinatorer")]
+		public async Task<IEnumerable<Bruger>> GetAlleKoordinatorer() // http get på alle frivillige i systemet
+		{
+			Console.WriteLine("getAlleKoordinatorer - brugerController");
+			return await Brugere.GetAlleKoordinatorer();
+		}
 
-		// frivillig funktioner
+
+        // frivillig funktioner
+        [HttpGet("{brugerEmail}")]
+		public async Task<IEnumerable<Bruger>> GetBruger(string? brugerEmail)
+        {
+            Console.WriteLine("getBruger - brugerController");
+			return await Brugere.GetBruger(brugerEmail);
+        }
+
 		[HttpPost]
 		public void AddBruger(Bruger bruger)
 		{

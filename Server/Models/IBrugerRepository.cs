@@ -16,8 +16,12 @@ namespace misfits_festival.Server.Models
 		// koordinator funktioner
 		Task<IEnumerable<Bruger>> GetAlleFrivillige(); // task til at hente alle frivillige i systemet
 
+		Task<IEnumerable<Bruger>> GetAlleKoordinatorer();
+
 
 		// frivillig funktioner
+		Task<IEnumerable<Bruger>> GetBruger(string? brugerEmail);
+
 		void AddBruger(Bruger bruger); // kan evt være en koordinators job..?
 
 		void UpdateBruger(Bruger bruger);

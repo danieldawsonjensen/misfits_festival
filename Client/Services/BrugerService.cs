@@ -11,12 +11,24 @@ namespace misfits_festival.Client.Services
         // koordinator funktioner
         public Task<Bruger[]?> GetAlleFrivillige()
         {
-            var result = httpClient.GetFromJsonAsync<Bruger[]>("api/bruger");
+            var result = httpClient.GetFromJsonAsync<Bruger[]>("api/bruger/allefrivillige");
+            return result;
+        }
+
+        public Task<Bruger[]?> GetAlleKoordinatorer()
+        {
+            var result = httpClient.GetFromJsonAsync<Bruger[]>("api/bruger/allekoordinatorer");
             return result;
         }
 
 
         // frivillig funktioner
+        public Task<Bruger[]?> GetBruger(string? brugerEmail)
+        {
+            var result = httpClient.GetFromJsonAsync<Bruger[]>("api/bruger/" + brugerEmail);
+            return result;
+        }
+
         public async Task<int> AddBruger(Bruger bruger)
         {
             var response = await httpClient.PostAsJsonAsync("api/bruger", bruger);

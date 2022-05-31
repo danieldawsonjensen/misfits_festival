@@ -21,7 +21,7 @@ namespace misfits_festival.Server.Models
         {
             sql = $@"SELECT * FROM opgave";
 
-            Console.WriteLine("getAlleOpgaver opgaveRepository");
+            Console.WriteLine("getAlleOpgaver - opgaveRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {
@@ -36,7 +36,7 @@ namespace misfits_festival.Server.Models
                 $@"INSERT INTO opgave (""opgave_beskrivelse"")
                     VALUES ('{opgave.OpgaveBeskrivelse}')";
 
-            Console.WriteLine("addOpgave opgaveRepository");
+            Console.WriteLine("addOpgave - opgaveRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {
@@ -50,7 +50,7 @@ namespace misfits_festival.Server.Models
                      SET opgave_beskrivelse = '{opgave.OpgaveBeskrivelse}'
                      WHERE opgave_id = {opgave.OpgaveId};";
 
-            Console.WriteLine("updateOpgave opgaveRepository");
+            Console.WriteLine("updateOpgave - opgaveRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {
@@ -62,7 +62,7 @@ namespace misfits_festival.Server.Models
         {
             sql = $@"DELETE FROM opgave WHERE opgave_id = {opgaveId};";
             Console.WriteLine("sql:" + sql);
-            Console.WriteLine("deleteOpgave opgaveRepository");
+            Console.WriteLine("deleteOpgave - opgaveRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {

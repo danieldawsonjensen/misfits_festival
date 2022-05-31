@@ -52,14 +52,11 @@ namespace misfits_festival.Server.Controllers
 			Vagter.UpdateVagt(vagt);
 		}
 
-		[HttpDelete("{vagtId:int?}")]
+		[HttpDelete("{vagtId:int?}")] //vagtId hentes fra services som modtager ID'et fra razor siden
 		public void DeleteVagt(int? vagtId) // http delete til at slette en vagt fra tabellen
 		{
 			Console.WriteLine("deleteVagt - vagtController" + vagtId);
 			Vagter.DeleteVagt(vagtId);
-
-
-
 		}
 
 

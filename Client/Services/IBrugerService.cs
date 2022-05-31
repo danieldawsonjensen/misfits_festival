@@ -8,8 +8,12 @@ namespace misfits_festival.Client.Services
 		// koordinator funktioner
 		Task<Bruger[]?> GetAlleFrivillige(); // metode til get af alle frivillige
 
+        Task<Bruger[]?> GetAlleKoordinatorer();
+
 
 		// frivillig funktioner
+		Task<Bruger[]?> GetBruger(string? brugerEmail);
+
 		Task<int> AddBruger(Bruger bruger);
 
 		Task<int> UpdateBruger(Bruger bruger);

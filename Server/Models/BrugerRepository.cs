@@ -21,10 +21,9 @@ namespace misfits_festival.Server.Models
         // koordinator funktioner
         public async Task<IEnumerable<Bruger>> GetAlleFrivillige()
         {
-            // sql = @"SELECT * FROM frivillig_kompetencer";
             sql = $@"SELECT * FROM frivillig_kompetencer;";
 
-            Console.WriteLine("getAlleFrivillige brugerRepository");
+            Console.WriteLine("getAlleFrivillige - brugerRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {
@@ -33,14 +32,40 @@ namespace misfits_festival.Server.Models
             }
         }
 
+        public async Task<IEnumerable<Bruger>> GetAlleKoordinatorer()
+        {
+            sql = $@"SELECT * FROM alle_koordinatorer;";
+
+            Console.WriteLine("getAlleKoordinatorer - brugerRepository");
+
+            using (var connection = new NpgsqlConnection(connString))
+            {
+                var alleKoordinatorer = await connection.QueryAsync<Bruger>(sql);
+                return alleKoordinatorer.ToList();
+            }
+        }
+
 
         // frivillig funktioner
+        public async Task<IEnumerable<Bruger>> GetBruger(string? brugerEmail)
+        {
+            sql = $@"SELECT * FROM frivillig_kompetencer WHERE bruger_email = '{brugerEmail}';";
+
+            Console.WriteLine("getBruger - brugerRepository");
+
+            using (var connection = new NpgsqlConnection(connString))
+            {
+                var minBruger = await connection.QueryAsync<Bruger>(sql);
+                return minBruger.ToList();
+            }
+        }
+
         public async void AddBruger(Bruger bruger)
         {
             sql =
                 $@"CALL opret_bruger ('{bruger.BrugerNavn}', '{bruger.BrugerEmail}', {bruger.RolleId}, '{bruger.TelefonNummer}')";
 
-            Console.WriteLine("addbBruger brugerRepository");
+            Console.WriteLine("addbBruger - brugerRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {
@@ -54,7 +79,7 @@ namespace misfits_festival.Server.Models
                      SET bruger_navn = '{bruger.BrugerNavn}'
                      WHERE brugerEmail = '{bruger.BrugerEmail}'";
 
-            Console.WriteLine("updateBruger brugerRepository");
+            Console.WriteLine("updateBruger - brugerRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {
@@ -67,7 +92,7 @@ namespace misfits_festival.Server.Models
             sql = $@"DELETE FROM bruger
                      WHERE brugerEmail = '{brugerEmail}'";
 
-            Console.WriteLine("deleteBruger brugerRepository");
+            Console.WriteLine("deleteBruger - brugerRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {
@@ -79,7 +104,7 @@ namespace misfits_festival.Server.Models
         {
             sql = $@"SELECT * FROM kompetence";
 
-            Console.WriteLine("getAlleKompetencer brugerRepository");
+            Console.WriteLine("getAlleKompetencer - brugerRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {

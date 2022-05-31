@@ -63,19 +63,17 @@
 
         <table>
             <tr>
-                <th>Opgave ID</th>
                 <th>Opgave beskrivelse</th>
                 <th></th>
             </tr>
             @foreach (var opgave in Opgaver)
             {
                 <tr>
-                    <td>@opgave.OpgaveId</td>
                     <td>@opgave.OpgaveBeskrivelse</td>
                     <!--De to knapper nedenfor bruges hhv. til valg af opgave når man laver en ny vagt, samt valg af opgave
                         til sletning af en opgave-->
-                    <button class="btn btn-success" @onclick="() => VælgOpgave(opgave)">Vælg denne opgave</button>
-                    <button class="btn btn-danger" @onclick="() => SletOpgaveKnap(opgave.OpgaveId)">Slet denne opgave</button>
+                    <button class="btn btn-success col-5" @onclick="() => VælgOpgave(opgave)">Vælg</button>
+                    <button class="btn btn-danger col-5" @onclick="() => SletOpgaveKnap(opgave)">Slet</button>
                 </tr>
 
             }
@@ -91,8 +89,8 @@
 
         <div class="col-md-12 mb-3">
             <label for="OpgaveSlet">Slet opgave</label>
-            <input id="OpgaveSlet" @bind-value="@SlettetOpgave.OpgaveId" class="form-control" />
-            <button class="btn btn-primary" @onclick="() => DeleteOpgaveHandler(SlettetOpgave.OpgaveId)">Slet denne opgave</button>
+            <input id="OpgaveSlet" @bind-value="SlettetOpgave.OpgaveBeskrivelse" class="form-control" />
+            <button class="btn btn-primary" @onclick="DeleteOpgaveHandler">Slet denne opgave</button>
         </div>
         
     </div>
@@ -101,7 +99,6 @@
 
 @code {
     private EditContext EditContext;
-    // private EditContext EditOpgaveContext;
     private Vagt Vagt = new Vagt();
     private List<Opgave> Opgaver = new List<Opgave>();
     private Opgave Opgave = new Opgave();
@@ -137,12 +134,11 @@
     }
 
 
-    private async void DeleteOpgaveHandler(int? opgaveId)
+    private async void DeleteOpgaveHandler()
     {
         ErrorCode = await OpgaveService.DeleteOpgave(SlettetOpgave.OpgaveId);
-        OpgaveService.DeleteOpgave(SlettetOpgave.OpgaveId);
         Console.WriteLine("Opgave slettet: " + ErrorCode);
-        Opgave = new Opgave();
+        SlettetOpgave = new Opgave();
     }
 
 
@@ -158,10 +154,10 @@
         Vagt.OpgaveBeskrivelse = opgave.OpgaveBeskrivelse;
     }
 
-    private async Task SletOpgaveKnap(int? opgaveId) // lav om til opgaveId og prøv metoderne igen
+    private async Task SletOpgaveKnap(Opgave opgave) // lav om til opgaveId og prøv metoderne igen
     {
-        SlettetOpgave.OpgaveId = opgaveId; // fortæller hvilket specifikt id der skal slettes
-        // SlettetOpgave.OpgaveBeskrivelse = opgave.OpgaveBeskrivelse;
+        SlettetOpgave.OpgaveId = opgave.OpgaveId; // fortæller hvilket specifikt id der skal slettes
+        SlettetOpgave.OpgaveBeskrivelse = opgave.OpgaveBeskrivelse;
     }
 
 }

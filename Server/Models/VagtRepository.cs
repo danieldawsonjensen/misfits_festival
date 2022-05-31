@@ -21,7 +21,7 @@ namespace misfits_festival.Server.Models
         {
             sql = @"SELECT * FROM vagt_opgave";
 
-            Console.WriteLine("getAlleVagter vagtRepository");
+            Console.WriteLine("getAlleVagter - vagtRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {
@@ -36,7 +36,7 @@ namespace misfits_festival.Server.Models
             sql = $@"INSERT INTO vagt (dato, vagt_start, vagt_slut, pause, område, opgave_id)
                         VALUES ('{vagt.Dato}', '{vagt.VagtStart}', '{vagt.VagtSlut}', {vagt.Pause}, '{vagt.Område}', {vagt.OpgaveId})";
 
-            Console.WriteLine("addVagt vagtRepository");
+            Console.WriteLine("addVagt - vagtRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {
@@ -54,7 +54,7 @@ namespace misfits_festival.Server.Models
 
             Console.WriteLine("sql: " + sql);
 
-            Console.WriteLine("updateVagt vagtRepository");
+            Console.WriteLine("updateVagt - vagtRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {
@@ -70,7 +70,7 @@ namespace misfits_festival.Server.Models
 
             Console.WriteLine("sql: " + sql);
 
-            Console.WriteLine("deleteVagt vagtRepository");
+            Console.WriteLine("deleteVagt - vagtRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {
@@ -93,7 +93,7 @@ namespace misfits_festival.Server.Models
 
             Console.WriteLine("sql:" + sql);
 
-            Console.WriteLine("getMineVagter vagtRepository");
+            Console.WriteLine("getMineVagter - vagtRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {
@@ -108,7 +108,7 @@ namespace misfits_festival.Server.Models
             sql = @"SELECT * FROM vagt_opgave
             WHERE bruger_email IS NULL";
 
-            Console.WriteLine("getLedigeVagter vagtRepository");
+            Console.WriteLine("getLedigeVagter - vagtRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {
@@ -125,7 +125,7 @@ namespace misfits_festival.Server.Models
                 SET bruger_email = '{vagt.BrugerEmail}'
                 WHERE vagt_id = {vagt.VagtId}";
 
-            Console.WriteLine("bookVagt vagtRepository");
+            Console.WriteLine("bookVagt - vagtRepository");
 
             using (var connection = new NpgsqlConnection(connString))
             {
