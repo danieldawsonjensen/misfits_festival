@@ -49,7 +49,7 @@ namespace misfits_festival.Server.Models
         // frivillig funktioner
         public async Task<IEnumerable<Bruger>> GetBruger(string? brugerEmail)
         {
-            // sql = $@"SELECT * FROM frivillig_kompetencer WHERE bruger_email = '{brugerEmail}';";
+            /*
             sql = $@" SELECT
                         b.bruger_id,
                         b.bruger_navn,
@@ -62,6 +62,8 @@ namespace misfits_festival.Server.Models
                     WHERE b.rolle_id = 1 AND bruger_email = '{brugerEmail}'
                     GROUP BY b.bruger_id, b.bruger_navn, b.bruger_email, b.telefonnummer
                     ORDER BY b.bruger_navn;";
+            */
+            sql = $@"SELECT * FROM bruger WHERE bruger_email = '{brugerEmail}'";
 
             Console.WriteLine("getBruger - brugerRepository");
 
@@ -75,7 +77,7 @@ namespace misfits_festival.Server.Models
         public async void AddBruger(Bruger bruger)
         {
             sql =
-                $@"CALL opret_bruger ('{bruger.BrugerNavn}', '{bruger.BrugerEmail}', {bruger.RolleId}, '{bruger.TelefonNummer}')";
+                $@"CALL opret_bruger ('{bruger.BrugerNavn}', '{bruger.BrugerEmail}', 1, '{bruger.TelefonNummer}')";
 
             Console.WriteLine("addbBruger - brugerRepository");
 
