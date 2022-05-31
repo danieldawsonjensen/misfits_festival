@@ -31,7 +31,7 @@ namespace misfits_festival.Client.Services
 
         public async Task<int> AddBruger(Bruger bruger)
         {
-            var response = await httpClient.PostAsJsonAsync("api/bruger", bruger);
+            var response = await httpClient.PostAsJsonAsync("api/bruger/", bruger);
             var responseStatusCode = response.StatusCode;
             return (int)responseStatusCode;
         }
@@ -43,10 +43,9 @@ namespace misfits_festival.Client.Services
             return (int)responseStatusCode;
         }
 
-        public async Task<int> DeleteBruger(string brugerEmail)
+        public async Task<int> DeleteBruger(string? brugerEmail)
         {
-            var response = await httpClient.PostAsJsonAsync("api/bruger", brugerEmail); // hvad skal der stå her?
-                                                                                        // skal der står DeleteAsync?
+            var response = await httpClient.DeleteAsync("api/bruger" + brugerEmail);
             var responseStatusCode = response.StatusCode;
             return (int)responseStatusCode;
         }

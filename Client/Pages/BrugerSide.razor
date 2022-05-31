@@ -94,9 +94,12 @@ Skriv din email herunder:
 
         </div>
 
+        <br />
+
         <div class="brugerprofil">
 
-            <h1>Dine profil</h1>
+            <h1>Din profil</h1>
+
 
             <table>
 
@@ -107,17 +110,54 @@ Skriv din email herunder:
                     <th>Kompetencer</th>
                 </tr>
 
-                @foreach (var bruger in Bruger)
-                    {
-                        <tr>
-                            <td>@bruger.BrugerNavn</td>
-                            <td>@bruger.BrugerEmail</td>
-                            <td>@bruger.TelefonNummer</td>
-                            <td>@bruger.Kompetencer</td>
-                        </tr>
-                    }
+                @foreach (var bruger in Brugere)
+                {
+                    <tr>
+                        <td>@bruger.BrugerNavn</td>
+                        <td>@bruger.BrugerEmail</td>
+                        <td>@bruger.TelefonNummer</td>
+                        <td>@bruger.Kompetencer</td>
+                        <button class="btn btn-success" @onclick="() => OpdaterBruger(bruger)">Opdater din profil</button>
+                    </tr>
+                }
 
             </table>
+
+            <br />
+
+            <EditForm EditContext="@EditContext" class="row p-3">
+                <!--Form til opdatering af en brugerens profil-->
+                <h3>Opdater din profil</h3>
+
+                <div class="col-2 mb-3">
+                    <label for="NyBrugerNavn">Brugernavn</label>
+                    <InputText id="NyBrugerNavn" @bind-Value="Bruger.BrugerNavn" class="form-control" />
+                </div>
+
+                <br />
+
+                <div class="col-2 mb-3">
+                    <label for="NyBrugerStart">Bruger email</label>
+                    <InputText id="NyBrugerEmail" @bind-Value="Bruger.BrugerEmail" class="form-control" />
+                </div>
+
+                <br />
+
+                <div class="col-2 mb-3">
+                    <label for="NyTelefonnumer">Telefonnummer</label>
+                    <InputText id="NyTelefonnummer" @bind-Value="Bruger.TelefonNummer" class="form-control" />
+                </div>
+
+                <br />
+                <br />
+
+                <div class="col-12 mb-3">
+                    <button class="btn btn-primary" @onclick="UpdateBrugerHandler">Opdater profil</button>
+                </div>
+
+
+            </EditForm>
+
 
         </div>
 
@@ -127,6 +167,9 @@ Skriv din email herunder:
     @code {
         const string noteKey = "note";
         string? brugerEmail = "";
+
+        private EditContext EditContext;
+        private int ErrorCode { get; set; }
 
         public async void UpdateLocalStorage()
         {
@@ -142,7 +185,8 @@ Skriv din email herunder:
         private List<Vagt> LedigeVagter = new List<Vagt>(); // liste til ledige vagter
 
         // definerer en bruger og en liste af brugerens vagter
-        private List<Bruger> Bruger = new List<Bruger>();
+        private Bruger Bruger = new Bruger();
+        private List<Bruger> Brugere = new List<Bruger>();
         private List<Vagt> BrugerVagter = new List<Vagt>();
 
         // interfaces der tages i brug i dette component
@@ -151,13 +195,35 @@ Skriv din email herunder:
         [Inject]
         public IVagtService VagtService { get; set; }
 
+        protected override void OnInitialized()
+        {
+            EditContext = new EditContext(Bruger);
+        }
+
+        private async Task UpdateBrugerHandler() // implementerer UpdateVagt(vagt) fra VagtService
+        {
+            ErrorCode = await BrugerService.UpdateBruger(Bruger);
+            Console.WriteLine("Vagt opdateret: " + ErrorCode);
+            Bruger = new Bruger();
+            EditContext = new EditContext(Bruger);
+        }
+
         protected override async Task OnInitializedAsync()
         {
             brugerEmail = await localStore.GetItemAsync<string?>(noteKey);
             LedigeVagter = (await VagtService.GetLedigeVagter()).ToList();// populater LedigeVagter vha. metoden i VagtService
 
-            Bruger = (await BrugerService.GetBruger(brugerEmail)).ToList();
+            Brugere = (await BrugerService.GetBruger(brugerEmail)).ToList();
+            // Bruger = (await BrugerService.GetBruger(brugerEmail));
             BrugerVagter = (await VagtService.GetMineVagter(brugerEmail)).ToList(); // populater MineVagter vha. metoden i VagtService
+        }
+
+        private async Task OpdaterBruger(Bruger bruger)
+        {
+            Bruger.BrugerId = bruger.BrugerId;
+            Bruger.BrugerNavn = bruger.BrugerNavn;
+            Bruger.BrugerEmail = bruger.BrugerEmail;
+            Bruger.TelefonNummer = bruger.TelefonNummer;
         }
 
 

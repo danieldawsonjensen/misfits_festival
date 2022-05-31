@@ -118,33 +118,6 @@
 
                 </EditForm>
 
-                <div class="koordinatorer">
-                    <h2>Alle koordinatorer</h2>
-                    <table>
-
-                        <tr>
-                            <th>Brugernavn</th>
-                            <th>Brugernavn</th>
-                            <th>Bruger email</th>
-                            <th>Rolle ID</th>
-                            <th>Telefonnummer</th>
-                        </tr>
-
-                        @foreach (var koordinator in Koordinatorer)
-                        {
-                            <tr>
-                                <td>@koordinator.BrugerId</td>
-                                <td>@koordinator.BrugerNavn</td>
-                                <td>@koordinator.BrugerEmail</td>
-                                <td>@koordinator.RolleId</td>
-                                <td>@koordinator.TelefonNummer</td>
-
-                            </tr>
-                        }
-
-                    </table>
-
-                </div>
 
                 <EditForm EditContext="@SlettetEditContext">
                     <!--Form til sletning af en vagt-->
@@ -215,8 +188,6 @@
     private EditContext EditContext;
     private EditContext SlettetEditContext; // definerer en sekundær EditContext; bruges til sletning af en vagt
     private int ErrorCode { get; set; }
-
-    private Bruger NyBruger = new Bruger(); // definerer en ny bruger
 
     // definerer en liste af vagt-opbjekter samt en enkelt vagt; disse bruges hhv. i GetAlleVagter() og UpdateVagt()
     private List<Vagt> Vagter = new List<Vagt>();

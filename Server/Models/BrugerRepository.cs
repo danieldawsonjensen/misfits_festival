@@ -49,7 +49,19 @@ namespace misfits_festival.Server.Models
         // frivillig funktioner
         public async Task<IEnumerable<Bruger>> GetBruger(string? brugerEmail)
         {
-            sql = $@"SELECT * FROM frivillig_kompetencer WHERE bruger_email = '{brugerEmail}';";
+            // sql = $@"SELECT * FROM frivillig_kompetencer WHERE bruger_email = '{brugerEmail}';";
+            sql = $@" SELECT
+                        b.bruger_id,
+                        b.bruger_navn,
+                        b.bruger_email,
+                        b.telefonnummer,
+                        string_agg(k.kompetence_beskrivelse, ', '::text) AS kompetencer
+                    FROM bruger b
+                    JOIN bruger_kompetence bk ON b.bruger_id = bk.bruger_bruger_id
+                    JOIN kompetence k ON bk.kompetence_kompetence_id = k.kompetence_id
+                    WHERE b.rolle_id = 1 AND bruger_email = '{brugerEmail}'
+                    GROUP BY b.bruger_id, b.bruger_navn, b.bruger_email, b.telefonnummer
+                    ORDER BY b.bruger_navn;";
 
             Console.WriteLine("getBruger - brugerRepository");
 
@@ -73,11 +85,10 @@ namespace misfits_festival.Server.Models
             }
         }
 
-        public async void UpdateBruger(Bruger bruger) // skal man kunne opdatere mere end bare navn fx?
+        public async void UpdateBruger(Bruger bruger) // where bruger_id = {bruger.brugerId}
         {
-            sql = $@"UPDATE bruger
-                     SET bruger_navn = '{bruger.BrugerNavn}'
-                     WHERE brugerEmail = '{bruger.BrugerEmail}'";
+            sql =
+                $@"UPDATE bruger SET bruger_navn = '{bruger.BrugerNavn}', bruger_email = '{bruger.BrugerEmail}', telefonnummer = '{bruger.TelefonNummer}' WHERE bruger_id = {bruger.BrugerId};";
 
             Console.WriteLine("updateBruger - brugerRepository");
 
