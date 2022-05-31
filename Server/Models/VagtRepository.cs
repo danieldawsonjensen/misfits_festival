@@ -120,10 +120,16 @@ namespace misfits_festival.Server.Models
 
         public async void BookVagt(Vagt vagt)
         {
+            /*
             sql =
                 $@"UPDATE vagt
                 SET bruger_email = '{vagt.BrugerEmail}'
                 WHERE vagt_id = {vagt.VagtId}";
+            */
+            sql =
+                $@"UPDATE vagt SET bruger_id = {vagt.BrugerId} WHERE vagt_id = {vagt.VagtId}";
+
+            Console.WriteLine("sql: " + sql);
 
             Console.WriteLine("bookVagt - vagtRepository");
 

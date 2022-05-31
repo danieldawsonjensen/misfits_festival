@@ -118,22 +118,25 @@
 
                 </EditForm>
 
+                <div class="sletvagt">
 
-                <EditForm EditContext="@SlettetEditContext">
-                    <!--Form til sletning af en vagt-->
+                    <EditForm EditContext="@EditContext">
+                        <!--Form til sletning af en vagt-->
 
-                    <h1>Slet en vagt</h1>
+                        <h1>Slet en vagt</h1>
 
-                    <div class="col-2 mb-3">
-                        <label for="SletVagtId">Vagt ID</label>
-                        <InputNumber id="SletVagtId" @bind-Value="SlettetVagt.VagtId" class="form-control" />
-                    </div>
+                        <div class="col-2 mb-3">
+                            <label for="SletVagtId">Vagt ID</label>
+                            <InputNumber id="SletVagtId" @bind-Value="SlettetVagt.VagtId" class="form-control" />
+                        </div>
 
-                    <div class="col-12 mb-3">
-                        <button class="btn btn-primary" @onclick="() => DeleteVagtHandler(SlettetVagt.VagtId)">Slet vagt</button>
-                    </div>
+                        <div class="col-12 mb-3">
+                            <button class="btn btn-primary" @onclick="() => DeleteVagtHandler(SlettetVagt.VagtId)">Slet vagt</button>
+                        </div>
 
-                </EditForm>
+                    </EditForm>
+
+                </div>
 
             </div>
 
@@ -224,7 +227,8 @@
         ErrorCode = await VagtService.DeleteVagt(vagtId);
         Console.WriteLine("Vagt slettet: " + ErrorCode);
         Vagt = new Vagt();
-        SlettetEditContext = new EditContext(SlettetVagt);
+        // SlettetEditContext = new EditContext(SlettetVagt);
+        EditContext = new EditContext(SlettetVagt);
     }
 
     protected override async Task OnInitializedAsync()

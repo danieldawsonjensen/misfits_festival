@@ -47,12 +47,44 @@ Skriv din email herunder:
                         <td>@vagt.Pause</td>
                         <td>@vagt.Område</td>
                         <td>@vagt.OpgaveBeskrivelse</td>
+                        <button class="btn btn-success" @onclick="() => BookVagt(vagt)">Opdater din profil</button>
                     </tr>
                 }
             </table>
             <!--</div>-->
 
             <br />
+
+            <div class="bookvagt">
+                <h1>Book vagt</h1>
+
+                <EditForm EditContext="@EditContext" class="row p-3">
+                    <!--Form til opdatering af en brugerens profil-->
+                    <h3>Book en vagt</h3>
+
+                    <div class="col-2 mb-3">
+                        <label for="BookVagtId">Vagt ID</label>
+                        <InputNumber id="BookVagtId" @bind-Value="Vagt.VagtId" class="form-control" />
+                    </div>
+
+                    <br />
+
+                    <div class="col-2 mb-3">
+                        <label for="BookBrugerId">Bruger ID</label>
+                        <InputNumber id="BookBrugerId" @bind-Value="Bruger.BrugerId" class="form-control" />
+                    </div>
+
+                    <br />
+
+                    <div class="col-12 mb-3">
+                        <button class="btn btn-primary" @onclick="BookVagtHandler">Book vagt</button>
+                    </div>
+
+
+                </EditForm>
+
+            </div>
+
             <br />
             <br />
 
@@ -185,6 +217,7 @@ Skriv din email herunder:
         }
 
         private List<Vagt> LedigeVagter = new List<Vagt>(); // liste til ledige vagter
+        private Vagt Vagt = new Vagt(); // definerer en vagt som bruges til booking af vagter
 
         // definerer en bruger og en liste af brugerens vagter
         private Bruger Bruger = new Bruger();
@@ -210,6 +243,14 @@ Skriv din email herunder:
             EditContext = new EditContext(Bruger);
         }
 
+        private async Task BookVagtHandler()
+        {
+            ErrorCode = await VagtService.BookVagt(Vagt);
+            Console.WriteLine("Vagt booket: " + ErrorCode);
+            Vagt = new Vagt();
+            EditContext = new EditContext(Vagt);
+        }
+
         protected override async Task OnInitializedAsync()
         {
             brugerEmail = await localStore.GetItemAsync<string?>(noteKey);
@@ -228,5 +269,8 @@ Skriv din email herunder:
             Bruger.TelefonNummer = bruger.TelefonNummer;
         }
 
-
+        private async Task BookVagt(Vagt vagt)
+        {
+            Vagt.VagtId = vagt.VagtId;
+        }
     }
