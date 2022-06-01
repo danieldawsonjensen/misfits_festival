@@ -13,9 +13,33 @@
     width: 50%;
 }
 
-.brugerprofil {
-    width: 50%;
+
+.profilparent {
+    overflow: hidden;
 }
+
+.brugerprofil {
+    text-align: left;
+    width: 10%;
+    float: left;
+}
+
+.updateprofil {
+    margin-left: 50%;
+    width: 100%;
+}
+
+
+.kompetenceparent {
+}
+
+.kompetencer {
+}
+
+.updatekompetencer {
+}
+
+
 
 table, th, td {
     text-align: center;

@@ -137,78 +137,78 @@ Skriv din email herunder:
 
     <br />
 
-    <div class="brugerprofil">
-
-        <h3>Din profil</h3>
-
-
+    <div class="profilparent">
 
         @foreach (var bruger in Brugere)
         {
-            <table>
+            <h3>Din profil</h3>
 
-                <tr>
-                    <th>Bruger ID</th>
-                    <th>Brugernavn</th>
-                    <th>Bruger email</th>
-                    <th>Telefonnummer</th>
-                    <th>Kompetencer</th>
-                </tr>
-                <tr>
-                    <td>@bruger.BrugerId</td>
-                    <td>@bruger.BrugerNavn</td>
-                    <td>@bruger.BrugerEmail</td>
-                    <td>@bruger.TelefonNummer</td>
-                    <td>@bruger.Kompetencer</td>
-                </tr>
 
-            </table>
-            <button class="btn btn-success" @onclick="() => OpdaterBruger(bruger)">Tryk her for at opdatere din profil</button>
+            <div class="brugerprofil">
+                <table>
+
+                    <tr>
+                        <th>Bruger ID</th>
+                        <th>Brugernavn</th>
+                        <th>Bruger email</th>
+                        <th>Telefonnummer</th>
+                        <th>Kompetencer</th>
+                    </tr>
+                    <tr>
+                        <td>@bruger.BrugerId</td>
+                        <td>@bruger.BrugerNavn</td>
+                        <td>@bruger.BrugerEmail</td>
+                        <td>@bruger.TelefonNummer</td>
+                        <td>@bruger.Kompetencer</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+            <br />
+
+            <div class="updateprofil">
+
+                <EditForm EditContext="@EditContext" class="row">
+                    <!--Form til opdatering af en brugerens profil-->
+                    <h3>Opdater din profil</h3>
+
+                    <div class="col-2 mb-3">
+                        <label for="NyBrugerNavn">Brugernavn</label>
+                        <InputText id="NyBrugerNavn" @bind-Value="bruger.BrugerNavn" class="form-control" />
+                    </div>
+
+                    <br />
+
+                    <div class="col-2 mb-3">
+                        <label for="NyBrugerStart">Bruger email</label>
+                        <InputText id="NyBrugerEmail" @bind-Value="bruger.BrugerEmail" class="form-control" />
+                    </div>
+
+                    <br />
+
+                    <div class="col-2 mb-3">
+                        <label for="NyTelefonnumer">Telefonnummer</label>
+                        <InputText id="NyTelefonnummer" @bind-Value="bruger.TelefonNummer" class="form-control" />
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <button class="btn btn-primary" @onclick="() => UpdateBrugerHandler(bruger)">Opdater profil</button>
+                    </div>
+
+
+                </EditForm>
+
+            </div>
         }
-
 
         <br />
 
     </div>
 
-    <div class="updateprofil">
 
-        <EditForm EditContext="@EditContext" class="row p-3">
-            <!--Form til opdatering af en brugerens profil-->
-            <h3>Opdater din profil</h3>
-
-            <div class="col-2 mb-3">
-                <label for="NyBrugerNavn">Brugernavn</label>
-                <InputText id="NyBrugerNavn" @bind-Value="Bruger.BrugerNavn" class="form-control" />
-            </div>
-
-            <br />
-
-            <div class="col-2 mb-3">
-                <label for="NyBrugerStart">Bruger email</label>
-                <InputText id="NyBrugerEmail" @bind-Value="Bruger.BrugerEmail" class="form-control" />
-            </div>
-
-            <br />
-
-            <div class="col-2 mb-3">
-                <label for="NyTelefonnumer">Telefonnummer</label>
-                <InputText id="NyTelefonnummer" @bind-Value="Bruger.TelefonNummer" class="form-control" />
-            </div>
-
-            <br />
-            <br />
-
-            <div class="col-12 mb-3">
-                <button class="btn btn-primary" @onclick="UpdateBrugerHandler">Opdater profil</button>
-            </div>
-
-
-        </EditForm>
-
-    </div>
-
-    <div class="updatekompetencer">
+    <div class="kompetencer">
 
         <table>
             <tr>
@@ -229,7 +229,7 @@ Skriv din email herunder:
         <EditForm EditContext="@EditContext">
             <!--Form til sletning af en vagt-->
 
-            <h1>Her kan du tilføje kompetencer til din profil</h1>
+            <h3>Her kan du tilføje kompetencer til din profil</h3>
 
             <div class="col-2 mb-3">
                 <label for="BrugerId">Skriv dit bruger ID her</label>
@@ -294,9 +294,9 @@ Skriv din email herunder:
             EditContext = new EditContext(Bruger);
         }
 
-        private async Task UpdateBrugerHandler() // implementerer UpdateVagt(vagt) fra VagtService
+        private async Task UpdateBrugerHandler(Bruger bruger) // implementerer UpdateVagt(vagt) fra VagtService
         {
-            ErrorCode = await BrugerService.UpdateBruger(Bruger);
+            ErrorCode = await BrugerService.UpdateBruger(bruger);
             Console.WriteLine("Vagt opdateret: " + ErrorCode);
             Bruger = new Bruger();
             EditContext = new EditContext(Bruger);
