@@ -11,7 +11,10 @@
 @page "/"
 
 <div class="page-background-page">
- <h1>Misfits Festival</h1>
+    <div class="header">
+    Misfits Festival
+    </div>
+ 
 
 <div class="brugerId">
 
@@ -22,7 +25,7 @@
     <br />
     <input @bind="brugerEmail" />
     <br />
-    <button @onclick="UpdateLocalStorage">Save</button>
+    <button @onclick="UpdateLocalStorage">Login</button>
     <button @onclick="ClearLocalStorage">Clear</button>
     <br />
     Hvis du ikke har en bruger email, henvises til siden 'Opret ny bruger'.
