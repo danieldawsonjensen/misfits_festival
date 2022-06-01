@@ -7,6 +7,9 @@ table, th, td {
 }
 
 .updatevagt {
-    width: 50%
+    position:relative;
 }
 
+.sletvagt {
+    position:absolute;right:-75%;
+}
