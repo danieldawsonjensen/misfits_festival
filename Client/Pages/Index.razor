@@ -10,8 +10,8 @@
 @inject Blazored.LocalStorage.ILocalStorageService localStore
 @page "/"
 
-
-<h1>Misfits Festival</h1>
+<div class="page-background-page">
+ <h1>Misfits Festival</h1>
 
 <div class="brugerId">
 
@@ -28,7 +28,7 @@
     Hvis du ikke har et bruger id, henvises til siden 'Opret ny bruger'.
 
 </div>
-
+</div>
 @code{
     // key og string til opdatering af email'en der skal stå gemmes i localstorage
     const string noteKey = "note";
