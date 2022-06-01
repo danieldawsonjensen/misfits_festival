@@ -1,7 +1,18 @@
 ﻿.parent {
-    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
 }
-  
+
+.vagter {
+}
+
+.bookvagt {
+    margin-left: 10%;
+    width: 200%;
+}
+
+.dinevagter {
+}
 
 table, th, td {
     border: 1px solid black;
