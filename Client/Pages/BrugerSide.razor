@@ -47,7 +47,7 @@ Skriv din email herunder:
                         <td>@vagt.Pause</td>
                         <td>@vagt.Område</td>
                         <td>@vagt.OpgaveBeskrivelse</td>
-                        <button class="btn btn-success" @onclick="() => BookVagt(vagt)">Book en vagt</button>
+                        <button class="btn btn-success" @onclick="() => BookVagt(vagt)">Send til booking form</button>
                     </tr>
                 }
             </table>
@@ -56,21 +56,20 @@ Skriv din email herunder:
             <br />
 
             <div class="bookvagt">
-                <h1>Book vagt</h1>
 
                 <EditForm EditContext="@EditContext" class="row p-3">
                     <!--Form til opdatering af en brugerens profil-->
                     <h3>Book en vagt</h3>
 
                     <div class="col-2 mb-3">
-                        <label for="BookVagtId">Vagt ID</label>
+                        <label for="BookVagtId">Vælg en af de ledige vagter fra tabellen</label>
                         <InputNumber id="BookVagtId" @bind-Value="Vagt.VagtId" class="form-control" />
                     </div>
 
                     <br />
 
                     <div class="col-2 mb-3">
-                        <label for="BookBrugerId">Bruger ID</label>
+                        <label for="BookBrugerId">Skriv til bruger ID her</label>
                         <InputNumber id="BookBrugerId" @bind-Value="Vagt.BrugerId" class="form-control" />
                     </div>
 
@@ -79,7 +78,6 @@ Skriv din email herunder:
                     <div class="col-12 mb-3">
                         <button class="btn btn-primary" @onclick="BookVagtHandler">Book vagt</button>
                     </div>
-
 
                 </EditForm>
 
@@ -138,6 +136,7 @@ Skriv din email herunder:
             <table>
 
                 <tr>
+                    <th>Bruger ID</th>
                     <th>Brugernavn</th>
                     <th>Bruger email</th>
                     <th>Telefonnummer</th>
@@ -147,11 +146,12 @@ Skriv din email herunder:
                 @foreach (var bruger in Brugere)
                 {
                     <tr>
+                        <td>@bruger.BrugerId</td>
                         <td>@bruger.BrugerNavn</td>
                         <td>@bruger.BrugerEmail</td>
                         <td>@bruger.TelefonNummer</td>
                         <td>@bruger.Kompetencer</td>
-                        <button class="btn btn-success" @onclick="() => OpdaterBruger(bruger)">Opdater din profil</button>
+                        <button class="btn btn-success" @onclick="() => OpdaterBruger(bruger)">Tryk her for at opdatere din profil</button>
                     </tr>
                 }
 
@@ -198,12 +198,15 @@ Skriv din email herunder:
 
             <table>
                 <tr>
+                    <th>Kompetence ID</th>
                     <th>Kompetence beskrivelse</th>
                 </tr>
                 @foreach (var kompetence in Kompetencer)
                 {
                     <tr>
+                        <td>@kompetence.KompetenceId</td>
                         <td>@kompetence.KompetenceBeskrivelse</td>
+                        <button class="btn btn-success" @onclick="() => TilføjKompetence(kompetence)">Tilføj denne kompetence til din profil</button>
                     </tr>
                 }
             </table>
@@ -212,16 +215,16 @@ Skriv din email herunder:
             <EditForm EditContext="@EditContext">
                 <!--Form til sletning af en vagt-->
 
-                <h1>Slet en vagt</h1>
+                <h1>Her kan du tilføje kompetencer til din profil</h1>
 
                 <div class="col-2 mb-3">
-                    <label for="SletVagtId">Bruger ID</label>
-                    <InputNumber id="SletVagtId" @bind-Value="Bruger.BrugerId" class="form-control" />
+                    <label for="BrugerId">Skriv dit bruger ID her</label>
+                    <InputNumber id="BrugerId" @bind-Value="Bruger.BrugerId" class="form-control" />
                 </div>
 
                 <div class="col-2 mb-3">
-                    <label for="SletVagtId">Kompetence ID</label>
-                    <InputNumber id="SletVagtId" @bind-Value="Kompetence.KompetenceId" class="form-control" />
+                    <label for="KompetenceId">Vælg den kompetence fra tabellen, du ønsker at tilføje</label>
+                    <InputNumber id="KompetenceId" @bind-Value="Kompetence.KompetenceId" class="form-control" />
                 </div>
 
                 <div class="col-12 mb-3">
@@ -325,6 +328,10 @@ Skriv din email herunder:
         private async Task BookVagt(Vagt vagt)
         {
             Vagt.VagtId = vagt.VagtId;
-            Vagt.BrugerId = 2;
+        }
+
+        private async Task TilføjKompetence(Kompetence kompetence)
+        {
+            Kompetence.KompetenceId = kompetence.KompetenceId;
         }
     }
