@@ -207,50 +207,57 @@ Skriv din email herunder:
 
     </div>
 
+    <div class="kompetenceparent">
 
-    <div class="kompetencer">
+        <div class="kompetencer">
 
-        <table>
-            <tr>
-                <th>Kompetence ID</th>
-                <th>Kompetence beskrivelse</th>
-            </tr>
-            @foreach (var kompetence in Kompetencer)
-            {
+            <table>
                 <tr>
-                    <td>@kompetence.KompetenceId</td>
-                    <td>@kompetence.KompetenceBeskrivelse</td>
-                    <button class="btn btn-success" @onclick="() => TilføjKompetence(kompetence)">Tilføj denne kompetence til din profil</button>
+                    <th>Kompetence ID</th>
+                    <th>Kompetence beskrivelse</th>
                 </tr>
-            }
-        </table>
+                @foreach (var kompetence in Kompetencer)
+                {
+                    <tr>
+                        <td>@kompetence.KompetenceId</td>
+                        <td>@kompetence.KompetenceBeskrivelse</td>
+                        <button class="btn btn-success" @onclick="() => TilføjKompetence(kompetence)">Tilføj denne kompetence til din profil</button>
+                    </tr>
+                    <br />
+                }
+            </table>
 
+        </div>
 
-        <EditForm EditContext="@EditContext">
-            <!--Form til sletning af en vagt-->
+        <div class="updatekompetencer">
 
-            <h3>Her kan du tilføje kompetencer til din profil</h3>
+            <EditForm EditContext="@EditContext">
+                <!--Form til sletning af en vagt-->
 
-            <div class="col-2 mb-3">
-                <label for="BrugerId">Skriv dit bruger ID her</label>
-                <InputNumber id="BrugerId" @bind-Value="Bruger.BrugerId" class="form-control" />
-            </div>
+                <h3>Her kan du tilføje kompetencer til din profil</h3>
 
-            <div class="col-2 mb-3">
-                <label for="KompetenceId">Vælg den kompetence fra tabellen, du ønsker at tilføje</label>
-                <InputNumber id="KompetenceId" @bind-Value="Kompetence.KompetenceId" class="form-control" />
-            </div>
+                <div class="col-2 mb-3">
+                    <label for="BrugerId">Skriv dit bruger ID her</label>
+                    <InputNumber id="BrugerId" @bind-Value="Bruger.BrugerId" class="form-control" />
+                </div>
 
-            <div class="col-12 mb-3">
-                <button class="btn btn-primary" @onclick="UpdateKompetencerHandler">Update kompetencer</button>
-            </div>
+                <div class="col-2 mb-3">
+                    <label for="KompetenceId">Vælg den kompetence fra tabellen, du ønsker at tilføje</label>
+                    <InputNumber id="KompetenceId" @bind-Value="Kompetence.KompetenceId" class="form-control" />
+                </div>
 
-        </EditForm>
+                <div class="col-12 mb-3">
+                    <button class="btn btn-primary" @onclick="UpdateKompetencerHandler">Update kompetencer</button>
+                </div>
+
+            </EditForm>
+
+        </div>
+
 
 
 
     </div>
-
 
     @code {
         const string noteKey = "note";
