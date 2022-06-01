@@ -101,7 +101,7 @@ Skriv din email herunder:
     <br />
     <br />
 
-    <div>
+    <div class="brugervagter">
 
         @if (BrugerVagter.Count() == 0)
         {
@@ -114,7 +114,6 @@ Skriv din email herunder:
             <table>
 
                 <tr>
-                    <th>Vagt ID</th>
                     <th>Dato</th>
                     <th>Vagt start</th>
                     <th>Vagt slut</th>
@@ -126,7 +125,6 @@ Skriv din email herunder:
                 @foreach (var vagt in BrugerVagter)
                 {
                     <tr>
-                        <td>@vagt.VagtId</td>
                         <td>@vagt.Dato.ToShortDateString()</td>
                         <td>@vagt.VagtStart</td>
                         <td>@vagt.VagtSlut</td>

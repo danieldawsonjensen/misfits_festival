@@ -11,13 +11,14 @@
     width: 200%;
 }
 
-.dinevagter {
+.brugervagter {
+    width: 50%;
 }
 
 table, th, td {
+    text-align: center;
     border: 1px solid black;
 }
 
 td {
-    width: 200%;
 }
