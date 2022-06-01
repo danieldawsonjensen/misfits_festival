@@ -64,8 +64,8 @@
                             <td>Ikke done</td>
                         }
                         <!--De to knapper nedenfor bruges til at vælge om man vil slette eller opdatere end vagt, samt hvilkens-->
-                        <button class="btn btn-success" @onclick="() => OpdaterVagt(vagt)">Opdater denne vagt</button>
-                        <button class="btn btn-danger" @onclick="() => SletVagt(vagt)">Slet denne vagt</button>
+                        <button class="block1" @onclick="() => OpdaterVagt(vagt)">Opdater vagt</button>
+                        <button class="block2   " @onclick="() => SletVagt(vagt)">Slet vagt</button>
                     </tr>
                 }
             </table>
@@ -78,7 +78,7 @@
 
                 <EditForm EditContext="@EditContext" class="row p-3">
                     <!--Form til opdatering af en vagt-->
-                    <h3>Update en vagt</h3>
+                    <h3>Opdater en vagt</h3>
 
                     <div class="col-2 mb-3">
                         <label for="NyVagtId">Vagt ID</label>
@@ -109,7 +109,7 @@
                     <br />
 
                     <div class="col-12 mb-3">
-                        <button class="btn btn-primary" @onclick="UpdateVagtHandler">Update vagt</button>
+                        <button class="btn btn-success" @onclick="UpdateVagtHandler">Opdater vagt</button>
                     </div>
 
 
@@ -122,7 +122,7 @@
                         </div>
 
                         <div class="col-12 mb-3">
-                            <button class="btn btn-primary" @onclick="() => DeleteVagtHandler(SlettetVagt.VagtId)">Slet vagt</button>
+                            <button class="btn btn-danger" @onclick="() => DeleteVagtHandler(SlettetVagt.VagtId)">Slet vagt</button>
                         </div>
                     </div>
 
@@ -132,7 +132,7 @@
 
             <div class="frivillige">
 
-                <h1>Frivillige</h1>
+                <h3>Frivillige</h3>
 
                 <table class="frivillige">
                     <tr>

@@ -2,14 +2,40 @@
     overflow: hidden;
 }
 
+.block1 {
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: #188754;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+}
+.block2 {
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: #DC3545;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+}
+
 table, th, td {
     border: 1px solid black;
 }
 
 .updatevagt {
-    position:relative;
+    position: relative;
+    border: 1px solid black;
 }
 
 .sletvagt {
-    position:absolute;right:-75%;
+    position: absolute;
+    right: -75%;
+    border: 1px solid black;
 }
