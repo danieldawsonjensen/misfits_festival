@@ -1,16 +1,19 @@
 ﻿.parent {
     justify-content: space-between;
+    display: flex;
 }
 
 .vagter {
 }
 
 .bookvagt {
-    margin-left: 10%;
-    width: 200%;
 }
 
 .brugervagter {
+    width: 50%;
+}
+
+.brugerprofil {
     width: 50%;
 }
 

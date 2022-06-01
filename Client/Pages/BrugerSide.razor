@@ -58,41 +58,35 @@ Skriv din email herunder:
 
         </div>
 
-        <div>
+        <div class="bookvagt">
 
-            <br />
+            <EditForm EditContext="@EditContext" class="row p-3">
+                <!--Form til opdatering af en brugerens profil-->
+                <h3>Book en vagt</h3>
 
-            <div class="bookvagt">
-
-                <EditForm EditContext="@EditContext" class="row p-3">
-                    <!--Form til opdatering af en brugerens profil-->
-                    <h3>Book en vagt</h3>
-
-                    <div>
-                        <label for="BookVagtId">Vælg en vagt fra tabellen</label>
-                        <br />
-                        <InputNumber id="BookVagtId" @bind-Value="Vagt.VagtId" class="col-1" />
-                    </div>
-
+                <div>
+                    <label for="BookVagtId">Vælg en vagt fra tabellen</label>
                     <br />
+                    <InputNumber id="BookVagtId" @bind-Value="Vagt.VagtId" class="col-1" />
+                </div>
 
-                    <div>
-                        <label for="BookBrugerId">Skriv til bruger ID her</label>
-                        <br />
-                        <InputNumber id="BookBrugerId" @bind-Value="Vagt.BrugerId" class="col-1" />
-                    </div>
+                <br />
 
+                <div>
+                    <label for="BookBrugerId">Skriv til bruger ID her</label>
                     <br />
-                    <br />
-                    <br />
+                    <InputNumber id="BookBrugerId" @bind-Value="Vagt.BrugerId" class="col-1" />
+                </div>
 
-                    <div class="col-12 mb-3">
-                        <button class="btn btn-primary" @onclick="BookVagtHandler">Book vagt</button>
-                    </div>
+                <br />
+                <br />
+                <br />
 
-                </EditForm>
+                <div class="col-12 mb-3">
+                    <button class="btn btn-primary" @onclick="BookVagtHandler">Book vagt</button>
+                </div>
 
-            </div>
+            </EditForm>
 
         </div>
 
@@ -109,7 +103,7 @@ Skriv din email herunder:
         }
         else
         {
-            <h1>Dine vagter</h1>
+            <h3>Dine vagter</h3>
 
             <table>
 
@@ -145,34 +139,39 @@ Skriv din email herunder:
 
     <div class="brugerprofil">
 
-        <h1>Din profil</h1>
+        <h3>Din profil</h3>
 
 
-        <table>
 
-            <tr>
-                <th>Bruger ID</th>
-                <th>Brugernavn</th>
-                <th>Bruger email</th>
-                <th>Telefonnummer</th>
-                <th>Kompetencer</th>
-            </tr>
+        @foreach (var bruger in Brugere)
+        {
+            <table>
 
-            @foreach (var bruger in Brugere)
-            {
+                <tr>
+                    <th>Bruger ID</th>
+                    <th>Brugernavn</th>
+                    <th>Bruger email</th>
+                    <th>Telefonnummer</th>
+                    <th>Kompetencer</th>
+                </tr>
                 <tr>
                     <td>@bruger.BrugerId</td>
                     <td>@bruger.BrugerNavn</td>
                     <td>@bruger.BrugerEmail</td>
                     <td>@bruger.TelefonNummer</td>
                     <td>@bruger.Kompetencer</td>
-                    <button class="btn btn-success" @onclick="() => OpdaterBruger(bruger)">Tryk her for at opdatere din profil</button>
                 </tr>
-            }
 
-        </table>
+            </table>
+            <button class="btn btn-success" @onclick="() => OpdaterBruger(bruger)">Tryk her for at opdatere din profil</button>
+        }
+
 
         <br />
+
+    </div>
+
+    <div class="updateprofil">
 
         <EditForm EditContext="@EditContext" class="row p-3">
             <!--Form til opdatering af en brugerens profil-->
