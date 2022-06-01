@@ -27,9 +27,7 @@
 
 <br />
 
-@for (int i = 0; i < Koordinatorer.Count(); i++)
-{
-    if (Koordinatorer.ElementAt(i).BrugerEmail == brugerEmail)
+@if (KoordinatorLoggetInd!=null)
     {
         <h3>Vagter</h3>
 
@@ -168,20 +166,12 @@
 
         <br />
         <br />
-        break;
+     
     }
-    else if (Koordinatorer.ElementAt(i).BrugerEmail != brugerEmail)
+    else
     {
         <h1>Du har ikke adgang</h1>
     }
-}
-
-
-
-
-
-
-
 
 @code {
     const string noteKey = "note";
@@ -200,6 +190,8 @@
     private List<Bruger> Koordinatorer = new List<Bruger>();
 
     private List<Bruger> Frivillige = new List<Bruger>(); // definerer en ny liste af brugere med rollen Frivillig
+
+    private Bruger? KoordinatorLoggetInd = null;
 
     // interfaces der tages i brug i dette component
     [Inject]
@@ -238,6 +230,18 @@
         Frivillige = (await BrugerService.GetAlleFrivillige()).ToList(); // populater vores liste af brugere v hjælp af,
                                                                          // getAlleFrivillige() metoden + toList
         Koordinatorer = (await BrugerService.GetAlleKoordinatorer()).ToList();
+        if (brugerEmail != "")
+        {
+
+            foreach (Bruger koordinator in Koordinatorer)
+            {
+                if (koordinator.BrugerEmail == brugerEmail)
+                {
+                    KoordinatorLoggetInd = koordinator;
+                }
+            }
+
+        }
     }
 
     private async Task OpdaterVagt(Vagt vagt)

@@ -21,5 +21,7 @@ namespace misfits_festival.Client.Services
 		Task<int> DeleteBruger(string brugerEmail);
 
         Task<Kompetence[]?> GetAlleKompetencer();
+
+		Task<int> UpdateKompetencer(Bruger bruger, Kompetence kompetence);
 	}
 }

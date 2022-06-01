@@ -45,7 +45,7 @@ namespace misfits_festival.Server.Controllers
 			Vagter.AddVagt(vagt);
 		}
 
-		[HttpPut]
+		[HttpPut("updatevagt")]
 		public void UpdateVagt(Vagt vagt) // http putt til opdatering af en vagt, evt ændring af tid, opgave etc
 		{
 			Console.WriteLine("updateVagt - vagtController");

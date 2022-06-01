@@ -47,7 +47,7 @@ Skriv din email herunder:
                         <td>@vagt.Pause</td>
                         <td>@vagt.Område</td>
                         <td>@vagt.OpgaveBeskrivelse</td>
-                        <button class="btn btn-success" @onclick="() => BookVagt(vagt)">Opdater din profil</button>
+                        <button class="btn btn-success" @onclick="() => BookVagt(vagt)">Book en vagt</button>
                     </tr>
                 }
             </table>
@@ -71,7 +71,7 @@ Skriv din email herunder:
 
                     <div class="col-2 mb-3">
                         <label for="BookBrugerId">Bruger ID</label>
-                        <InputNumber id="BookBrugerId" @bind-Value="Bruger.BrugerId" class="form-control" />
+                        <InputNumber id="BookBrugerId" @bind-Value="Vagt.BrugerId" class="form-control" />
                     </div>
 
                     <br />
@@ -192,6 +192,45 @@ Skriv din email herunder:
 
             </EditForm>
 
+        </div>
+
+        <div class="updatekompetencer">
+
+            <table>
+                <tr>
+                    <th>Kompetence beskrivelse</th>
+                </tr>
+                @foreach (var kompetence in Kompetencer)
+                {
+                    <tr>
+                        <td>@kompetence.KompetenceBeskrivelse</td>
+                    </tr>
+                }
+            </table>
+
+
+            <EditForm EditContext="@EditContext">
+                <!--Form til sletning af en vagt-->
+
+                <h1>Slet en vagt</h1>
+
+                <div class="col-2 mb-3">
+                    <label for="SletVagtId">Bruger ID</label>
+                    <InputNumber id="SletVagtId" @bind-Value="Bruger.BrugerId" class="form-control" />
+                </div>
+
+                <div class="col-2 mb-3">
+                    <label for="SletVagtId">Kompetence ID</label>
+                    <InputNumber id="SletVagtId" @bind-Value="Kompetence.KompetenceId" class="form-control" />
+                </div>
+
+                <div class="col-12 mb-3">
+                    <button class="btn btn-primary" @onclick="UpdateKompetencerHandler">Update kompetencer</button>
+                </div>
+
+            </EditForm>
+
+
 
         </div>
 
@@ -203,6 +242,7 @@ Skriv din email herunder:
         string? brugerEmail = "";
 
         private EditContext EditContext;
+        private EditContext EditContextKompetencer;
         private int ErrorCode { get; set; }
 
         public async void UpdateLocalStorage()
@@ -223,6 +263,10 @@ Skriv din email herunder:
         private Bruger Bruger = new Bruger();
         private List<Bruger> Brugere = new List<Bruger>();
         private List<Vagt> BrugerVagter = new List<Vagt>();
+
+        private List<Kompetence> Kompetencer = new List<Kompetence>();
+        private Kompetence Kompetence = new Kompetence();
+        public BrugerKompetence BrugerKompetence = new BrugerKompetence();
 
         // interfaces der tages i brug i dette component
         [Inject]
@@ -251,14 +295,23 @@ Skriv din email herunder:
             EditContext = new EditContext(Vagt);
         }
 
+        private async Task UpdateKompetencerHandler()
+        {
+            ErrorCode = await BrugerService.UpdateKompetencer(Bruger, Kompetence);
+            Console.WriteLine("Kompetencer opdateret: " + ErrorCode);
+            BrugerKompetence = new BrugerKompetence();
+            EditContext = new EditContext(BrugerKompetence);
+        }
+
         protected override async Task OnInitializedAsync()
         {
             brugerEmail = await localStore.GetItemAsync<string?>(noteKey);
             LedigeVagter = (await VagtService.GetLedigeVagter()).ToList();// populater LedigeVagter vha. metoden i VagtService
 
             Brugere = (await BrugerService.GetBruger(brugerEmail)).ToList();
-            // Bruger = (await BrugerService.GetBruger(brugerEmail));
             BrugerVagter = (await VagtService.GetMineVagter(brugerEmail)).ToList(); // populater MineVagter vha. metoden i VagtService
+
+            Kompetencer = (await BrugerService.GetAlleKompetencer()).ToList();
         }
 
         private async Task OpdaterBruger(Bruger bruger)
@@ -272,5 +325,6 @@ Skriv din email herunder:
         private async Task BookVagt(Vagt vagt)
         {
             Vagt.VagtId = vagt.VagtId;
+            Vagt.BrugerId = 2;
         }
     }

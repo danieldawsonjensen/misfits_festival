@@ -56,6 +56,17 @@ namespace misfits_festival.Client.Services
             return result;
         }
 
+        //        public async Task<int> UpdateKompetencer(BrugerKompetence brugerKompetence)
+        public async Task<int> UpdateKompetencer(Bruger bruger, Kompetence kompetence)
+
+        {
+            BrugerKompetence brugerKompetence = new BrugerKompetence();
+            brugerKompetence.Bruger = bruger;
+            brugerKompetence.Kompetence = kompetence;
+            var response = await httpClient.PutAsJsonAsync("api/bruger/updatekompetencer/", brugerKompetence);
+            var responseStatusCode = response.StatusCode;
+            return (int)responseStatusCode;
+        }
 
         public BrugerService(HttpClient httpClient)
         {

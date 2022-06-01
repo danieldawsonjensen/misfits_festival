@@ -27,7 +27,7 @@ namespace misfits_festival.Client.Services
 
         public async Task<int> UpdateVagt(Vagt vagt)
         {
-            var response = await httpClient.PutAsJsonAsync("api/vagter", vagt);
+            var response = await httpClient.PutAsJsonAsync("api/vagter/updatevagt", vagt);
             var responseStatusCode = response.StatusCode;
             return (int)responseStatusCode;
         }

@@ -30,5 +30,7 @@ namespace misfits_festival.Server.Models
 											   // og skal det måske være noget koordinatoren kan gøre?
 
 		Task<IEnumerable<Kompetence>> GetAlleKompetencer();
+
+		void UpdateKompetencer(BrugerKompetence brugerKompetence);
 	}
 }

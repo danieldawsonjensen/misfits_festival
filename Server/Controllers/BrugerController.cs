@@ -81,5 +81,12 @@ namespace misfits_festival.Server.Controllers
 			return await Brugere.GetAlleKompetencer();
         }
 
+		[HttpPut("updatekompetencer")]
+		public void UpdateKompetencer(BrugerKompetence brugerKompetence)
+		{
+			Console.WriteLine("updateKompetencer - brugerController");
+			Brugere.UpdateKompetencer(brugerKompetence);
+		}
+
 	}
 }

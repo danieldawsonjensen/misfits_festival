@@ -7,7 +7,7 @@ namespace misfits_festival.Shared.Models
 		// private List<Kompetence> kompetencer = new List<Kompetence>();
 
 		public int? KompetenceId { get; set; }
-		public string KompetenceBeskrivelse { get; set; }
+		public string? KompetenceBeskrivelse { get; set; }
 
 
 		public Kompetence()
