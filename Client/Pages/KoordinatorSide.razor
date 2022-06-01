@@ -107,22 +107,15 @@
                     </div>
 
                     <br />
-                    <br />
 
                     <div class="col-12 mb-3">
                         <button class="btn btn-primary" @onclick="UpdateVagtHandler">Update vagt</button>
                     </div>
 
 
-                </EditForm>
-
-                <div class="sletvagt">
-
-                    <EditForm EditContext="@EditContext">
-                        <!--Form til sletning af en vagt-->
-
-                        <h1>Slet en vagt</h1>
-
+                    <div class="sletvagt">
+                    <h3>Slet en vagt</h3>
+                    <!--Form til sletning af en vagt-->
                         <div class="col-2 mb-3">
                             <label for="SletVagtId">Vagt ID</label>
                             <InputNumber id="SletVagtId" @bind-Value="SlettetVagt.VagtId" class="form-control" />
@@ -131,10 +124,9 @@
                         <div class="col-12 mb-3">
                             <button class="btn btn-primary" @onclick="() => DeleteVagtHandler(SlettetVagt.VagtId)">Slet vagt</button>
                         </div>
+                    </div>
 
                     </EditForm>
-
-                </div>
 
             </div>
 
