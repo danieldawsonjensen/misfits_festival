@@ -12,33 +12,45 @@
 .brugervagter {
 }
 
+.overskriftparent {
+    justify-content: space-between;
+    display: flex;
+}
+
+.egen {
+}
+
+.update {
+    margin-right: 29.5%;
+}
+
 
 .profilparent {
-    overflow: hidden;
+    justify-content: space-between;
+    display: flex;
 }
 
 .brugerprofil {
-    float: left;
 }
 
 .updateprofil {
-    margin-left: 50%;
-    width: 100%;
+    margin-left: 2%;
+    width: 200%;
 }
 
 
 .kompetenceparent {
-    overflow: hidden;
-}
-
-.kompetencer {
-    width: 100%;
-    float: left;
+    justify-content: space-between;
+    display: flex;
 }
 
 .updatekompetencer {
-    margin-left: 50%;
-    width: 100%;
+    width: 29%;
+}
+
+.kompetencer {
+    width: 30%;
+    margin-right: 40%;
 }
 
 

@@ -7,97 +7,112 @@
 @using misfits_festival.Client.Pages;
 @using System.Net.Http;
 
+@inject Blazored.LocalStorage.ILocalStorageService localStore
+
 @page "/nyvagt"
 
-<h3>Opret ny vagt</h3>
+@if (KoordinatorLoggetInd != null)
+{
+    <h3>Opret ny vagt</h3>
 
-<div class="parent">
-    <div class="opretvagt">
-        <EditForm EditContext="@EditContext" class="row p-3"> <!--Form til opretning af en ny vagt-->
+    <div class="parent">
+        <div class="opretvagt">
+            <EditForm EditContext="@EditContext" class="row p-3">
+                <!--Form til opretning af en ny vagt-->
 
-            <div class="col-md-6 mb-3">
-                <label for="OpgaveBeskrivelse">Opgave Beskrivelse</label>
-                <InputText id="OpgaveBeskrivelse" @bind-Value="Vagt.OpgaveBeskrivelse" class="form-control" />
-            </div>
+                <div class="col-md-6 mb-3">
+                    <label for="OpgaveBeskrivelse">Opgave Beskrivelse</label>
+                    <InputText id="OpgaveBeskrivelse" @bind-Value="Vagt.OpgaveBeskrivelse" class="form-control" />
+                </div>
 
-            <br />
+                <br />
 
-            <div class="col-md-6 mb-3">
-                <label for="Dato">Dato</label>
-                <InputDate id="Dato" @bind-Value="Vagt.Dato" class="form-control" />
-            </div>
+                <div class="col-md-6 mb-3">
+                    <label for="Dato">Dato</label>
+                    <InputDate id="Dato" @bind-Value="Vagt.Dato" class="form-control" />
+                </div>
 
-            <br />
+                <br />
 
-            <div class="col-md-6 mb-3">
-                <label for="VagtStart">Vagt start</label>
-                <InputText id="VagtStart" @bind-Value="Vagt.VagtStart" class="form-control" />
-            </div>
+                <div class="col-md-6 mb-3">
+                    <label for="VagtStart">Vagt start</label>
+                    <InputText id="VagtStart" @bind-Value="Vagt.VagtStart" class="form-control" />
+                </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="VagtSlut">Vagt slut</label>
-                <InputText id="VagtSlut" @bind-Value="Vagt.VagtSlut" class="form-control" />
-            </div>
+                <div class="col-md-6 mb-3">
+                    <label for="VagtSlut">Vagt slut</label>
+                    <InputText id="VagtSlut" @bind-Value="Vagt.VagtSlut" class="form-control" />
+                </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="Pause">Pause</label>
-                <InputNumber id="Pause" @bind-Value="Vagt.Pause" class="form-control" />
-            </div>
+                <div class="col-md-6 mb-3">
+                    <label for="Pause">Pause</label>
+                    <InputNumber id="Pause" @bind-Value="Vagt.Pause" class="form-control" />
+                </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="Område">Område</label>
-                <InputText id="Område" @bind-Value="Vagt.Område" class="form-control" />
-            </div>
+                <div class="col-md-6 mb-3">
+                    <label for="Område">Område</label>
+                    <InputText id="Område" @bind-Value="Vagt.Område" class="form-control" />
+                </div>
 
-            <br />
+                <br />
 
-            <div class="col-12 mb-3">
-                <button class="btn btn-primary" @onclick="AddVagtHandler">Tilføj ny vagt</button>
-            </div>
+                <div class="col-12 mb-3">
+                    <button class="btn btn-primary" @onclick="AddVagtHandler">Tilføj ny vagt</button>
+                </div>
 
 
 
-        </EditForm>
-    </div>
-    <div class="opgaver">
+            </EditForm>
+        </div>
+        <div class="opgaver">
 
-        <table>
-            <tr>
-                <th>Opgave beskrivelse</th>
-                <th></th>
-            </tr>
-            @foreach (var opgave in Opgaver)
-            {
+            <table>
                 <tr>
-                    <td>@opgave.OpgaveBeskrivelse</td>
-                    <!--De to knapper nedenfor bruges hhv. til valg af opgave når man laver en ny vagt, samt valg af opgave
-                        til sletning af en opgave-->
-                    <button class="btn btn-success col-6" style="text-align:center" @onclick="() => VælgOpgave(opgave)">Vælg</button>
-                    <button class="btn btn-danger col-6" style="text-align:center" @onclick="() => SletOpgaveKnap(opgave)">Slet</button>
+                    <th>Opgave beskrivelse</th>
+                    <th></th>
                 </tr>
+                @foreach (var opgave in Opgaver)
+                {
+                    <tr>
+                        <td>@opgave.OpgaveBeskrivelse</td>
+                        <!--De to knapper nedenfor bruges hhv. til valg af opgave når man laver en ny vagt, samt valg af opgave
+                            til sletning af en opgave-->
+                        <button class="btn btn-success col-6" style="text-align:center" @onclick="() => VælgOpgave(opgave)">Vælg</button>
+                        <button class="btn btn-danger col-6" style="text-align:center" @onclick="() => SletOpgaveKnap(opgave)">Slet</button>
+                    </tr>
 
-            }
-        </table>
+                }
+            </table>
 
-        <br />
+            <br />
 
-        <div class="col-md-12 mb-3">
-            <label for="OpgaveAdd">Ny opgave</label>
-            <input id="OpgaveAdd" @bind-value="Opgave.OpgaveBeskrivelse" class="form-control" />
-            <button class="btn btn-primary" @onclick="AddOpgaveHandler">Tilføj denne opgave</button>
+            <div class="col-md-12 mb-3">
+                <label for="OpgaveAdd">Ny opgave</label>
+                <input id="OpgaveAdd" @bind-value="Opgave.OpgaveBeskrivelse" class="form-control" />
+                <button class="btn btn-primary" @onclick="AddOpgaveHandler">Tilføj denne opgave</button>
+            </div>
+
+            <div class="col-md-12 mb-3">
+                <label for="OpgaveSlet">Slet opgave</label>
+                <input id="OpgaveSlet" @bind-value="SlettetOpgave.OpgaveBeskrivelse" class="form-control" />
+                <button class="btn btn-primary" @onclick="DeleteOpgaveHandler">Slet denne opgave</button>
+            </div>
+
         </div>
 
-        <div class="col-md-12 mb-3">
-            <label for="OpgaveSlet">Slet opgave</label>
-            <input id="OpgaveSlet" @bind-value="SlettetOpgave.OpgaveBeskrivelse" class="form-control" />
-            <button class="btn btn-primary" @onclick="DeleteOpgaveHandler">Slet denne opgave</button>
-        </div>
-        
     </div>
-
-</div>
+}
+else
+{
+    <br />
+    <h1>Du har ikke adgang til denne side</h1>
+}
 
 @code {
+    // brugerEmail starter som en tom streng og udfyldes vha. localStorage
+    const string noteKey = "note";
+    string brugerEmail = "";
+
     private EditContext EditContext;
     private Vagt Vagt = new Vagt();
     private List<Opgave> Opgaver = new List<Opgave>();
@@ -106,11 +121,18 @@
 
     private int ErrorCode { get; set; }
 
+    // liste af koordinatorer; denne loopes igennem for at tjekke brugerens adgang
+    private List<Bruger> Koordinatorer = new List<Bruger>();
+    // Koordinatorens adgang initialiseres
+    private Bruger? KoordinatorLoggetInd = null;
+
     // interfaces der tages i brug i dette component
     [Inject]
     public IVagtService VagtService { get; set; }
     [Inject]
     public IOpgaveService OpgaveService { get; set; }
+    [Inject]
+    public IBrugerService BrugerService { get; set; }
 
 
     protected override void OnInitialized()
@@ -144,9 +166,25 @@
 
     protected override async Task OnInitializedAsync()
     {
+        brugerEmail = await localStore.GetItemAsync<string>(noteKey);
         Opgaver = (await OpgaveService.GetAlleOpgaver()).ToList();
+        Koordinatorer = (await BrugerService.GetAlleKoordinatorer()).ToList();
+
+        // følgende kode sikrer at brugerEmail findes i listen af koordinatorer; ellers gives der ikke adgang til siden
+        // den kører det også kun hvis bruger har tastet en email
+        if (brugerEmail != "")
+        {
+            foreach (Bruger koordinator in Koordinatorer)
+            {
+                if (koordinator.BrugerEmail == brugerEmail)
+                {
+                    KoordinatorLoggetInd = koordinator;
+                }
+            }
+        }
     }
 
+    // simple metoder til at udfylde forms i hhv: AddVagtHandler(),
     private async Task VælgOpgave(Opgave opgave)
     {
         // Vagt.OpgaveId = opgave.OpgaveId;
@@ -154,9 +192,11 @@
         Vagt.OpgaveBeskrivelse = opgave.OpgaveBeskrivelse;
     }
 
+    // og DeleteOpgaveHandler()
     private async Task SletOpgaveKnap(Opgave opgave) // lav om til opgaveId og prøv metoderne igen
     {
-        SlettetOpgave.OpgaveId = opgave.OpgaveId; // fortæller hvilket specifikt id der skal slettes
+        // fortæller hvilket specifikt id der skal slettes; bruger kan ikke se dette, men systemet gemmer det
+        SlettetOpgave.OpgaveId = opgave.OpgaveId;
         SlettetOpgave.OpgaveBeskrivelse = opgave.OpgaveBeskrivelse;
     }
 

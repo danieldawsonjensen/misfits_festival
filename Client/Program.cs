@@ -12,6 +12,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+// herunder registreres de tre services
 builder.Services.AddHttpClient<IBrugerService, BrugerService>(client =>
 {
     client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);

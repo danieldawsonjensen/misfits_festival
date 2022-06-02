@@ -18,6 +18,7 @@
 
 <div class="brugerId">
 
+    <!--Følgende kode bruges til at gemme en brugers login info i localStorage det kan bruges på andre sider-->
     Velkommen til Misfits Festivals digitale hjemmeside!
     <br />
     <br />
@@ -51,6 +52,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        brugerEmail = await localStore.GetItemAsync<string>(noteKey); // brugerEmail opdateres til at indeholde data fra localStorage
+        // brugerEmail opdateres til at indeholde data fra localStorage
+        brugerEmail = await localStore.GetItemAsync<string>(noteKey);
     }
 }

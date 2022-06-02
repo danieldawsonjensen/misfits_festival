@@ -11,353 +11,330 @@
 
 @page "/bruger"
 
-<h3>Bruger side</h3>
+<div class="parent">
 
-Skriv din email herunder:
-<br />
-<input @bind="brugerEmail" />
-<br />
-<button @onclick="UpdateLocalStorage">Save</button>
-<button @onclick="ClearLocalStorage">Clear</button>
+    <div class="vagter">
+        <!--<div class="ledigevagter">-->
 
-    Din bruger email er: @brugerEmail
+        <h3>Ledige vagter</h3>
 
-    <br />
-    <br />
-
-    <div class="parent">
-
-        <div class="vagter">
-            <!--<div class="ledigevagter">-->
-
-            <h3>Ledige vagter</h3>
-
-            <table>
+        <table>
+            <tr>
+                <th>Dato</th>
+                <th>Vagt start</th>
+                <th>Vagt slut</th>
+                <th>Pause</th>
+                <th>Område</th>
+                <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
+            </tr>
+            @foreach (var vagt in LedigeVagter)
+            {
                 <tr>
-                    <th>Dato</th>
-                    <th>Vagt start</th>
-                    <th>Vagt slut</th>
-                    <th>Pause</th>
-                    <th>Område</th>
-                    <th>Opgave beskrivelse</th> <!--Dette skal evt laves til en join m. OpgaveBeskrivelse i stedet-->
+                    <td>@vagt.Dato.ToShortDateString()</td>
+                    <td>@vagt.VagtStart</td>
+                    <td>@vagt.VagtSlut</td>
+                    <td>@vagt.Pause</td>
+                    <td>@vagt.Område</td>
+                    <td>@vagt.OpgaveBeskrivelse</td>
+                    <button class="btn btn-success" @onclick="() => BookVagt(vagt)">Send til booking form</button>
                 </tr>
-                @foreach (var vagt in LedigeVagter)
-                {
-                    <tr>
-                        <td>@vagt.Dato.ToShortDateString()</td>
-                        <td>@vagt.VagtStart</td>
-                        <td>@vagt.VagtSlut</td>
-                        <td>@vagt.Pause</td>
-                        <td>@vagt.Område</td>
-                        <td>@vagt.OpgaveBeskrivelse</td>
-                        <button class="btn btn-success" @onclick="() => BookVagt(vagt)">Send til booking form</button>
-                    </tr>
-                }
-            </table>
-            <!--</div>-->
-
-        </div>
-
-        <div class="bookvagt">
-
-            <EditForm EditContext="@EditContext" class="row p-3">
-                <!--Form til opdatering af en brugerens profil-->
-                <h3>Book en vagt</h3>
-
-                <div>
-                    <label for="BookVagtId">Vælg en vagt fra tabellen</label>
-                    <br />
-                    <InputNumber id="BookVagtId" @bind-Value="Vagt.VagtId" class="col-1" />
-                </div>
-
-                <br />
-
-                <div>
-                    <label for="BookBrugerId">Skriv til bruger ID her</label>
-                    <br />
-                    <InputNumber id="BookBrugerId" @bind-Value="Vagt.BrugerId" class="col-1" />
-                </div>
-
-                <br />
-                <br />
-                <br />
-
-                <div class="col-12 mb-3">
-                    <button class="btn btn-primary" @onclick="BookVagtHandler">Book vagt</button>
-                </div>
-
-            </EditForm>
-
-        </div>
+            }
+        </table>
+        <!--</div>-->
 
     </div>
 
-    <br />
-    <br />
+    <div class="bookvagt">
 
-    <div class="brugervagter">
+        <EditForm EditContext="@EditContext" class="row p-3">
+            <!--Form til opdatering af en brugerens profil-->
+            <h3>Book en vagt</h3>
 
-        @if (BrugerVagter.Count() == 0)
-        {
-            <h3>Der er ingen vagter at vise</h3>
-        }
-        else
-        {
-            <h3>Dine vagter</h3>
-
-            <table>
-
-                <tr>
-                    <th>Dato</th>
-                    <th>Vagt start</th>
-                    <th>Vagt slut</th>
-                    <th>Pause</th>
-                    <th>Område</th>
-                    <th>Opgave beskrivelse</th>
-                    <th>Bruger email</th>
-                </tr>
-                @foreach (var vagt in BrugerVagter)
-                {
-                    <tr>
-                        <td>@vagt.Dato.ToShortDateString()</td>
-                        <td>@vagt.VagtStart</td>
-                        <td>@vagt.VagtSlut</td>
-                        <td>@vagt.Pause</td>
-                        <td>@vagt.Område</td>
-                        <td>@vagt.OpgaveBeskrivelse</td>
-                        <td>@vagt.BrugerEmail</td>
-                    </tr>
-                }
-
-            </table>
-        }
-
-
-    </div>
-
-    <br />
-
-    <div class="profilparent">
-
-        @foreach (var bruger in Brugere)
-        {
-            <h3>Din profil</h3>
-
-
-            <div class="brugerprofil">
-                <table>
-
-                    <tr>
-                        <th>Bruger ID</th>
-                        <th>Brugernavn</th>
-                        <th>Bruger email</th>
-                        <th>Telefonnummer</th>
-                        <th>Kompetencer</th>
-                    </tr>
-                    <tr>
-                        <td>@bruger.BrugerId</td>
-                        <td>@bruger.BrugerNavn</td>
-                        <td>@bruger.BrugerEmail</td>
-                        <td>@bruger.TelefonNummer</td>
-                        <td>@bruger.Kompetencer</td>
-                    </tr>
-
-                </table>
-
+            <div>
+                <label for="BookVagtId">Vælg en vagt fra tabellen</label>
+                <br />
+                <InputNumber id="BookVagtId" @bind-Value="Vagt.VagtId" class="col-1" />
             </div>
 
             <br />
 
-            <div class="updateprofil">
-
-                <EditForm EditContext="@EditContext" class="row">
-                    <!--Form til opdatering af en brugerens profil-->
-                    <h3>Opdater din profil</h3>
-
-                    <div class="col-2 mb-3">
-                        <label for="NyBrugerNavn">Brugernavn</label>
-                        <InputText id="NyBrugerNavn" @bind-Value="bruger.BrugerNavn" class="form-control" />
-                    </div>
-
-                    <br />
-
-                    <div class="col-2 mb-3">
-                        <label for="NyBrugerStart">Bruger email</label>
-                        <InputText id="NyBrugerEmail" @bind-Value="bruger.BrugerEmail" class="form-control" />
-                    </div>
-
-                    <br />
-
-                    <div class="col-2 mb-3">
-                        <label for="NyTelefonnumer">Telefonnummer</label>
-                        <InputText id="NyTelefonnummer" @bind-Value="bruger.TelefonNummer" class="form-control" />
-                    </div>
-
-                    <div class="col-12 mb-3">
-                        <button class="btn btn-primary" @onclick="() => UpdateBrugerHandler(bruger)">Opdater profil</button>
-                        <label class=" bookingbesked" for="bookingbesked">@BrugerBesked</label>
-                    </div>
-
-
-                </EditForm>
-
+            <div>
+                <label for="BookBrugerId">Skriv til bruger ID her</label>
+                <br />
+                <InputNumber id="BookBrugerId" @bind-Value="Vagt.BrugerId" class="col-1" />
             </div>
-        }
 
-        <br />
+            <br />
+            <br />
+            <br />
+
+            <div class="col-12 mb-3">
+                <button class="btn btn-primary" @onclick="BookVagtHandler">Book vagt</button>
+            </div>
+
+        </EditForm>
 
     </div>
 
-    <div class="kompetenceparent">
+</div>
 
-        <div class="kompetencer">
+<br />
+<br />
 
-            <table>
+<div class="brugervagter">
+
+    @if (BrugerVagter.Count() == 0)
+    {
+        <h3>Der er ingen vagter at vise</h3>
+    }
+    else
+    {
+        <h3>Dine vagter</h3>
+
+        <table>
+
+            <tr>
+                <th>Dato</th>
+                <th>Vagt start</th>
+                <th>Vagt slut</th>
+                <th>Pause</th>
+                <th>Område</th>
+                <th>Opgave beskrivelse</th>
+                <th>Bruger email</th>
+            </tr>
+            @foreach (var vagt in BrugerVagter)
+            {
                 <tr>
-                    <th>Kompetence ID</th>
-                    <th>Kompetence beskrivelse</th>
+                    <td>@vagt.Dato.ToShortDateString()</td>
+                    <td>@vagt.VagtStart</td>
+                    <td>@vagt.VagtSlut</td>
+                    <td>@vagt.Pause</td>
+                    <td>@vagt.Område</td>
+                    <td>@vagt.OpgaveBeskrivelse</td>
+                    <td>@vagt.BrugerEmail</td>
                 </tr>
-                @foreach (var kompetence in Kompetencer)
-                {
-                    <tr>
-                        <td>@kompetence.KompetenceId</td>
-                        <td>@kompetence.KompetenceBeskrivelse</td>
-                        <button class="btn btn-success" @onclick="() => TilføjKompetence(kompetence)">Tilføj denne kompetence til din profil</button>
-                    </tr>
-                    <br />
-                }
+            }
+
+        </table>
+    }
+
+
+</div>
+
+<br />
+
+<div class="overskriftparent">
+
+    <div class="egen">
+        <h3>Din profil</h3>
+    </div>
+
+    <div class="update">
+        <h3>Opdater din profil</h3>
+    </div>
+
+</div>
+
+<div class="profilparent">
+    @foreach (var bruger in Brugere)
+    {
+        <div class="brugerprofil">
+            <table>
+
+                <tr>
+                    <th>Bruger ID</th>
+                    <th>Brugernavn</th>
+                    <th>Bruger email</th>
+                    <th>Telefonnummer</th>
+                    <th>Kompetencer</th>
+                </tr>
+                <tr>
+                    <td>@bruger.BrugerId</td>
+                    <td>@bruger.BrugerNavn</td>
+                    <td>@bruger.BrugerEmail</td>
+                    <td>@bruger.TelefonNummer</td>
+                    <td>@bruger.Kompetencer</td>
+                </tr>
+
             </table>
 
         </div>
 
-        <div class="updatekompetencer">
+        <br />
 
-            <EditForm EditContext="@EditContext">
-                <!--Form til sletning af en vagt-->
+        <div class="updateprofil">
 
-                <h3>Her kan du tilføje kompetencer til din profil</h3>
+            <EditForm EditContext="@EditContext" class="row">
+                <!--Form til opdatering af en brugerens profil-->
 
-                <div class="col-2 mb-3">
-                    <label for="BrugerId">Skriv dit bruger ID her</label>
-                    <InputNumber id="BrugerId" @bind-Value="Bruger.BrugerId" class="form-control" />
+                <div class="col-5 mb-3">
+                    <label for="NyBrugerNavn">Brugernavn</label>
+                    <InputText id="NyBrugerNavn" @bind-Value="bruger.BrugerNavn" class="form-control" />
                 </div>
 
-                <div class="col-2 mb-3">
-                    <label for="KompetenceId">Vælg den kompetence fra tabellen, du ønsker at tilføje</label>
-                    <InputNumber id="KompetenceId" @bind-Value="Kompetence.KompetenceId" class="form-control" />
+                <br />
+
+                <div class="col-5 mb-3">
+                    <label for="NyBrugerStart">Bruger email</label>
+                    <InputText id="NyBrugerEmail" @bind-Value="bruger.BrugerEmail" class="form-control" />
                 </div>
 
-                <div class="col-12 mb-3">
-                    <button class="btn btn-primary" @onclick="UpdateKompetencerHandler">Update kompetencer</button>
-                </div>
+                <br />
 
+                <div class="col-5 mb-3">
+                    <label for="NyTelefonnumer">Telefonnummer</label>
+                    <InputText id="NyTelefonnummer" @bind-Value="bruger.TelefonNummer" class="form-control" />
+                </div>
+                <button class="btn btn-primary col-5 mb-5" style="margin-top:24px;" @onclick="() => UpdateBrugerHandler(bruger)">Opdater profil</button>
+                <label class=" bookingbesked" for="bookingbesked" style="color:green;">@BrugerBesked</label>
+
+                <br />
+                <br />
             </EditForm>
 
         </div>
+    }
+
+</div>
+
+<div class="kompetenceparent">
+
+    <div class="updatekompetencer">
+
+        <EditForm EditContext="@EditContext">
+            <!--Form til sletning af en vagt-->
+
+            <h3>Her kan du tilføje kompetencer til din profil</h3>
+
+            <div>
+                <label class="col-8" for="BrugerId">Skriv dit bruger ID her</label>
+                <br />
+                <InputNumber class="col-3" id="BrugerId" @bind-Value="Bruger.BrugerId" />
+            </div>
+
+            <br />
+
+            <div>
+                <label class="col-8" for="KompetenceId">Vælg den kompetence fra tabellen, du ønsker at tilføje</label>
+                <br />
+                <input class="col-6" id="KompetenceId" @bind-value="Kompetence.KompetenceBeskrivelse" />
+            </div>
+
+            <br />
+
+            <div class="col-12 mb-3">
+                <button class="btn btn-primary" @onclick="UpdateKompetencerHandler">Update kompetencer</button>
+            </div>
+
+        </EditForm>
 
     </div>
 
-    @code {
-        const string noteKey = "note";
-        string? brugerEmail = "";
+    <div class="kompetencer">
 
-        private EditContext EditContext;
-        private EditContext EditContextKompetencer;
-        private int ErrorCode { get; set; }
-        private string BrugerBesked = "";
-
-        public async void UpdateLocalStorage()
+        @foreach (var kompetence in Kompetencer)
         {
-            await localStore.SetItemAsync(noteKey, brugerEmail);
+            <button class="btn btn-success" @onclick="() => TilføjKompetence(kompetence)">@kompetence.KompetenceBeskrivelse</button>
         }
+    </div>
 
-        public async void ClearLocalStorage()
+</div>
+
+@code {
+    // brugerEmail starter som en tom streng og udfyldes vha. localStorage
+    const string noteKey = "note";
+    string? brugerEmail = "";
+
+    private EditContext EditContext;
+    private int ErrorCode { get; set; }
+    private string BrugerBesked = "";
+
+    private List<Vagt> LedigeVagter = new List<Vagt>();
+    private Vagt Vagt = new Vagt(); // til BookVagt
+
+    private List<Bruger> Brugere = new List<Bruger>(); // til GET på brugerProfil
+    private List<Vagt> BrugerVagter = new List<Vagt>(); // til GET på egne vagter
+
+    private Bruger Bruger = new Bruger(); // til update af brugers kompetencer
+    private List<Kompetence> Kompetencer = new List<Kompetence>();
+    private Kompetence Kompetence = new Kompetence();
+    public BrugerKompetence BrugerKompetence = new BrugerKompetence(); // til update af brugers kompetencer
+
+    // interfaces der tages i brug i dette component
+    [Inject]
+    public IBrugerService BrugerService { get; set; }
+    [Inject]
+    public IVagtService VagtService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        EditContext = new EditContext(Bruger);
+    }
+
+    private async Task UpdateBrugerHandler(Bruger bruger)
+    {
+        // her sikres at man ikke kan lave sin email til en tom streng;
+        // eftersom meget af systemet kører mod brugerEmail, vælges der at sikre at alle brugere har en
+        if (bruger.BrugerEmail == "")
         {
-            brugerEmail = "";
-            await localStore.ClearAsync();
+            BrugerBesked = "Din email må ikke være tom";
         }
-
-        private List<Vagt> LedigeVagter = new List<Vagt>(); // liste til ledige vagter
-        private Vagt Vagt = new Vagt(); // definerer en vagt som bruges til booking af vagter
-
-        // definerer en bruger og en liste af brugerens vagter
-        private Bruger Bruger = new Bruger();
-        private List<Bruger> Brugere = new List<Bruger>();
-        private List<Vagt> BrugerVagter = new List<Vagt>();
-
-        private List<Kompetence> Kompetencer = new List<Kompetence>();
-        private Kompetence Kompetence = new Kompetence();
-        public BrugerKompetence BrugerKompetence = new BrugerKompetence();
-
-        // interfaces der tages i brug i dette component
-        [Inject]
-        public IBrugerService BrugerService { get; set; }
-        [Inject]
-        public IVagtService VagtService { get; set; }
-
-        protected override void OnInitialized()
+        else
         {
+            BrugerBesked = "Profil opdateret";
+            ErrorCode = await BrugerService.UpdateBruger(bruger);
+            Console.WriteLine("Vagt opdateret: " + ErrorCode);
+            Bruger = new Bruger();
             EditContext = new EditContext(Bruger);
         }
-
-        private async Task UpdateBrugerHandler(Bruger bruger) // implementerer UpdateVagt(vagt) fra VagtService
-        {
-            if (bruger.BrugerEmail == "")
-            {
-                BrugerBesked = "Din email må ikke være tom";
-            }
-            else
-            {
-                BrugerBesked = "Profil opdateret";
-                ErrorCode = await BrugerService.UpdateBruger(bruger);
-                Console.WriteLine("Vagt opdateret: " + ErrorCode);
-                Bruger = new Bruger();
-                EditContext = new EditContext(Bruger);
-            }
-        }
-
-        private async Task BookVagtHandler()
-        {
-            ErrorCode = await VagtService.BookVagt(Vagt);
-            Console.WriteLine("Vagt booket: " + ErrorCode);
-            Vagt = new Vagt();
-            EditContext = new EditContext(Vagt);
-        }
-
-        private async Task UpdateKompetencerHandler()
-        {
-            ErrorCode = await BrugerService.UpdateKompetencer(Bruger, Kompetence);
-            Console.WriteLine("Kompetencer opdateret: " + ErrorCode);
-            BrugerKompetence = new BrugerKompetence();
-            EditContext = new EditContext(BrugerKompetence);
-        }
-
-        protected override async Task OnInitializedAsync()
-        {
-            brugerEmail = await localStore.GetItemAsync<string?>(noteKey);
-            LedigeVagter = (await VagtService.GetLedigeVagter()).ToList();// populater LedigeVagter vha. metoden i VagtService
-
-            Brugere = (await BrugerService.GetBruger(brugerEmail)).ToList();
-            BrugerVagter = (await VagtService.GetMineVagter(brugerEmail)).ToList(); // populater MineVagter vha. metoden i VagtService
-
-            Kompetencer = (await BrugerService.GetAlleKompetencer()).ToList();
-        }
-
-        private async Task OpdaterBruger(Bruger bruger)
-        {
-            Bruger.BrugerId = bruger.BrugerId;
-            Bruger.BrugerNavn = bruger.BrugerNavn;
-            Bruger.BrugerEmail = bruger.BrugerEmail;
-            Bruger.TelefonNummer = bruger.TelefonNummer;
-        }
-
-        private async Task BookVagt(Vagt vagt)
-        {
-            Vagt.VagtId = vagt.VagtId;
-        }
-
-        private async Task TilføjKompetence(Kompetence kompetence)
-        {
-            Kompetence.KompetenceId = kompetence.KompetenceId;
-        }
     }
+
+    private async Task BookVagtHandler()
+    {
+        ErrorCode = await VagtService.BookVagt(Vagt);
+        Console.WriteLine("Vagt booket: " + ErrorCode);
+        Vagt = new Vagt();
+        EditContext = new EditContext(Vagt);
+    }
+
+    private async Task UpdateKompetencerHandler()
+    {
+        // updateKompetencer tager her 2 parametre;
+        // disse sendes videre til BrugerService hvor de samles til en enkelt instans af BrugerKompetence
+        ErrorCode = await BrugerService.UpdateKompetencer(Bruger, Kompetence);
+        Console.WriteLine("Kompetencer opdateret: " + ErrorCode);
+        BrugerKompetence = new BrugerKompetence();
+        EditContext = new EditContext(BrugerKompetence);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        brugerEmail = await localStore.GetItemAsync<string?>(noteKey);
+        LedigeVagter = (await VagtService.GetLedigeVagter()).ToList();// populater LedigeVagter vha. metoden i VagtService
+
+        Brugere = (await BrugerService.GetBruger(brugerEmail)).ToList();
+        BrugerVagter = (await VagtService.GetMineVagter(brugerEmail)).ToList(); // populater MineVagter vha. metoden i VagtService
+
+        Kompetencer = (await BrugerService.GetAlleKompetencer()).ToList();
+    }
+
+    // simple metoder til at udfylde forms i hhv: UpdaterBrugerHandler(),
+    private async Task OpdaterBruger(Bruger bruger)
+    {
+        Bruger.BrugerId = bruger.BrugerId;
+        Bruger.BrugerNavn = bruger.BrugerNavn;
+        Bruger.BrugerEmail = bruger.BrugerEmail;
+        Bruger.TelefonNummer = bruger.TelefonNummer;
+    }
+    // BookVagtHandler(),
+    private async Task BookVagt(Vagt vagt)
+    {
+        Vagt.VagtId = vagt.VagtId;
+    }
+    // og UpdateKompetencerHandler()
+    private async Task TilføjKompetence(Kompetence kompetence)
+    {
+        Kompetence.KompetenceId = kompetence.KompetenceId;
+        Kompetence.KompetenceBeskrivelse = kompetence.KompetenceBeskrivelse;
+    }
+}

@@ -11,178 +11,164 @@
 
 @page "/koordinator"
 
-<div class="brugerEmail">
-    <!--
-    Skriv herunder dit bruger id:
-    <br />
-    <input @bind="brugerId" />
 
-    <br />
+@if (KoordinatorLoggetInd != null)
+{
+    <h3>Vagter</h3>
 
-    <button @onclick="UpdateLocalStorage">Save</button>
-    <button @onclick="ClearLocalStorage">Clear</button>
-    -->
-
-</div>
-
-<br />
-
-@if (KoordinatorLoggetInd!=null)
-    {
-        <h3>Vagter</h3>
-
-        <div class="vagter">
-            <table class="vagter">
+    <div class="vagter">
+        <table class="vagter">
+            <tr>
+                <th>Vagt ID</th>
+                <th>Dato</th>
+                <th>Vagt start</th>
+                <th>Vagt slut</th>
+                <th>Pause</th>
+                <th>Område</th>
+                <th>Opgave beskrivelse</th>
+                <th>Bruger email</th>
+                <th>Status</th>
+            </tr>
+            @foreach (var vagt in Vagter)
+            {
                 <tr>
-                    <th>Vagt ID</th>
-                    <th>Dato</th>
-                    <th>Vagt start</th>
-                    <th>Vagt slut</th>
-                    <th>Pause</th>
-                    <th>Område</th>
-                    <th>Opgave beskrivelse</th>
-                    <th>Bruger email</th>
-                    <th>Status</th>
+                    <td>@vagt.VagtId</td>
+                    <td>@vagt.Dato.ToShortDateString()</td>
+                    <td>@vagt.VagtStart</td>
+                    <td>@vagt.VagtSlut</td>
+                    <td>@vagt.Pause</td>
+                    <td>@vagt.Område</td>
+                    <td>@vagt.OpgaveBeskrivelse</td>
+                    <td>@vagt.BrugerEmail</td>
+                    @if (vagt.Dato < DateTime.Now) // hvis dags dato er senere end vagtens, er status ikke done
+                    {
+                        <td>Done</td>
+                    }
+                    else
+                    {
+                        <td>Ikke done</td>
+                    }
+                    <!--De to knapper nedenfor bruges til at vælge om man vil slette eller opdatere end vagt, samt hvilkens-->
+                    <button class="block1" @onclick="() => OpdaterVagt(vagt)">Opdater vagt</button>
+                    <button class="block2   " @onclick="() => SletVagt(vagt)">Slet vagt</button>
                 </tr>
-                @foreach (var vagt in Vagter)
+            }
+        </table>
+        <br />
+    </div>
+
+    <div class="parent">
+
+        <div class="updatevagt">
+
+            <EditForm EditContext="@EditContext" class="row p-3">
+                <!--Form til opdatering af en vagt-->
+                <h3>Opdater en vagt</h3>
+
+                <div class="col-2 mb-3">
+                    <label for="NyVagtId">Vagt ID</label>
+                    <InputNumber id="NyVagtId" @bind-Value="Vagt.VagtId" class="form-control" />
+                </div>
+
+                <br />
+
+                <div class="col-2 mb-3">
+                    <label for="NyVagtStart">Vagt start</label>
+                    <InputText id="NyVagtStart" @bind-Value="Vagt.VagtStart" class="form-control" />
+                </div>
+
+                <br />
+
+                <div class="col-2 mb-3">
+                    <label for="NyVagtSlut">Vagt slut</label>
+                    <InputText id="NyVagtSlut" @bind-Value="Vagt.VagtSlut" class="form-control" />
+                </div>
+
+                <br />
+
+                <div class="col-2 mb-3">
+                    <label for="NyPause">Pause</label>
+                    <InputNumber id="NyPause" @bind-Value="Vagt.Pause" class="form-control" />
+                </div>
+
+                <br />
+
+                <div class="col-12 mb-3">
+                    <button class="btn btn-success" @onclick="UpdateVagtHandler">Opdater vagt</button>
+                </div>
+
+
+                <div class="sletvagt">
+                    <h3>Slet en vagt</h3>
+                    <!--Form til sletning af en vagt-->
+                    <div class="col-2 mb-3">
+                        <label for="SletVagtId">Vagt ID</label>
+                        <InputNumber id="SletVagtId" @bind-Value="SlettetVagt.VagtId" class="form-control" />
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <button class="btn btn-danger" @onclick="() => DeleteVagtHandler(SlettetVagt.VagtId)">Slet vagt</button>
+                    </div>
+                </div>
+
+            </EditForm>
+
+        </div>
+
+        <div class="frivillige">
+
+            <h3>Frivillige</h3>
+
+            <table class="frivillige">
+                <tr>
+                    <th>Bruger Navn</th>
+                    <th>Bruger Email</th>
+                    <th>Telefonnummer</th>
+                    <th>Kompetencer</th>
+                </tr>
+                @foreach (var frivillig in Frivillige)
                 {
                     <tr>
-                        <td>@vagt.VagtId</td>
-                        <td>@vagt.Dato.ToShortDateString()</td>
-                        <td>@vagt.VagtStart</td>
-                        <td>@vagt.VagtSlut</td>
-                        <td>@vagt.Pause</td>
-                        <td>@vagt.Område</td>
-                        <td>@vagt.OpgaveBeskrivelse</td>
-                        <td>@vagt.BrugerEmail</td>
-                        @if (vagt.Dato < DateTime.Now) // hvis dags dato er senere end vagtens, er status ikke done
-                        {
-                            <td>Done</td>
-                        }
-                        else
-                        {
-                            <td>Ikke done</td>
-                        }
-                        <!--De to knapper nedenfor bruges til at vælge om man vil slette eller opdatere end vagt, samt hvilkens-->
-                        <button class="block1" @onclick="() => OpdaterVagt(vagt)">Opdater vagt</button>
-                        <button class="block2   " @onclick="() => SletVagt(vagt)">Slet vagt</button>
+                        <td>@frivillig.BrugerNavn</td>
+                        <td>@frivillig.BrugerEmail</td>
+                        <td>@frivillig.TelefonNummer</td>
+                        <td>@frivillig.Kompetencer</td>
                     </tr>
                 }
             </table>
-            <br />
-        </div>
-
-        <div class="parent">
-
-            <div class="updatevagt">
-
-                <EditForm EditContext="@EditContext" class="row p-3">
-                    <!--Form til opdatering af en vagt-->
-                    <h3>Opdater en vagt</h3>
-
-                    <div class="col-2 mb-3">
-                        <label for="NyVagtId">Vagt ID</label>
-                        <InputNumber id="NyVagtId" @bind-Value="Vagt.VagtId" class="form-control" />
-                    </div>
-
-                    <br />
-
-                    <div class="col-2 mb-3">
-                        <label for="NyVagtStart">Vagt start</label>
-                        <InputText id="NyVagtStart" @bind-Value="Vagt.VagtStart" class="form-control" />
-                    </div>
-
-                    <br />
-
-                    <div class="col-2 mb-3">
-                        <label for="NyVagtSlut">Vagt slut</label>
-                        <InputText id="NyVagtSlut" @bind-Value="Vagt.VagtSlut" class="form-control" />
-                    </div>
-
-                    <br />
-
-                    <div class="col-2 mb-3">
-                        <label for="NyPause">Pause</label>
-                        <InputNumber id="NyPause" @bind-Value="Vagt.Pause" class="form-control" />
-                    </div>
-
-                    <br />
-
-                    <div class="col-12 mb-3">
-                        <button class="btn btn-success" @onclick="UpdateVagtHandler">Opdater vagt</button>
-                    </div>
-
-
-                    <div class="sletvagt">
-                    <h3>Slet en vagt</h3>
-                    <!--Form til sletning af en vagt-->
-                        <div class="col-2 mb-3">
-                            <label for="SletVagtId">Vagt ID</label>
-                            <InputNumber id="SletVagtId" @bind-Value="SlettetVagt.VagtId" class="form-control" />
-                        </div>
-
-                        <div class="col-12 mb-3">
-                            <button class="btn btn-danger" @onclick="() => DeleteVagtHandler(SlettetVagt.VagtId)">Slet vagt</button>
-                        </div>
-                    </div>
-
-                    </EditForm>
-
-            </div>
-
-            <div class="frivillige">
-
-                <h3>Frivillige</h3>
-
-                <table class="frivillige">
-                    <tr>
-                        <th>Bruger Navn</th>
-                        <th>Bruger Email</th>
-                        <th>Telefonnummer</th>
-                        <th>Kompetencer</th>
-                    </tr>
-                    @foreach (var frivillig in Frivillige)
-                    {
-                        <tr>
-                            <td>@frivillig.BrugerNavn</td>
-                            <td>@frivillig.BrugerEmail</td>
-                            <td>@frivillig.TelefonNummer</td>
-                            <td>@frivillig.Kompetencer</td>
-                        </tr>
-                    }
-                </table>
-
-            </div>
 
         </div>
 
-        <br />
-        <br />
-     
-    }
-    else
-    {
-        <h1>Du har ikke adgang</h1>
-    }
+    </div>
+
+    <br />
+    <br />
+
+}
+else
+{
+    <br />
+    <h1>Du har ikke adgang til denne side</h1>
+}
 
 @code {
+    // brugerEmail starter som en tom streng og udfyldes vha. localStorage
     const string noteKey = "note";
     string brugerEmail = "";
 
 
     private EditContext EditContext;
-    private EditContext SlettetEditContext; // definerer en sekundær EditContext; bruges til sletning af en vagt
     private int ErrorCode { get; set; }
 
-    // definerer en liste af vagt-opbjekter samt en enkelt vagt; disse bruges hhv. i GetAlleVagter() og UpdateVagt()
     private List<Vagt> Vagter = new List<Vagt>();
     private Vagt Vagt = new Vagt();
-    private Vagt SlettetVagt = new Vagt(); // definerer endnu et Vagt opbjekt der bruges til sletning af en vagt
+    private Vagt SlettetVagt = new Vagt();
 
+    private List<Bruger> Frivillige = new List<Bruger>();
+
+    // liste af koordinatorer; denne loopes igennem for at tjekke brugerens adgang
     private List<Bruger> Koordinatorer = new List<Bruger>();
-
-    private List<Bruger> Frivillige = new List<Bruger>(); // definerer en ny liste af brugere med rollen Frivillig
-
+    // Koordinatorens adgang initialiseres
     private Bruger? KoordinatorLoggetInd = null;
 
     // interfaces der tages i brug i dette component
@@ -191,10 +177,9 @@
     [Inject]
     public IBrugerService BrugerService { get; set; }
 
-    protected override void OnInitialized() // initialiserer de to EditContext's
+    protected override void OnInitialized()
     {
         EditContext = new EditContext(Vagt);
-        SlettetEditContext = new EditContext(SlettetVagt);
     }
 
     private async Task UpdateVagtHandler() // implementerer UpdateVagt(vagt) fra VagtService
@@ -211,7 +196,6 @@
         ErrorCode = await VagtService.DeleteVagt(vagtId);
         Console.WriteLine("Vagt slettet: " + ErrorCode);
         Vagt = new Vagt();
-        // SlettetEditContext = new EditContext(SlettetVagt);
         EditContext = new EditContext(SlettetVagt);
     }
 
@@ -219,12 +203,13 @@
     {
         brugerEmail = await localStore.GetItemAsync<string>(noteKey);
         Vagter = (await VagtService.GetAlleVagter()).ToList();
-        Frivillige = (await BrugerService.GetAlleFrivillige()).ToList(); // populater vores liste af brugere v hjælp af,
-                                                                         // getAlleFrivillige() metoden + toList
+        Frivillige = (await BrugerService.GetAlleFrivillige()).ToList();
         Koordinatorer = (await BrugerService.GetAlleKoordinatorer()).ToList();
+
+        // følgende kode sikrer at brugerEmail findes i listen af koordinatorer; ellers gives der ikke adgang til siden
+        // den kører det også kun hvis bruger har tastet en email
         if (brugerEmail != "")
         {
-
             foreach (Bruger koordinator in Koordinatorer)
             {
                 if (koordinator.BrugerEmail == brugerEmail)
@@ -232,10 +217,10 @@
                     KoordinatorLoggetInd = koordinator;
                 }
             }
-
         }
     }
 
+    // simple metoder til at udfylde forms i hhv: UpdaterVagtHandler(),
     private async Task OpdaterVagt(Vagt vagt)
     {
         Vagt.VagtId = vagt.VagtId;
@@ -244,6 +229,7 @@
         Vagt.Pause = vagt.Pause;
     }
 
+    // og DeleteVagtHandler()
     private async Task SletVagt(Vagt vagt)
     {
         SlettetVagt.VagtId = vagt.VagtId;

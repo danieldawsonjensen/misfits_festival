@@ -51,19 +51,18 @@ namespace misfits_festival.Server.Models
         // frivillig funktioner
         public async Task<IEnumerable<Bruger>> GetBruger(string? brugerEmail)
         {
-            
-            sql = $@" SELECT
-                        b.bruger_id,
-                        b.bruger_navn,
-                        b.bruger_email,
-                        b.telefonnummer,
-                        string_agg(k.kompetence_beskrivelse, ', '::text) AS kompetencer
-                    FROM bruger b
-                    JOIN bruger_kompetence bk ON b.bruger_id = bk.bruger_bruger_id
-                    JOIN kompetence k ON bk.kompetence_kompetence_id = k.kompetence_id
-                    WHERE b.rolle_id = 1 AND bruger_email = '{brugerEmail}'
-                    GROUP BY b.bruger_id, b.bruger_navn, b.bruger_email, b.telefonnummer
-                    ORDER BY b.bruger_navn;";
+            sql = $@"SELECT
+                 	b.bruger_id,
+ 	                b.bruger_navn,
+                    b.bruger_email,
+                    b.telefonnummer,
+                    string_agg(k.kompetence_beskrivelse, ', '::text) AS kompetencer
+                FROM bruger b
+                    LEFT JOIN bruger_kompetence bk ON b.bruger_id = bk.bruger_bruger_id
+                    LEFT JOIN kompetence k ON bk.kompetence_kompetence_id = k.kompetence_id
+                WHERE b.rolle_id = 1 AND bruger_email = '{brugerEmail}'
+                GROUP BY b.bruger_id, b.bruger_navn, b.bruger_email, b.telefonnummer
+                ORDER BY b.bruger_navn;";
 
             Console.WriteLine("getBruger - brugerRepository");
 

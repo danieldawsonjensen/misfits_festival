@@ -62,35 +62,9 @@
     </EditForm>
 </div>
 
-<!--Tilføjelse af kompetencer direkte på opretBruger siden er ikke færdigimplementeret.
-    Dette kunne evt være et fremtidigt mål, og er et sted til videreudvikling-->
-<div class="kompetencer">
-    <table>
-        <tr>
-            <th>Kompetence beskrivelse</th>
-            <th></th>
-        </tr>
-        @foreach (var kompetence in Kompetencer)
-        {
-            <tr>
-                <td>@kompetence.KompetenceBeskrivelse</td>
-                <button class="btn btn-success" @onclick="() => VælgKompetence(kompetence)">Vælg denne kompetence</button>
-            </tr>
-        }
-    </table>
-
-
-
-</div>
-
-
 @code {
     private EditContext EditContext;
     private Bruger Bruger = new Bruger();
-
-    private List<Kompetence> Kompetencer = new List<Kompetence>();
-
-    private int[] Roller = { 1 }; // når en bruger oprettes skal de kun kunne have rolleId 1
 
     private int ErrorCode { get; set; }
 
@@ -102,25 +76,13 @@
     protected override void OnInitialized()
     {
         EditContext = new EditContext(Bruger);
-        Bruger.RolleId = Roller[0]; // gør at dropdown menuen til rolleId står på 1 ved initialisering
     }
 
-    private async Task AddBrugerHandler() // implementerer AddBruger(bruger)
+    private async Task AddBrugerHandler()
     {
         ErrorCode = await BrugerService.AddBruger(Bruger);
         Console.WriteLine("Bruger tilføjet: " + ErrorCode);
         Bruger = new Bruger();
         EditContext = new EditContext(Bruger);
-        Bruger.RolleId = Roller[0];
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Kompetencer = (await BrugerService.GetAlleKompetencer()).ToList();
-    }
-
-    private async Task VælgKompetence(Kompetence kompetence)
-    {
-        Bruger.Kompetencer = kompetence.KompetenceBeskrivelse;
     }
 }

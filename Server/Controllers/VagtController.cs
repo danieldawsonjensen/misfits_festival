@@ -70,14 +70,14 @@ namespace misfits_festival.Server.Controllers
 			return await Vagter.GetMineVagter(brugerEmail);
 		}
 
-		[HttpGet("ledigevagter")]  // eftersom der er flere get metoder ifm vagter, defineres et ekstra endepunkt her
+		[HttpGet("ledigevagter")] // eftersom der er flere get metoder ifm vagter, defineres et ekstra endepunkt her
 		public async Task<IEnumerable<Vagt>> GetLedigeVagter()
 		{
 			Console.WriteLine("getledigevagter - vagtController");
 			return await Vagter.GetLedigeVagter();
 		}
 
-		[HttpPut("bookvagt")]  // eftersom der er flere put metoder ifm vagter, defineres et ekstra endepunkt her
+		[HttpPut("bookvagt")] // eftersom der er flere put metoder ifm vagter, defineres et ekstra endepunkt her
 		public void BookVagt(Vagt vagt)
 		{
 			Console.WriteLine("bookvagt - vagtController");

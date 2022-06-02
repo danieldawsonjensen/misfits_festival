@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+// her registreres de tre repositories
 builder.Services.AddScoped<IBrugerRepository, BrugerRepository>();
 builder.Services.AddScoped<IOpgaveRepository, OpgaveRepository>();
 builder.Services.AddScoped<IVagtRepository, VagtRepository>();
