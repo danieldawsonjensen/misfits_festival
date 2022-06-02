@@ -30,15 +30,15 @@ namespace misfits_festival.Server.Controllers
 		}
 
 		// koordinator funktioner
-		[HttpGet("allefrivillige")]
-		public async Task<IEnumerable<Bruger>> GetAlleFrivillige() // http get på alle frivillige i systemet
+		[HttpGet("allefrivillige")] // eftersom der er flere get metoder ifm brugere, defineres et ekstra endepunkt her
+		public async Task<IEnumerable<Bruger>> GetAlleFrivillige()
 		{
 			Console.WriteLine("getAlleFrivillige - brugerController");
 			return await Brugere.GetAlleFrivillige();
 		}
 
-		[HttpGet("allekoordinatorer")]
-		public async Task<IEnumerable<Bruger>> GetAlleKoordinatorer() // http get på alle frivillige i systemet
+		[HttpGet("allekoordinatorer")] // eftersom der er flere get metoder ifm brugere, defineres et ekstra endepunkt her
+		public async Task<IEnumerable<Bruger>> GetAlleKoordinatorer()
 		{
 			Console.WriteLine("getAlleKoordinatorer - brugerController");
 			return await Brugere.GetAlleKoordinatorer();
@@ -46,7 +46,7 @@ namespace misfits_festival.Server.Controllers
 
 
         // frivillig funktioner
-        [HttpGet("{brugerEmail}")]
+        [HttpGet("{brugerEmail}")] // brugerEmail henter email fra BrugerService som modtager specifik email fra razor siden
 		public async Task<IEnumerable<Bruger>> GetBruger(string? brugerEmail)
         {
             Console.WriteLine("getBruger - brugerController");
@@ -67,21 +67,14 @@ namespace misfits_festival.Server.Controllers
 			Brugere.UpdateBruger(bruger);
         }
 
-		[HttpDelete]
-		public void DeleteBruger(string brugerEmail)
-		{
-			Console.WriteLine("deleteBruger - brugerController");
-			Brugere.DeleteBruger(brugerEmail);
-		}
-
-		[HttpGet("getkompetencer")]
+		[HttpGet("getkompetencer")]  // eftersom der er flere get metoder i controlleren, defineres et ekstra endepunkt her
 		public async Task<IEnumerable<Kompetence>> GetAlleKompetencer()
         {
             Console.WriteLine("getAlleKompetencer - frivilligController");
 			return await Brugere.GetAlleKompetencer();
         }
 
-		[HttpPut("updatekompetencer")]
+		[HttpPut("updatekompetencer")]  // eftersom der er flere put metoder i controlleren, defineres et ekstra endepunkt her
 		public void UpdateKompetencer(BrugerKompetence brugerKompetence)
 		{
 			Console.WriteLine("updateKompetencer - brugerController");

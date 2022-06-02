@@ -12,9 +12,9 @@ namespace misfits_festival.Server.Models
 {
     internal class OpgaveRepository : IOpgaveRepository
     {
-        // string connString = "User ID=postgres;Password=qrm49zyp;Host=localhost;Port=5432;Database=2_semester_projekt;";
+        // connection string til vores azure database
         string connString = "User ID=adminbruger;Password=!hej1234;Host=misfitsfestival-db.postgres.database.azure.com;Port=5432;Database=postgres;";
-        string sql = "";
+        string sql = ""; // tom sql string som justeres i de forskellige metoder
 
 
         public async Task<IEnumerable<Opgave>> GetAlleOpgaver()
@@ -44,24 +44,11 @@ namespace misfits_festival.Server.Models
             }
         }
 
-        public async void UpdateOpgave(Opgave opgave)
-        {
-            sql = $@"UPDATE opgave
-                     SET opgave_beskrivelse = '{opgave.OpgaveBeskrivelse}'
-                     WHERE opgave_id = {opgave.OpgaveId};";
-
-            Console.WriteLine("updateOpgave - opgaveRepository");
-
-            using (var connection = new NpgsqlConnection(connString))
-            {
-                var updateOpgave = await connection.ExecuteAsync(sql);
-            }
-        }
-
         public async void DeleteOpgave(int? opgaveId)
         {
-            sql = $@"DELETE FROM opgave WHERE opgave_id = {opgaveId};";
-            Console.WriteLine("sql:" + sql);
+            sql = $@"DELETE FROM opgave
+                    WHERE opgave_id = {opgaveId};";
+
             Console.WriteLine("deleteOpgave - opgaveRepository");
 
             using (var connection = new NpgsqlConnection(connString))

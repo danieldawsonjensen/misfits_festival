@@ -14,7 +14,7 @@ namespace misfits_festival.Server.Models
 	public interface IBrugerRepository
 	{
 		// koordinator funktioner
-		Task<IEnumerable<Bruger>> GetAlleFrivillige(); // task til at hente alle frivillige i systemet
+		Task<IEnumerable<Bruger>> GetAlleFrivillige();
 
 		Task<IEnumerable<Bruger>> GetAlleKoordinatorer();
 
@@ -22,12 +22,10 @@ namespace misfits_festival.Server.Models
 		// frivillig funktioner
 		Task<IEnumerable<Bruger>> GetBruger(string? brugerEmail);
 
-		void AddBruger(Bruger bruger); // kan evt være en koordinators job..?
+		void AddBruger(Bruger bruger);
 
 		void UpdateBruger(Bruger bruger);
 
-		void DeleteBruger(string brugerEmail); // ?? hvordan skal denne implementeres og er den nødvendig?
-											   // og skal det måske være noget koordinatoren kan gøre?
 
 		Task<IEnumerable<Kompetence>> GetAlleKompetencer();
 

@@ -13,15 +13,16 @@ namespace misfits_festival.Server.Models
 {
     internal class BrugerRepository : IBrugerRepository
     {
-        // string connString = "User ID=postgres;Password=qrm49zyp;Host=localhost;Port=5432;Database=2_semester_projekt;";
+        // connection string til vores azure database
         string connString = "User ID=adminbruger;Password=!hej1234;Host=misfitsfestival-db.postgres.database.azure.com;Port=5432;Database=postgres;";
-        string sql = "";
+        string sql = ""; // tom sql string som justeres i de forskellige metoder
 
 
         // koordinator funktioner
         public async Task<IEnumerable<Bruger>> GetAlleFrivillige()
         {
             sql = $@"SELECT * FROM frivillig_kompetencer;";
+            // frivillig_kompetencer er et view der joiner en frivillig med deres kompetencer
 
             Console.WriteLine("getAlleFrivillige - brugerRepository");
 
@@ -35,6 +36,7 @@ namespace misfits_festival.Server.Models
         public async Task<IEnumerable<Bruger>> GetAlleKoordinatorer()
         {
             sql = $@"SELECT * FROM alle_koordinatorer;";
+            // alle_koordinatorer er et view der viser alle brugere med rollen koordinator
 
             Console.WriteLine("getAlleKoordinatorer - brugerRepository");
 
@@ -62,8 +64,6 @@ namespace misfits_festival.Server.Models
                     WHERE b.rolle_id = 1 AND bruger_email = '{brugerEmail}'
                     GROUP BY b.bruger_id, b.bruger_navn, b.bruger_email, b.telefonnummer
                     ORDER BY b.bruger_navn;";
-            
-            // sql = $@"SELECT * FROM bruger WHERE bruger_email = '{brugerEmail}'";
 
             Console.WriteLine("getBruger - brugerRepository");
 
@@ -78,6 +78,7 @@ namespace misfits_festival.Server.Models
         {
             sql =
                 $@"CALL opret_bruger ('{bruger.BrugerNavn}', '{bruger.BrugerEmail}', 1, '{bruger.TelefonNummer}')";
+            // 1-tallet gør at man automatisk bliver frivillig når man opretter sig i systemet. Man får rolleId 1
 
             Console.WriteLine("addbBruger - brugerRepository");
 
@@ -87,10 +88,12 @@ namespace misfits_festival.Server.Models
             }
         }
 
-        public async void UpdateBruger(Bruger bruger) // where bruger_id = {bruger.brugerId}
+        public async void UpdateBruger(Bruger bruger)
         {
             sql =
-                $@"UPDATE bruger SET bruger_navn = '{bruger.BrugerNavn}', bruger_email = '{bruger.BrugerEmail}', telefonnummer = '{bruger.TelefonNummer}' WHERE bruger_id = {bruger.BrugerId};";
+                $@"UPDATE bruger
+                    SET bruger_navn = '{bruger.BrugerNavn}', bruger_email = '{bruger.BrugerEmail}', telefonnummer = '{bruger.TelefonNummer}'
+                    WHERE bruger_id = {bruger.BrugerId};";
 
             Console.WriteLine("updateBruger - brugerRepository");
 
@@ -100,18 +103,6 @@ namespace misfits_festival.Server.Models
             }
         }
 
-        public async void DeleteBruger(string brugerEmail)
-        {
-            sql = $@"DELETE FROM bruger
-                     WHERE brugerEmail = '{brugerEmail}'";
-
-            Console.WriteLine("deleteBruger - brugerRepository");
-
-            using (var connection = new NpgsqlConnection(connString))
-            {
-                var deleteBruger = await connection.ExecuteAsync(sql);
-            }
-        }
 
         public async Task<IEnumerable<Kompetence>> GetAlleKompetencer()
         {

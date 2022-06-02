@@ -15,9 +15,7 @@ namespace misfits_festival.Server.Models
 	{
 		Task<IEnumerable<Opgave>> GetAlleOpgaver();
 
-		void AddOpgave(Opgave opgave); // metode til post af en ny opgave
-
-		void UpdateOpgave(Opgave opgave);
+		void AddOpgave(Opgave opgave);
 
 		void DeleteOpgave(int? opgaveId);
 	}

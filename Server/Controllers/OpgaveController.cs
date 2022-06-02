@@ -37,20 +37,13 @@ namespace misfits_festival.Server.Controllers
 		}
 
 		[HttpPost]
-		public void AddOpgave(Opgave opgave) // http post til at tilføje en ny opgave
+		public void AddOpgave(Opgave opgave)
 		{
 			Console.WriteLine("addOpgave - opgaveController");
 			Opgaver.AddOpgave(opgave);
 		}
 
-        [HttpPut]
-		public void UpdateOpgave(Opgave opgave)
-        {
-			Console.WriteLine("updateOpgave - opgaveController");
-			Opgaver.UpdateOpgave(opgave);
-		}
-
-        [HttpDelete("{opgaveId:int?}")]
+        [HttpDelete("{opgaveId:int?}")] // opgaveId hentes fra OpgaveService som modtager ID fra razor siden
 		public void DeleteOpgave(int? opgaveId)
         {
 			Console.WriteLine("deleteOpgave - opgaveController");

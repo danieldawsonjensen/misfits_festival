@@ -12,9 +12,10 @@ namespace misfits_festival.Server.Models
 {
     internal class VagtRepository : IVagtRepository
     {
-        // string connString = "User ID=postgres;Password=qrm49zyp;Host=localhost;Port=5432;Database=2_semester_projekt;";
+        // connection string til vores azure database
         string connString = "User ID=adminbruger;Password=!hej1234;Host=misfitsfestival-db.postgres.database.azure.com;Port=5432;Database=postgres;";
-        string sql = "";
+        string sql = ""; // tom sql string som justeres i de forskellige metoder
+
 
         // koordinator funktioner
         public async Task<IEnumerable<Vagt>> GetAlleVagter()
@@ -32,7 +33,6 @@ namespace misfits_festival.Server.Models
 
         public async void AddVagt(Vagt vagt)
         {
-            // sql = $@"CALL opret_vagt ({vagt.VagtId}, {vagt.Dato}, {vagt.VagtStart}, {vagt.VagtSlut}, {vagt.Pause}, {vagt.Område}, {vagt.OpgaveId}, {vagt.OpgaveBeskrivelse})";
             sql = $@"INSERT INTO vagt (dato, vagt_start, vagt_slut, pause, område, opgave_id)
                         VALUES ('{vagt.Dato}', '{vagt.VagtStart}', '{vagt.VagtSlut}', {vagt.Pause}, '{vagt.Område}', {vagt.OpgaveId})";
             Console.WriteLine("sql: " + sql);
@@ -49,11 +49,9 @@ namespace misfits_festival.Server.Models
         public async void UpdateVagt(Vagt vagt)
         {   
             sql =
-                $@"UPDATE vagt SET vagt_start = '{vagt.VagtStart}', vagt_slut = '{vagt.VagtSlut}', pause = {vagt.Pause} WHERE vagt_id = {vagt.VagtId}";
-
-            // sql = $@"UPDATE vagt SET bruger_id = {vagt.BrugerId} WHERE vagt_id = {vagt.VagtId}";
-
-            Console.WriteLine("sql: " + sql);
+                $@"UPDATE vagt
+                    SET vagt_start = '{vagt.VagtStart}', vagt_slut = '{vagt.VagtSlut}', pause = {vagt.Pause}
+                    WHERE vagt_id = {vagt.VagtId}";
 
             Console.WriteLine("updateVagt - vagtRepository");
 
@@ -67,9 +65,8 @@ namespace misfits_festival.Server.Models
         public async void DeleteVagt(int? vagtId)
         {
             sql =
-                $@"DELETE FROM vagt WHERE vagt_id = {vagtId}";
-
-            Console.WriteLine("sql: " + sql);
+                $@"DELETE FROM vagt
+                    WHERE vagt_id = {vagtId}";
 
             Console.WriteLine("deleteVagt - vagtRepository");
 
@@ -83,16 +80,12 @@ namespace misfits_festival.Server.Models
         // frivillig funktioner
         public async Task<IEnumerable<Vagt>> GetMineVagter(string? brugerEmail)
         {
-            /*sql = $@"SELECT * FROM vagt_opgave
-            WHERE bruger_id = {brugerId}";*/
-
             sql = $@"SELECT v.vagt_id, v.dato, v.vagt_start, v.vagt_slut, v.pause, v.""område"", o.opgave_beskrivelse, b.bruger_email
                      FROM vagt v
                      JOIN opgave o USING(opgave_id)
                      LEFT JOIN bruger b USING(bruger_id)
                      WHERE bruger_email = '{brugerEmail}'; ";
-
-            Console.WriteLine("sql:" + sql);
+            // læser brugerens indtastede email i localStorage og henter vagter med den tilkoblede email
 
             Console.WriteLine("getMineVagter - vagtRepository");
 
@@ -121,16 +114,10 @@ namespace misfits_festival.Server.Models
 
         public async void BookVagt(Vagt vagt)
         {
-            /*
             sql =
                 $@"UPDATE vagt
-                SET bruger_email = '{vagt.BrugerEmail}'
-                WHERE vagt_id = {vagt.VagtId}";
-            */
-            sql =
-                $@"UPDATE vagt SET bruger_id = {vagt.BrugerId} WHERE vagt_id = {vagt.VagtId}";
-
-            Console.WriteLine("sql: " + sql);
+                    SET bruger_id = {vagt.BrugerId}
+                    WHERE vagt_id = {vagt.VagtId}";
 
             Console.WriteLine("bookVagt - vagtRepository");
 

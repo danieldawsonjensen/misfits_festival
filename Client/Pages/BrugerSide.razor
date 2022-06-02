@@ -195,6 +195,7 @@ Skriv din email herunder:
 
                     <div class="col-12 mb-3">
                         <button class="btn btn-primary" @onclick="() => UpdateBrugerHandler(bruger)">Opdater profil</button>
+                        <label class=" bookingbesked" for="bookingbesked">@BrugerBesked</label>
                     </div>
 
 
@@ -254,9 +255,6 @@ Skriv din email herunder:
 
         </div>
 
-
-
-
     </div>
 
     @code {
@@ -266,6 +264,7 @@ Skriv din email herunder:
         private EditContext EditContext;
         private EditContext EditContextKompetencer;
         private int ErrorCode { get; set; }
+        private string BrugerBesked = "";
 
         public async void UpdateLocalStorage()
         {
@@ -303,10 +302,18 @@ Skriv din email herunder:
 
         private async Task UpdateBrugerHandler(Bruger bruger) // implementerer UpdateVagt(vagt) fra VagtService
         {
-            ErrorCode = await BrugerService.UpdateBruger(bruger);
-            Console.WriteLine("Vagt opdateret: " + ErrorCode);
-            Bruger = new Bruger();
-            EditContext = new EditContext(Bruger);
+            if (bruger.BrugerEmail == "")
+            {
+                BrugerBesked = "Din email må ikke være tom";
+            }
+            else
+            {
+                BrugerBesked = "Profil opdateret";
+                ErrorCode = await BrugerService.UpdateBruger(bruger);
+                Console.WriteLine("Vagt opdateret: " + ErrorCode);
+                Bruger = new Bruger();
+                EditContext = new EditContext(Bruger);
+            }
         }
 
         private async Task BookVagtHandler()

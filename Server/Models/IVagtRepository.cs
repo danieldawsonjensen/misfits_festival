@@ -14,19 +14,19 @@ namespace misfits_festival.Server.Models
 	public interface IVagtRepository
 	{
 		// koordinator funktioner
-		Task<IEnumerable<Vagt>> GetAlleVagter(); // metode til get alle vagter i systemet
+		Task<IEnumerable<Vagt>> GetAlleVagter();
 
-		void AddVagt(Vagt vagt); // metode til at poste en ny vagt
+		void AddVagt(Vagt vagt);
 
-		void UpdateVagt(Vagt vagt); // metode til at update en vagt
+		void UpdateVagt(Vagt vagt);
 
-		void DeleteVagt(int? id); // metode til delete af en vagt
+		void DeleteVagt(int? id);
 
 
 		// frivillig funktioner
-		Task<IEnumerable<Vagt>> GetMineVagter(string? brugerEmail); //skal muligvis være int brugerId // metode til at se sine egne bookede vagter
+		Task<IEnumerable<Vagt>> GetMineVagter(string? brugerEmail);
 
-		Task<IEnumerable<Vagt>> GetLedigeVagter(); // metode til at se alle de nuværende ledige vagter
+		Task<IEnumerable<Vagt>> GetLedigeVagter();
 
 		void BookVagt(Vagt vagt);
 	}

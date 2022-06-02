@@ -12,13 +12,15 @@ using Microsoft.Net.Http;
 
 namespace misfits_festival.Server.Controllers
 {
+	// i controlleren defineres de diverse api-endepunkter der benyttes af metoderne
+
 	[ApiController]
 	[Route("api/vagter")]
 
-	public class VagtController : ControllerBase // nedarvning fra ControllerBase er meget vigtig
+	// nedarvning fra ControllerBase er meget vigtig til api requests
+	public class VagtController : ControllerBase
 	{
-		private readonly IVagtRepository Vagter = new VagtRepository(); // definerer en ny instans af interfacet med
-																					 // metoderne til CRUD funktionalitet
+		private readonly IVagtRepository Vagter = new VagtRepository();
 
 		public VagtController(IVagtRepository vagtRepository)
 		{
@@ -30,8 +32,8 @@ namespace misfits_festival.Server.Controllers
 		}
 
 		// koordinator funktioner
-		[HttpGet("allevagter")]
-		public async Task<IEnumerable<Vagt>> GetAlleVagter() // http get til samtlige vagter, både bookede og ledige
+		[HttpGet("allevagter")] // eftersom der er flere get metoder ifm vagter, defineres et ekstra endepunkt her
+		public async Task<IEnumerable<Vagt>> GetAlleVagter()
 		{
 			Console.WriteLine("getAlleVagter - vagtController");
 			return await Vagter.GetAlleVagter();
@@ -39,21 +41,21 @@ namespace misfits_festival.Server.Controllers
 
 
 		[HttpPost]
-		public void AddVagt(Vagt vagt) // http post til at tilføje en ny vagt til tabellen
+		public void AddVagt(Vagt vagt)
 		{
 			Console.WriteLine("addVagt - vagtController");
 			Vagter.AddVagt(vagt);
 		}
 
 		[HttpPut("updatevagt")]
-		public void UpdateVagt(Vagt vagt) // http putt til opdatering af en vagt, evt ændring af tid, opgave etc
+		public void UpdateVagt(Vagt vagt)
 		{
 			Console.WriteLine("updateVagt - vagtController");
 			Vagter.UpdateVagt(vagt);
 		}
 
-		[HttpDelete("{vagtId:int?}")] //vagtId hentes fra services som modtager ID'et fra razor siden
-		public void DeleteVagt(int? vagtId) // http delete til at slette en vagt fra tabellen
+		[HttpDelete("{vagtId:int?}")] //vagtId hentes fra VagtService som modtager ID'et fra razor siden
+		public void DeleteVagt(int? vagtId)
 		{
 			Console.WriteLine("deleteVagt - vagtController" + vagtId);
 			Vagter.DeleteVagt(vagtId);
@@ -61,23 +63,22 @@ namespace misfits_festival.Server.Controllers
 
 
 		//frivillig funktioner
-		[HttpGet("{brugerEmail}")]
-		public async Task<IEnumerable<Vagt>> GetMineVagter(string? brugerEmail) // http get task til vagter med et specifikt brugerId
+		[HttpGet("{brugerEmail}")] // brugerEmail hentes fra VagtService som modtager mail fra razor siden
+		public async Task<IEnumerable<Vagt>> GetMineVagter(string? brugerEmail)
 		{
 			Console.WriteLine("getminevagter - vagtController");
 			return await Vagter.GetMineVagter(brugerEmail);
 		}
 
-		[HttpGet("ledigevagter")]
-		public async Task<IEnumerable<Vagt>> GetLedigeVagter() // http get task til vagter der er ledige
+		[HttpGet("ledigevagter")]  // eftersom der er flere get metoder ifm vagter, defineres et ekstra endepunkt her
+		public async Task<IEnumerable<Vagt>> GetLedigeVagter()
 		{
 			Console.WriteLine("getledigevagter - vagtController");
 			return await Vagter.GetLedigeVagter();
 		}
 
-		[HttpPut("bookvagt")]
-		public void BookVagt(Vagt vagt) // http post til booking af en vagt, bruger et brugerId og
-													  // vagtId'et til den vagt man vil booke
+		[HttpPut("bookvagt")]  // eftersom der er flere put metoder ifm vagter, defineres et ekstra endepunkt her
+		public void BookVagt(Vagt vagt)
 		{
 			Console.WriteLine("bookvagt - vagtController");
 			Vagter.BookVagt(vagt);
