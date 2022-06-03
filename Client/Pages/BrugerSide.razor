@@ -85,7 +85,7 @@
 
     @if (BrugerVagter.Count() == 0)
     {
-        <h3>Der er ingen vagter at vise</h3>
+        <h3>Du har ingen vagter booket i kalenderen</h3>
     }
     else
     {
@@ -317,10 +317,10 @@
     protected override async Task OnInitializedAsync()
     {
         brugerEmail = await localStore.GetItemAsync<string?>(noteKey);
-        LedigeVagter = (await VagtService.GetLedigeVagter()).ToList();// populater LedigeVagter vha. metoden i VagtService
+        LedigeVagter = (await VagtService.GetLedigeVagter()).ToList();
 
         Brugere = (await BrugerService.GetBruger(brugerEmail)).ToList();
-        BrugerVagter = (await VagtService.GetMineVagter(brugerEmail)).ToList(); // populater MineVagter vha. metoden i VagtService
+        BrugerVagter = (await VagtService.GetMineVagter(brugerEmail)).ToList();
 
         Kompetencer = (await BrugerService.GetAlleKompetencer()).ToList();
     }

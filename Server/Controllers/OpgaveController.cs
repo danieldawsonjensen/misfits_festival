@@ -15,10 +15,10 @@ namespace misfits_festival.Server.Controllers
 	[ApiController]
 	[Route("api/opgaver")]
 
-	public class OpgaveController : ControllerBase // nedarvning fra ControllerBase er meget vigtig
+	public class OpgaveController : ControllerBase // nedarvning fra ControllerBase
 	{
 		private readonly IOpgaveRepository Opgaver = new OpgaveRepository(); // definerer en ny instans af interfacet med
-																					 // metoderne til CRUD funktionalitet
+																			 // metoderne til CRUD funktionalitet
 
 		public OpgaveController(IOpgaveRepository opgaveRepository)
 		{

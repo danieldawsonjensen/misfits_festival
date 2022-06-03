@@ -7,7 +7,7 @@ using Npgsql;
 
 namespace misfits_festival.Client.Services
 {
-    public class VagtService : IVagtService
+    public class VagtService : IVagtService // implementerer metoder fra interfacet
     {
         private readonly HttpClient httpClient;
 
@@ -34,8 +34,7 @@ namespace misfits_festival.Client.Services
 
         public async Task<int> DeleteVagt(int? vagtId)
         {
-            var response = await httpClient.DeleteAsync("api/vagter/" + vagtId); // hvad skal der stå her?
-                                                                                 // skal der står DeleteAsync?
+            var response = await httpClient.DeleteAsync("api/vagter/" + vagtId);
 
             Console.WriteLine("vagtService - deleteVagt" + vagtId);
             var responseStatusCode = response.StatusCode;
@@ -46,23 +45,23 @@ namespace misfits_festival.Client.Services
         // frivillig funktioner
         public async Task<Vagt[]?> GetMineVagter(string? brugerEmail)
         {
-            var result = await httpClient.GetFromJsonAsync<Vagt[]>("api/vagter/" + brugerEmail); // httpGet fra api'en
+            var result = await httpClient.GetFromJsonAsync<Vagt[]>("api/vagter/" + brugerEmail);
             return result;
         }
 
         public async Task<Vagt[]?> GetLedigeVagter()
         {
-            var result = await httpClient.GetFromJsonAsync<Vagt[]>("api/vagter/ledigevagter"); // httpGet fra api'en
+            var result = await httpClient.GetFromJsonAsync<Vagt[]>("api/vagter/ledigevagter");
             return result;
         }
 
-        // muligvis skal man ikke selv kunne vælge en vagt, men koordinatoren skal derimod booke dig ind..?
         public async Task<int> BookVagt(Vagt vagt)
         {
-            var response = await httpClient.PutAsJsonAsync("api/vagter/bookvagt", vagt); // httpPut fra api'en
+            var response = await httpClient.PutAsJsonAsync("api/vagter/bookvagt", vagt);
             var responseStatusCode = response.StatusCode;
             return (int)responseStatusCode;
         }
+
 
         public VagtService(HttpClient httpClient)
         {

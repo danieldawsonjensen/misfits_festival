@@ -7,7 +7,7 @@ using Npgsql;
 
 namespace misfits_festival.Client.Services
 {
-    public class OpgaveService : IOpgaveService
+    public class OpgaveService : IOpgaveService // implementerer metoder fra interfacet
     {
         private readonly HttpClient httpClient;
 
@@ -34,13 +34,11 @@ namespace misfits_festival.Client.Services
 
         public async Task<int> DeleteOpgave(int? opgaveId)
         {
-            Console.WriteLine("før delete");
-            var response = await httpClient.DeleteAsync("api/opgaver/" + opgaveId); // hvad skal der stå her?
-                                                                                   // skal der står DeleteAsync?
-            Console.WriteLine("efter delete");
+            var response = await httpClient.DeleteAsync("api/opgaver/" + opgaveId);
             var responseStatusCode = response.StatusCode;
             return (int)responseStatusCode;
         }
+
 
         public OpgaveService(HttpClient httpClient)
         {

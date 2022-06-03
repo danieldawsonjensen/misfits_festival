@@ -4,7 +4,7 @@ using misfits_festival.Shared.Models;
 
 namespace misfits_festival.Client.Services
 {
-    public class BrugerService : IBrugerService
+    public class BrugerService : IBrugerService // implementerer metoder fra interfacet
     {
         private readonly HttpClient httpClient;
 
@@ -56,10 +56,11 @@ namespace misfits_festival.Client.Services
             return result;
         }
 
-        //        public async Task<int> UpdateKompetencer(BrugerKompetence brugerKompetence)
         public async Task<int> UpdateKompetencer(Bruger bruger, Kompetence kompetence)
 
         {
+            // der sker lidt meget i denne service, men essentielt samler den et Bruger objekt og et Kompetence objekt;
+            // disse samles i database i mange-til-mange tabellen bruger_kompetence
             BrugerKompetence brugerKompetence = new BrugerKompetence();
             brugerKompetence.Bruger = bruger;
             brugerKompetence.Kompetence = kompetence;
@@ -67,6 +68,7 @@ namespace misfits_festival.Client.Services
             var responseStatusCode = response.StatusCode;
             return (int)responseStatusCode;
         }
+
 
         public BrugerService(HttpClient httpClient)
         {

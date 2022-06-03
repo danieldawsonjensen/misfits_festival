@@ -63,6 +63,7 @@ namespace misfits_festival.Server.Models
                 WHERE b.rolle_id = 1 AND bruger_email = '{brugerEmail}'
                 GROUP BY b.bruger_id, b.bruger_navn, b.bruger_email, b.telefonnummer
                 ORDER BY b.bruger_navn;";
+            // læser brugerens indtastede email i localStorage og henter brugerdata med den tilkoblede email
 
             Console.WriteLine("getBruger - brugerRepository");
 
@@ -120,7 +121,7 @@ namespace misfits_festival.Server.Models
         {
             sql =
                 $@"INSERT INTO bruger_kompetence VALUES ({brugerKompetence.Bruger.BrugerId}, {brugerKompetence.Kompetence.KompetenceId});";
-            Console.WriteLine("sql: " + sql);
+
 
             Console.WriteLine("updateKompetencer - brugerRepository");
 
