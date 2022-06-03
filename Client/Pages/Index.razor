@@ -12,27 +12,27 @@
 
 <div class="page-background-page">
     <div class="header">
-    Misfits Festival
+        Misfits Festival
     </div>
- 
 
-<div class="brugerId">
 
-    <!--Følgende kode bruges til at gemme en brugers login info i localStorage det kan bruges på andre sider-->
-    Velkommen til Misfits Festivals digitale hjemmeside!
-    <br />
-    <br />
-    Skriv din email herunder:
-    <br />
-    <input @bind="brugerEmail" />
-    <br />
-    <button @onclick="UpdateLocalStorage">Login</button>
-    <button @onclick="ClearLocalStorage">Clear</button>
-    <br />
-    <br />
-    Hvis du ikke har en bruger email, henvises til siden <a href="https://misfitsfestivalapp.azurewebsites.net/nybruger">opret bruger</a>.
+    <div class="brugerId">
 
-</div>
+        <!--Følgende kode bruges til at gemme en brugers login info i localStorage det kan bruges på andre sider-->
+        Velkommen til Misfits Festivals digitale hjemmeside!
+        <br />
+        <br />
+        Skriv din email herunder:
+        <br />
+        <input @bind="brugerEmail" />
+        <br />
+        <button class="btn btn-success" @onclick="UpdateLocalStorage">Login</button>
+        <button class="btn btn-light" @onclick="ClearLocalStorage">Clear</button>
+        <br />
+        <br />
+        Hvis du ikke har en bruger email, henvises til siden <a href="https://misfitsfestivalapp.azurewebsites.net/nybruger">opret bruger</a>.
+
+    </div>
 </div>
 @code{
     // key og string til opdatering af email'en der skal stå gemmes i localstorage

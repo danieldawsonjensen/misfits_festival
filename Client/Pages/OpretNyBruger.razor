@@ -29,28 +29,9 @@
 
         <br />
 
-        <!--
-        <div class="col-md-6 mb-3">
-            <label for="RolleId">Rolle</label>
-            <InputSelect id="RolleId" @bind-Value="Bruger.RolleId">
-                @foreach (var rolle in Roller)
-                {
-                    <option>@rolle</option>
-                }
-            </InputSelect>
-        </div>
-            -->
-        <br />
-
         <div class="col-md-6 mb-3">
             <label for="Telefonnummer">Telefonnummer</label>
             <InputText id="Telefonnummer" @bind-Value="Bruger.TelefonNummer" class="form-control" />
-        </div>
-
-        <br />
-
-        <div class="col-md-12 mb-3">
-            <label for="ValgtKompetence">Valgt kompetence: @Bruger.Kompetencer</label>
         </div>
 
         <br />

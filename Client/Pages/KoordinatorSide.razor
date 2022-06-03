@@ -195,8 +195,8 @@ else
         vagtId = SlettetVagt.VagtId;
         ErrorCode = await VagtService.DeleteVagt(vagtId);
         Console.WriteLine("Vagt slettet: " + ErrorCode);
-        Vagt = new Vagt();
-        EditContext = new EditContext(SlettetVagt);
+        SlettetVagt = new Vagt();
+        EditContext = new EditContext(Vagt);
     }
 
     protected override async Task OnInitializedAsync()

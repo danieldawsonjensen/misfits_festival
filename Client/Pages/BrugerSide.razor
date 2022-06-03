@@ -232,10 +232,17 @@
 
     <div class="kompetencer">
 
-        @foreach (var kompetence in Kompetencer)
-        {
-            <button class="btn btn-success" @onclick="() => TilføjKompetence(kompetence)">@kompetence.KompetenceBeskrivelse</button>
-        }
+        <ul>
+
+            @foreach (var kompetence in Kompetencer)
+            {
+                <li>
+                    <button class="btn btn-outline-dark" @onclick="() => TilføjKompetence(kompetence)">@kompetence.KompetenceBeskrivelse</button>
+                </li>
+                <br />
+            }
+
+        </ul>
     </div>
 
 </div>

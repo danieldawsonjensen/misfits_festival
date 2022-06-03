@@ -95,7 +95,7 @@
             <div class="col-md-12 mb-3">
                 <label for="OpgaveSlet">Slet opgave</label>
                 <input id="OpgaveSlet" @bind-value="SlettetOpgave.OpgaveBeskrivelse" class="form-control" />
-                <button class="btn btn-primary" @onclick="DeleteOpgaveHandler">Slet denne opgave</button>
+                <button class="btn btn-primary" @onclick="() => DeleteOpgaveHandler(SlettetOpgave.OpgaveId)">Slet denne opgave</button>
             </div>
 
         </div>
@@ -156,11 +156,13 @@ else
     }
 
 
-    private async void DeleteOpgaveHandler()
+    private async void DeleteOpgaveHandler(int? opgaveId)
     {
-        ErrorCode = await OpgaveService.DeleteOpgave(SlettetOpgave.OpgaveId);
+        opgaveId = SlettetOpgave.OpgaveId;
+        ErrorCode = await OpgaveService.DeleteOpgave(opgaveId);
         Console.WriteLine("Opgave slettet: " + ErrorCode);
         SlettetOpgave = new Opgave();
+        EditContext = new EditContext(Vagt);
     }
 
 
